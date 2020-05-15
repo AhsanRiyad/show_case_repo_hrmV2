@@ -24,6 +24,7 @@
 				v-if="n.type == 'cAutoComplete' "
 				:label="n.label"
 				v-model="n.value"
+				:api=" !R.isNil(n.api) ? n.api : '' "
 				:rules="{ required: n.required , name: n.Name }"
 				>
 				</cAutoComplete>

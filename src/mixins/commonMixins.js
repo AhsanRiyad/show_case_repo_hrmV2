@@ -24,6 +24,7 @@ export default {
         //closes the commonDialog
         myDialogClose() {
             this.myDialogVisible = false
+            this.getData();
         },
 
         //form validation rules, working for all pages
@@ -66,8 +67,6 @@ export default {
 
             console.log(this.apiBase);
             // debugger;
-            
-
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.apiRequestData.method = "post";
@@ -77,11 +76,11 @@ export default {
             //axios calling, actions will be dispatched asynchronously
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
                 console.log(response);
+                //success dialog                
                 this.$awn.success(`Successfully`);
             }).catch(() => {
                 this.table_loading = false;
             });
-
         },
         getData() {
             //a very common getData function for baseTable, will be call at the created lifeCycle hook

@@ -33,17 +33,18 @@ export default {
     ],
     formArray: [
       {
-        type: "cTextArea",
-        label: "Company Classification Type Name",
+        type: "cTextField",
+        label: "Business Group Name",
         name: "name",
         value: "",
         required: true,
         fun: vm.ch
       },
       {
-        type: "cTextField",
-        label: "Company Classification Type Description",
-        name: "description",
+        type: "cAutoComplete",
+        label: "Company Classification Type",
+        name: "companyClassTypeId",
+        api: "/ws/companyClassType/getAll/active",
         required: true,
         value: ""
       },
