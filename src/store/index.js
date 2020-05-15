@@ -63,7 +63,7 @@ actions: {
 			let headers = {
 				'Authorization': 'Bearer ' + VueCookies.get('accessToken') ,
 				'Content-Type': 'application/json;charset=UTF-8',
-				[!R.isNil(data.newOrviewOrEditOrCorrection) && data.newOrviewOrEditOrCorrection == 'update' ? 
+				[!R.isNil(data.newOrviewOrEditOrCorrection) && data.newOrviewOrEditOrCorrection == 'edit' ? 
 				'updatedBy': 'createdBy'] : VueCookies.get('username')
 			}
 			console.log(headers);

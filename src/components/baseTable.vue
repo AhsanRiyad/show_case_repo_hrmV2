@@ -27,19 +27,34 @@
         <template v-slot:item.actions="item">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on" class="ma-1" small @click.stop="()=>doActionOnItem('view', item )">pageview</v-icon>
+              <v-icon
+                v-on="on"
+                class="ma-1"
+                small
+                @click.stop="()=>doActionOnItem('view', item )"
+              >pageview</v-icon>
             </template>
             <span>View</span>
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on" class="ma-1" small @click.stop="()=>doActionOnItem('edit', item )">edit</v-icon>
+              <v-icon
+                v-on="on"
+                class="ma-1"
+                small
+                @click.stop="()=>doActionOnItem('edit', item )"
+              >edit</v-icon>
             </template>
             <span>Edit</span>
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on" class="ma-1" small @click.stop="()=>doActionOnItem('edit', item )">spellcheck</v-icon>
+              <v-icon
+                v-on="on"
+                class="ma-1"
+                small
+                @click.stop="()=>doActionOnItem('edit', item )"
+              >spellcheck</v-icon>
             </template>
             <span>Correction</span>
           </v-tooltip>
@@ -52,9 +67,10 @@
       :newOrviewOrEditOrCorrectionProps="newOrviewOrEditOrCorrection"
       :formArray.sync="formArray"
       :dialogVisible="myDialogVisible"
+      :infoOfaId="infoOfaId"
       @close="myDialogClose"
     >
-      <template v-slot:formDialog="">
+      <template v-slot:formDialog>
         <slot age2="22" ref="slotForm" :name="nameOfSlot"></slot>
       </template>
     </commonDialog>
@@ -69,7 +85,9 @@ export default {
   name: "baseTable",
   mixins: [commonMixins],
   props: ["tableHeader", "formArray", "apiBase"],
-  data: () => ({}),
+  data: () => ({
+    infoOfaId: {},
+  }),
   created() {
     this.getData("/getAll/active");
   }

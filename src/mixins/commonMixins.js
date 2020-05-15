@@ -80,20 +80,23 @@ export default {
         }
     },
     methods: {
-        actionIsView(item) {
+        actionIsView(infoOfaId) {
             this.newOrviewOrEditOrCorrection = 'view';
             //add timestamp if in the view mode
-            this.addTimeStamp(item);
+            this.addTimeStamp(infoOfaId);
             //make readonly
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = true;
                 k[i].clearable = false;
             })
         },
-        actionIsEdit(item) {
+        actionIsEdit(infoOfaId) {
             this.newOrviewOrEditOrCorrection = 'edit';
             //add timestamp if in the view mode
-            this.removeTimeStamp(item);
+            this.removeTimeStamp(infoOfaId);
+            
+            this.fillItemsIntheForm(infoOfaId);
+            
             //make readonly
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = false;
@@ -117,11 +120,30 @@ export default {
             console.log('checking the items');
             console.log(item);
 
-            if (action == 'view') {
-                this.actionIsView(item);
-            } else if (action == 'edit') {
-                this.actionIsEdit(item);
-            }
+
+            //get Data from server
+
+            //a very common getData function for baseTable, will be call at the created lifeCycle hook
+            this.apiRequestData.method = "get";
+            this.apiRequestData.api = this.$store.getters.getActivePathName + '/getActive/'+item.id;
+            this.apiRequestData.data = {};
+
+            //table loader
+            this.tableLoading = true;
+
+            //axios calling, actions will be dispatched asynchronously
+            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+                //this variable will send the value to the commonDialog forms so that it can have the data
+                //when it needs to submit
+                this.infoOfaId = response;
+
+                //saves the items from the database in the table
+                if (action == 'view') {
+                    this.actionIsView(response);
+                } else if (action == 'edit') {
+                    this.actionIsEdit(response);
+                }
+            });
 
             //this will make the dialog visible
             this.myDialogVisible = true;
@@ -143,7 +165,15 @@ export default {
                 ? this._.times(4, () => { this.formArray.pop() })
                 : "";
         },
-        addTimeStamp(itemFromBaseTable) {
+        fillItemsIntheForm(infoOfaId){
+            //formArray.name == key of infoOfaId matches
+            this.formArray.forEach((n, i) => {
+                if (this.R.has(n.name, infoOfaId)) {
+                    this.formArray[i].value = infoOfaId[n.name];
+                }
+            });
+        },
+        addTimeStamp(infoOfaId) {
             console.log("firing event bus");
             //this will ensure that timspamp is not being added multiple times
             !this.formArray.some(n => n.name == "createdBy")
@@ -151,12 +181,9 @@ export default {
                     this.formArray.push(n);
                 })
                 : "";
-            //formArray.name == key of itemFromBaseTable matches
-            this.formArray.forEach((n, i) => {
-                if (this.R.has(n.name, itemFromBaseTable)) {
-                    this.formArray[i].value = itemFromBaseTable[n.name];
-                }
-            });
+            //formArray.name == key of infoOfaId matches
+            this.fillItemsIntheForm(infoOfaId);
+        
         },
         //form validation rules, working for all pages
         fieldRulesProp(required, fieldName) {
@@ -196,12 +223,12 @@ export default {
         //base table functions starts
         submit(newOrviewOrEditOrCorrection) {
             //this is for input form validation
-            new Promise((res) => {
+            new Promise((resolve) => {
                 //remove timestamp if there is any
                 this.removeTimeStamp();
                 //this is only for form validation issues, connected with allFormInputs components
                 this.$store.commit("setNewOrOldChecker", 'updated');
-                res();
+                resolve();
             }).then(() => {
                 if (!this.$refs.form.validate()) return;
             })
@@ -219,6 +246,10 @@ export default {
 
             console.log(this.apiBase);
             // debugger;
+
+            newOrviewOrEditOrCorrection == 'edit' ? formInputValues = { ...this.infoOfaId, ...formInputValues} : ''; 
+
+            console.log(formInputValues);
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';

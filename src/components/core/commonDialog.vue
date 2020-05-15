@@ -51,6 +51,10 @@
       newOrviewOrEditOrCorrectionProps: {
         type: [String],
         default: 'view'
+      },
+      infoOfaId: {
+        type: [Object, Array],
+        default: undefined
       }
     },
     mixins: [ commonMixins ],
