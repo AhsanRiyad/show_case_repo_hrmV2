@@ -38,9 +38,15 @@ export default {
     methods: {
         viewItem({ item }){
             //this will make the dialog visible
-            eventBus.$emit('updateForm', item);
             this.myDialogVisible = true;
             console.log(item);
+            
+            setTimeout(function () 
+            { 
+                eventBus.$emit('updateForm', item);
+                alert("Hello"); 
+            }, 
+            3000);
 
             //this bus will be captured in the allFormInput components
         },

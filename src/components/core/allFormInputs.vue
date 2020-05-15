@@ -58,9 +58,13 @@ export default {
   },
   methods: {},
   created() {
-    eventBus.$on("updateForm", function(payLoad) {
+    //this event is being fired from baseTable viewItem function, the the definition is in the common mixins file
+    eventBus.$on("updateForm", (item) => {
       console.log("firing event bus");
-      console.log(payLoad);
+      console.log(item);
+
+      console.log("this is form array");
+      console.log(this.formArray);
     });
   },
   watch: {
