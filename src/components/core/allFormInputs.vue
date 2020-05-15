@@ -54,7 +54,7 @@
 
 <script>
 import commonMixins from "@/mixins/commonMixins";
-import { eventBus } from "@/main";
+// import { eventBus } from "@/main";
 import { mapGetters } from "vuex";
 export default {
   name: "allFormInput",
@@ -108,15 +108,15 @@ export default {
   methods: {},
   created() {
     //this event will remove extra timestamp field
-    eventBus.$on("removeTimestamp", () => {
+    /* eventBus.$on("removeTimestamp", () => {
       this.formArray.some(n => n.name == "createdBy")
         ? this._.times( 4 , ()=>{ this.formArray.pop() } )
         : "";
-    });
+    }); */
 
 
     //this event is being fired from baseTable viewItem function, the the definition is in the common mixins file
-    eventBus.$on("updateForm", itemFromBaseTable => {
+   /*  eventBus.$on("updateForm", itemFromBaseTable => {
       console.log("firing event bus");
       //this will ensure that timspamp is not being added multiple times
       !this.formArray.some(n => n.name == "createdBy")
@@ -131,7 +131,7 @@ export default {
           this.formArray[i].value = itemFromBaseTable[n.name];
         }
       });
-    });
+    }); */
   },
   updated() {
     // this.$store.commit("setNewOrOldChecker", "updated");
