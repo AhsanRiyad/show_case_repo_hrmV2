@@ -49,7 +49,7 @@
     </v-card>
 
     <commonDialog
-      :newOrviewOrEditOrCorrection="newOrviewOrEditOrCorrection"
+      :newOrviewOrEditOrCorrectionProps="newOrviewOrEditOrCorrection"
       :formArray.sync="formArray"
       :dialogVisible="myDialogVisible"
       @close="myDialogClose"
@@ -71,7 +71,7 @@ export default {
   props: ["tableHeader", "formArray", "apiBase"],
   data: () => ({}),
   created() {
-    this.getData();
+    this.getData("/getAll/active");
   }
 };
 </script>

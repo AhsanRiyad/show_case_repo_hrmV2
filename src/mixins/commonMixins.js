@@ -80,7 +80,7 @@ export default {
         }
     },
     methods: {
-        actionIsView(item){
+        actionIsView(item) {
             this.newOrviewOrEditOrCorrection = 'view';
             //add timestamp if in the view mode
             this.addTimeStamp(item);
@@ -90,7 +90,7 @@ export default {
                 k[i].clearable = false;
             })
         },
-        actionIsEdit(item){
+        actionIsEdit(item) {
             this.newOrviewOrEditOrCorrection = 'edit';
             //add timestamp if in the view mode
             this.removeTimeStamp(item);
@@ -100,7 +100,7 @@ export default {
                 k[i].clearable = true;
             })
         },
-        actionIsNew(item){
+        actionIsNew(item) {
             this.newOrviewOrEditOrCorrection = 'new';
             //add timestamp if in the view mode
             this.removeTimeStamp(item);
@@ -114,19 +114,23 @@ export default {
         },
         //view item
         doActionOnItem(action, { item }) {
+            console.log('checking the items');
+            console.log(item);
+
             if (action == 'view') {
                 this.actionIsView(item);
-            } else if (action == 'edit'){
+            } else if (action == 'edit') {
                 this.actionIsEdit(item);
             }
+
             //this will make the dialog visible
             this.myDialogVisible = true;
-            
+
         },
         //closes the commonDialog
         myDialogClose() {
             this.myDialogVisible = false;
-            this.getData();
+            this.getData("/getAll/active");
         },
         clearInput(items) {
             this.$store.commit("setNewOrOldChecker", 'new');
@@ -190,11 +194,12 @@ export default {
             this.$store.commit('setNewOrOldChecker', 'updated');
         },
         //base table functions starts
-        submit() {
+        submit(newOrviewOrEditOrCorrection) {
             //this is for input form validation
             new Promise((res) => {
                 //remove timestamp if there is any
                 this.removeTimeStamp();
+                //this is only for form validation issues, connected with allFormInputs components
                 this.$store.commit("setNewOrOldChecker", 'updated');
                 res();
             }).then(() => {
@@ -216,9 +221,11 @@ export default {
             // debugger;
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.apiRequestData.method = "post";
+            this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
             this.apiRequestData.api = this.$store.getters.getActivePathName;
             this.apiRequestData.data = formInputValues;
+            //this will help decide the header if it will be createdBy or updatedBy
+            this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
 
             //axios calling, actions will be dispatched asynchronously
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
@@ -228,24 +235,13 @@ export default {
             }).catch(() => {
                 this.tableLoading = false;
             });
-
-
-
-
-
-
-
-
-
             // }, 50);
 
-
-
         },
-        getData() {
+        getData(extention) {
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.apiRequestData.method = "get";
-            this.apiRequestData.api = this.$store.getters.getActivePathName + "/getAll/active";
+            this.apiRequestData.api = this.$store.getters.getActivePathName + extention;
             this.apiRequestData.data = {};
 
             //table loader
