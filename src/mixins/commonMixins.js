@@ -40,12 +40,12 @@ export default {
             //this will make the dialog visible
             this.myDialogVisible = true;
             console.log(item);
-        //setTimeout is useful for firing the event in the first time, other than this it will be fired on the second time
+            //setTimeout is useful for firing the event in the first time, other than this it will be fired on the second time
             setTimeout(function () {
                 eventBus.$emit('updateForm', item);
                 // alert("Hello"); 
             },
-            50);
+                50);
 
             //this bus will be captured in the allFormInput components
         },
@@ -60,12 +60,15 @@ export default {
                 a[i].value = null;
             })
 
-            setTimeout(function () {
+            this.formArray.some(n => n.name == "createdBy")
+                ? this._.times(4, () => { this.formArray.pop() })
+                : "";
+
+
+            /* setTimeout(function () {
                 eventBus.$emit('removeTimestamp');
             },
-            50);
-
-
+            50); */
         },
         //form validation rules, working for all pages
         fieldRulesProp(required, fieldName) {
@@ -80,7 +83,7 @@ export default {
                     v => !!v || fieldName + ' is required',
                     v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'Invalid'
                 ]);
-                
+
             }
             else if (/(name)/g.test(fieldName)) {
 
@@ -89,7 +92,7 @@ export default {
                     // v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'Invalid'
                 ]);
             }
-             else if (/(startDate|date|endDate)/g.test(fieldName)) {
+            else if (/(startDate|date|endDate)/g.test(fieldName)) {
                 return ([
                     v => !!v || fieldName + ' is required',
                 ]);
@@ -99,7 +102,7 @@ export default {
                 ]);
             }
         },
-        solveInputValidation(){
+        solveInputValidation() {
             console.log('in the solve funcitons');
             this.$store.commit('setNewOrOldChecker', 'updated');
         },
