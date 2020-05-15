@@ -57,7 +57,7 @@ export default {
         clearInput(items) {
             this.$store.commit("setNewOrOldChecker", 'new');
             items.forEach((n, i, a) => {
-                a[i].value = '';
+                a[i].value = null;
             })
         },
         //form validation rules, working for all pages
@@ -71,7 +71,7 @@ export default {
 
                 return ([
                     v => !!v || fieldName + ' is required',
-                    v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'invalide quantity'
+                    v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'Invalid'
                 ]);
                 
             }
@@ -79,7 +79,7 @@ export default {
 
                 return ([
                     v => !!v || fieldName + ' is required',
-                    v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'invalide quantity'
+                    // v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'Invalid'
                 ]);
             }
              else if (/(startDate|date|endDate)/g.test(fieldName)) {
@@ -98,8 +98,7 @@ export default {
         },
         //base table functions starts
         submit() {
-
-            //
+            //this is for input form validation
             this.$store.commit("setNewOrOldChecker", 'updated');
 
             setTimeout(() => {
