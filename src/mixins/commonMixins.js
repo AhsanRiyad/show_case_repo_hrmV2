@@ -66,11 +66,22 @@ export default {
 
             console.log(this.apiBase);
             // debugger;
-
             
 
 
-            this.$awn.success(`Successfully`);
+            //a very common getData function for baseTable, will be call at the created lifeCycle hook
+            this.apiRequestData.method = "post";
+            this.apiRequestData.api = this.$store.getters.getActivePathName;
+            this.apiRequestData.data = formInputValues;
+
+            //axios calling, actions will be dispatched asynchronously
+            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+                console.log(response);
+                this.$awn.success(`Successfully`);
+            }).catch(() => {
+                this.table_loading = false;
+            });
+
         },
         getData() {
             //a very common getData function for baseTable, will be call at the created lifeCycle hook

@@ -106,6 +106,7 @@ export default {
           this.loading = false;
           //set cookie
           this.$cookies.set("accessToken", response.accessToken);
+          this.$cookies.set("username", this.formData.username);
 
           //show msg
           this.$awn.success("Success");
