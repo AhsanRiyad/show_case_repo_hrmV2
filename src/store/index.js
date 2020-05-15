@@ -15,7 +15,6 @@ Vue.use(Vuex);
 export default new Vuex.Store({
 state: {
 	name: 'riyad',
-
 },
 getters: {
 	get_tabs_menu_list : state => state.accessible_modules.admin,
