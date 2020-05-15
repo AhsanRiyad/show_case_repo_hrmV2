@@ -37,6 +37,8 @@
           v-model="n.value"
           :api=" !R.isNil(n.api) ? n.api : '' "
           :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
+          :readonly="!R.isNil(n.readonly) ? n.readonly : false"
+          :clearable="!R.isNil(n.clearable) ? n.clearable : true"
         ></cAutoComplete>
 
         <cDatePicker
@@ -46,6 +48,8 @@
           :min=" !R.isNil(n.min) ? R.find(R.propEq('name' , n.min))(formArray).value : '' "
           :max=" !R.isNil(n.max) ? R.find(R.propEq('name' , n.max))(formArray).value : '' "
           :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
+          :readonly="!R.isNil(n.readonly) ? n.readonly : false"
+          :clearable="!R.isNil(n.clearable) ? n.clearable : true"
         ></cDatePicker>
       </v-col>
     </v-row>

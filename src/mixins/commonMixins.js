@@ -77,6 +77,14 @@ export default {
     methods: {
         //view item
         viewItem({ item }) {
+            
+            
+            this.formArray.forEach( (n, i , k)=>{
+                k[i].readonly = true;
+                k[i].clearable = false;
+            })
+
+            
             //this will make the dialog visible
             this.myDialogVisible = true;
             console.log(item);
@@ -86,6 +94,10 @@ export default {
                 // alert("Hello"); 
             },
                 50); */
+
+
+
+
 
             this.addTimeStamp(item);
 

@@ -9,7 +9,8 @@
     color="red darken-1"
     @input="handleValue"
     :rules="fieldRulesProp( rules.required , rules.name )"
-    clearable
+    :clearable=" !R.isNil(clearable) ? clearable : true "
+    :readonly=" !R.isNil(readonly) ? readonly : true "
   ></v-autocomplete>
 </template>
 
@@ -17,7 +18,7 @@
 import commonMixins from '@/mixins/commonMixins'
 export default {
   name: "cAutoComplete",
-  props: ["value", "label", "rules", "api"],
+  props: ["value", "label", "rules", "api", "clearable" , "readonly"],
   mixins: [commonMixins],
   data() {
     return {
