@@ -26,7 +26,7 @@
       <v-card-actions>
         <v-spacer></v-spacer>
         <v-btn color="red darken-1" text  @click="intDialogVisible = false">Close</v-btn>
-        <v-btn color="red darken-1" text @click.stop="submit">Save</v-btn>
+        <v-btn v-if="newOrviewOrEditOrCorrection != 'view'" color="red darken-1" text @click.stop="()=>submit(newOrviewOrEditOrCorrection)">Save</v-btn>
       </v-card-actions>
     </v-card>
   </v-dialog>
@@ -35,7 +35,7 @@
 <script>
   import commonMixins from '@/mixins/commonMixins'
   export default {
-    props:['dialogVisible', 'age2', 'formArray'],
+    props:['dialogVisible', 'age2', 'formArray' , 'newOrviewOrEditOrCorrection'],
     mixins: [ commonMixins ],
     data () {
       return {
@@ -58,6 +58,7 @@
      }
    },
    methods: {
+     closeDialog(){},
     clicked(){
       console.log('clicked');
     }

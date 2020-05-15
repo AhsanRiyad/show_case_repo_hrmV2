@@ -28,6 +28,11 @@ export default {
             data: {},
         },
 
+        //
+        newOrviewOrEditOrCorrection: '',
+
+
+        //for all form input
         timestamp: [
             {
                 type: "cTextField",
@@ -75,33 +80,37 @@ export default {
         }
     },
     methods: {
-        //view item
-        viewItem({ item }) {
-            
-            
-            this.formArray.forEach( (n, i , k)=>{
+        actionIsView(item){
+            this.newOrviewOrEditOrCorrection = 'view';
+            //add timestamp if in the view mode
+            this.addTimeStamp(item);
+            //make readonly
+            this.formArray.forEach((n, i, k) => {
                 k[i].readonly = true;
                 k[i].clearable = false;
             })
 
-            
+        },
+        actionIsEdit(item){
+            this.newOrviewOrEditOrCorrection = 'edit';
+            //add timestamp if in the view mode
+            this.removeTimeStamp(item);
+            //make readonly
+            this.formArray.forEach((n, i, k) => {
+                k[i].readonly = false;
+                k[i].clearable = true;
+            })
+        },
+        //view item
+        doActionOnItem(action, { item }) {
+            if (action == 'view') {
+                this.actionIsView(item);
+            } else if (action == 'edit'){
+                this.actionIsEdit(item);
+            }
             //this will make the dialog visible
             this.myDialogVisible = true;
-            console.log(item);
-            //setTimeout is useful for firing the event in the first time, other than this it will be fired on the second time
-            /* setTimeout(function () {
-                eventBus.$emit('updateForm', item);
-                // alert("Hello"); 
-            },
-                50); */
-
-
-
-
-
-            this.addTimeStamp(item);
-
-            //this bus will be captured in the allFormInput components
+            
         },
         //closes the commonDialog
         myDialogClose() {
@@ -138,8 +147,6 @@ export default {
                     this.formArray[i].value = itemFromBaseTable[n.name];
                 }
             });
-
-
         },
         //form validation rules, working for all pages
         fieldRulesProp(required, fieldName) {
@@ -160,7 +167,6 @@ export default {
 
                 return ([
                     v => !!v || fieldName + ' is required',
-                    // v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'Invalid'
                 ]);
             }
             else if (/(startDate|date|endDate)/g.test(fieldName)) {

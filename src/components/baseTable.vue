@@ -27,19 +27,19 @@
         <template v-slot:item.actions="item">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on" class="ma-1" small @click.stop="()=>viewItem(item)">pageview</v-icon>
+              <v-icon v-on="on" class="ma-1" small @click.stop="()=>doActionOnItem('view', item )">pageview</v-icon>
             </template>
             <span>View</span>
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on" class="ma-1" small @click.stop="">edit</v-icon>
+              <v-icon v-on="on" class="ma-1" small @click.stop="()=>doActionOnItem('edit', item )">edit</v-icon>
             </template>
             <span>Edit</span>
           </v-tooltip>
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">
-              <v-icon v-on="on" class="ma-1" small @click.stop="">spellcheck</v-icon>
+              <v-icon v-on="on" class="ma-1" small @click.stop="()=>doActionOnItem('edit', item )">spellcheck</v-icon>
             </template>
             <span>Correction</span>
           </v-tooltip>
@@ -49,6 +49,7 @@
     </v-card>
 
     <commonDialog
+      :newOrviewOrEditOrCorrection="newOrviewOrEditOrCorrection"
       :formArray.sync="formArray"
       :dialogVisible="myDialogVisible"
       @close="myDialogClose"

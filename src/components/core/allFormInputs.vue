@@ -66,80 +66,14 @@ export default {
   mixins: [commonMixins],
   data() {
     return {
-      timestamp: [
-        {
-          type: "cTextField",
-          label: "Created By",
-          name: "createdBy",
-          value: "",
-          required: false,
-          readonly: true,
-          clearable: false
-        },
-        {
-          type: "cTextField",
-          label: "Created At",
-          name: "createdAt",
-          value: "",
-          required: false,
-          readonly: true,
-          clearable: false
-        },
-        {
-          type: "cTextField",
-          label: "Updated By",
-          name: "UpdatedBy",
-          value: "",
-          required: false,
-          readonly: true,
-          clearable: false
-        },
-        {
-          type: "cTextField",
-          label: "Updated At",
-          name: "UpdatedAt",
-          value: "",
-          required: false,
-          readonly: true,
-          clearable: false
-        }
-      ]
     };
   },
   computed: {
     ...mapGetters(["getNewOrOldChecker"])
   },
   methods: {},
-  created() {
-    //this event will remove extra timestamp field
-    /* eventBus.$on("removeTimestamp", () => {
-      this.formArray.some(n => n.name == "createdBy")
-        ? this._.times( 4 , ()=>{ this.formArray.pop() } )
-        : "";
-    }); */
-
-
-    //this event is being fired from baseTable viewItem function, the the definition is in the common mixins file
-   /*  eventBus.$on("updateForm", itemFromBaseTable => {
-      console.log("firing event bus");
-      //this will ensure that timspamp is not being added multiple times
-      !this.formArray.some(n => n.name == "createdBy")
-        ? this.timestamp.forEach(n => {
-            this.formArray.push(n);
-          })
-        : "";
-
-      //formArray.name == key of itemFromBaseTable matches
-      this.formArray.forEach((n, i) => {
-        if (this.R.has(n.name, itemFromBaseTable)) {
-          this.formArray[i].value = itemFromBaseTable[n.name];
-        }
-      });
-    }); */
-  },
-  updated() {
-    // this.$store.commit("setNewOrOldChecker", "updated");
-  },
+  created() {},
+  updated() {},
   destroy() {},
   watch: {
     getNewOrOldChecker: {
