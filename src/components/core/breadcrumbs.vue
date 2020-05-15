@@ -1,15 +1,15 @@
 <template>
     <div>
         <v-subheader
-        >  {{ get_sub_header }}  <v-divider inset></v-divider
+        >  {{ getSubHeader }}  <v-divider inset></v-divider
             ></v-subheader>
 
             <v-breadcrumbs :items="items" class="breadcrumbs" divider="/">
                 <template slot="item" slot-scope="props">
-                    <router-link :to="{ name: props.item.link }" class="link">
+                    <router-link :to="{ name: props.item.name }" class="link">
 
                         {{
-                            props.item.name
+                            props.item.title
                         }}
 
                     </router-link>
@@ -21,7 +21,7 @@
     </template>
 
     <script>
-        import updateItemsMixin from '@/mixins/update_items_from_router';
+        import updateItemsMixin from '@/mixins/updateItemsFromRouter';
         import * as R from 'ramda'
 
         export default {
@@ -32,17 +32,17 @@
               {
                 name: 'Dashboard',
                 disabled: false,
-                link: 'breadcrumbs_dashboard',
+                link: 'breadcrumbsDashboard',
             },
             {
                 name: 'Link 1',
                 disabled: false,
-                link: 'breadcrumbs_link_1',
+                link: 'breadcrumbsLink1',
             },
             {
                 name: 'Link 2',
                 disabled: true,
-                link: 'breadcrumbs_link_2',
+                link: 'breadcrumbsLink2',
             },
             ],
         }),
@@ -58,7 +58,7 @@
                 }
             },
             computed: {
-                get_sub_header(){
+                getSubHeader(){
                     if( !R.isNil(this.$route.meta.childPages) ){
                         return "Select to Nevigate";
                     }else {

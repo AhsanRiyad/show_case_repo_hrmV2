@@ -2,59 +2,75 @@
 import Vue from 'vue';
 import Vuex from 'vuex';
 
+import VueCookies from 'vue-cookies'
+
+import axios from 'axios'
+
 //accessible modules , tab menu
-import accessible_modules from './role_based/accessible_modules';
+import accessibleModules from './roleBased/accessibleModules';
 
 //imported state
-import work_structure from './modules/work_structure';
+import workStructure from './modules/workStructure';
 import admin from './modules/admin';
-
 
 Vue.use(Vuex);
 
 export default new Vuex.Store({
-state: {
-	name: 'riyad',
-},
-getters: {
-	get_tabs_menu_list : state => state.accessible_modules.admin,
-	get_state : state => state,
+	state: {
+		name: 'riyad',
+		apiBase: "http://localhost:8090/hrm-server/api",
+		activeRouteName: 'hellow',
+		activePathName: '',
+	},
+	getters: {
+		getTabsMenuList : state => state.accessibleModules.admin,
+		getState : state => state,
+		getApiBase: state => state.apiBase,
+		getActiveRouteName: state => state.activeRouteName,
+		getActivePathName: state => state.activePathName,
+	},
+	mutations: {
+		setActiveRouteName(state , name){
+			state.activeRouteName = name;
+		},
+		setActivePathName(state , name){
+			state.activePathName = name;
+		}
+	},
+actions: {
+	testActions: context => {
+		console.log(context);
+		return new Promise( (resolve)=>{
+			resolve('from promise');
+		} )
+	},
+	callApi: (context, data) => {
+		return new Promise( (resolve , reject)=>{
+			let url = context.state.apiBase+data.api;
+			console.log(url);
+			let headers = {
+				'Authorization': 'Bearer ' + VueCookies.get('accessToken') ,
+				'Content-Type': 'application/json;charset=UTF-8',
+				'createdBy': '00000000',
+				'updatedBy': '00000000'
+			}
 
+			console.log(headers);
 
+			console.log(data);
+			axios( {  method: data.method, url: url , data: data.data , headers: headers } ).then( ( response )=>{
+				console.log("in the dispatch");
+				console.log(response);
+				resolve(response.data);
+			}).catch((error)=>{
+				reject(error);
+			})
+		})
+	}
 },
-mutations: {
-SET_ACCESSIBLE_MODULES(state) {
-let role = state.roles.toLowerCase();
-/* todo: handle with API */
-if (role === 'admin') {
-state.availableModules = state.accessible_modules.admin;
-} else if (role === 'hr') {
-state.availableModules = state.accessible_modules.hr;
-} else if (role === 'employee') {
-state.availableModules = state.accessible_modules.employee;
-} else if (role === '') {
-//this.$router.push('/login');
-
-//this will be deleteted
-state.availableModules = state.accessible_modules.admin;
-
-}
-},
-INVALIDATE_USER(state) {
-localStorage.removeItem('user-token');
-localStorage.removeItem('username');
-localStorage.removeItem('name');
-localStorage.removeItem('role');
-localStorage.removeItem('photo');
-state.photo = '';
-},
-},
-actions: {},
 modules: {
-
-work_structure: work_structure,
-accessible_modules: accessible_modules,
-admin: admin,
-
+	workStructure: workStructure,
+	accessibleModules: accessibleModules,
+	admin: admin,
 }
 });

@@ -1,6 +1,6 @@
 <template>
 	<span>
-		<child_page_items :root-path="pageRouteName" />
+		<childPageItems :root-path="pageRouteName" />
 		<router-view></router-view>
 	</span>
 
@@ -8,11 +8,11 @@
 
 <script>
 	export default {
-		name: 'work_structure_base',
+		name: 'workStructureBase',
 		title: 'Work Structure',
 		data: () => ({
 
-			pageRouteName: 'work_structure',
+			pageRouteName: 'workStructure',
 			isLoading: false
 
 		}),

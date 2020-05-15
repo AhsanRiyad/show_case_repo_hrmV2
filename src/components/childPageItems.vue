@@ -20,7 +20,7 @@
             ripple
             class="rounded-card ml-5"
             style="border-radius: 20px;"
-            :to="{ name: n.link }"
+            :to="{ name: n.name }"
             >
             <v-card-text class="text-left" style="padding-top: 130px;"  >
                 <div
@@ -31,7 +31,7 @@
             <h3
             class="title font-weight-light black--text mb-2"
             >
-            {{ n.name }}
+            {{ n.title }}
         </h3>
     </v-card-text>
 </v-card>
@@ -42,9 +42,9 @@
 </span>
 </template>
 <script>
-    import updateItemsMixin from '../mixins/update_items_from_router';
+    import updateItemsMixin from '../mixins/updateItemsFromRouter';
     export default {
-        name: 'child_page_items',
+        name: 'childPageItems',
         props: {
             rootPath: {
                 type: String,

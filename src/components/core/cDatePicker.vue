@@ -17,7 +17,7 @@
     readonly
     clearable
     v-on="on"
-    :rules="field_rules_prop('date')"
+    :rules="fieldRulesProp( rules.required , rules.name )"
     ></v-text-field>
   </template>
   <v-date-picker 
@@ -35,12 +35,12 @@
 </template>
 
 <script>
-  import common_mixins from '@/mixins/common_mixins'
+  import commonMixins from '@/mixins/commonMixins'
 
   export default {
-    name:'v_datepicker',
-    props:['value', 'label', 'min', 'max'],
-    mixins: [common_mixins],
+    name:'cDatePicker',
+    props:['value', 'label', 'min', 'max', 'rules'],
+    mixins: [commonMixins],
     data: () => ({
       date: "",
       dateFormatted: "" , 
@@ -55,8 +55,6 @@
         },
         set(val) {
           this.date = val;
-          console.log('in the set function');
-          console.log(val);
           this.$emit('input', val);
         }
       }
@@ -66,52 +64,30 @@
         return this.moment(date).format('DD-MM-YYYY');
       },
       handleValue(val){
-        console.log('value input');
-        console.log(val);
         this.$emit('input', val);
-
-        console.log('value printing');
-        console.log(this.value);
-
       },
     },
     mounted(){
       this.date = this.value;
-      console.log('min date');
-      console.log(this.min);
-      console.log('max date');
-      console.log(this.max);
     },
     watch:{
       value: {
-        handler: function(newVal, oldVal){
-          console.log('inside watch handler datePicker');
-          console.log(newVal);
-          console.log(oldVal);
+        handler: function(){
         },
         immediate: true,
       },
       min: {
-        handler: function(newVal, oldVal){
-          console.log('inside watch handler datePicker min change');
-          console.log(newVal);
-          console.log(oldVal);
+        handler: function(){
         },
         immediate: true,
       },
       max: {
-        handler: function(newVal, oldVal){
-          console.log('inside watch handler datePicker max change');
-          console.log(newVal);
-          console.log(oldVal);
+        handler: function(){
         },
         immediate: true,
       },
       date: {
-        handler: function(newVal, oldVal){
-          console.log('date watch');
-          console.log('new val '+ newVal);
-          console.log('old val ' +oldVal);
+        handler: function(){
           this.dateFormatted = this.moment(this.date).format('DD-MM-YYYY');
           this.dateFormatted == 'Invalid date' ? this.dateFormatted = "": '';
 
@@ -120,8 +96,6 @@
       }
     },
     updated(){
-      console.log('in the updated hook');
-      console.log(this.date);
     }
   }
 </script>

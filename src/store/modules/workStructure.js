@@ -3,12 +3,12 @@ export default {
         subModules: [
             {
                 name: 'Company Classification Type',
-                link: 'company_classification_type',
+                link: 'companyClassType',
                 icon: 'mdi-file-document-outline'
             },
             {
                 name: 'Business group',
-                link: 'business_group',
+                link: 'businessGroup',
                 icon: 'mdi-file-document-outline'
             },
             {
