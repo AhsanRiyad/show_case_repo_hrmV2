@@ -10,25 +10,25 @@
         @click.stop="solveInputValidation"
       >
         <v-textarea
-          
           v-if=" n.type == 'cTextArea' "
           filled
           rows="2"
           :label="n.label"
           v-model="n.value"
-          :rules="fieldRulesProp(n.required ,  n.name)"
-          clearable
+          :rules="fieldRulesProp( !R.isNil(n.required) ? n.required : true ,  n.name)"
+          :readonly="!R.isNil(n.readonly) ? n.readonly : false"
+          :clearable="!R.isNil(n.clearable) ? n.clearable : true"
         ></v-textarea>
 
         <!-- here setNewOrOldChecker is for creating new value and for form validation, all are linked up -->
         <v-text-field
-          
           v-if=" n.type == 'cTextField' "
           color="red darken-1"
           :label="n.label"
           v-model="n.value"
-          :rules="fieldRulesProp(n.required ,  n.name)"
-          clearable
+          :rules="fieldRulesProp( !R.isNil(n.required) ? n.required : true ,  n.name)"
+          :readonly="!R.isNil(n.readonly) ? n.readonly : false"
+          :clearable="!R.isNil(n.clearable) ? n.clearable : true"
         ></v-text-field>
 
         <cAutoComplete
@@ -36,7 +36,7 @@
           :label="n.label"
           v-model="n.value"
           :api=" !R.isNil(n.api) ? n.api : '' "
-          :rules="{ required: n.required , name: n.Name }"
+          :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
         ></cAutoComplete>
 
         <cDatePicker
@@ -45,7 +45,7 @@
           v-model="n.value"
           :min=" !R.isNil(n.min) ? R.find(R.propEq('name' , n.min))(formArray).value : '' "
           :max=" !R.isNil(n.max) ? R.find(R.propEq('name' , n.max))(formArray).value : '' "
-          :rules="{ required: n.required , name: n.Name }"
+          :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
         ></cDatePicker>
       </v-col>
     </v-row>
@@ -55,28 +55,79 @@
 <script>
 import commonMixins from "@/mixins/commonMixins";
 import { eventBus } from "@/main";
+import { mapGetters } from "vuex";
 export default {
   name: "allFormInput",
   props: ["formArray", "age2"],
   mixins: [commonMixins],
   data() {
     return {
-      counter: 0
+      timestamp: [
+        {
+          type: "cTextField",
+          label: "Created By",
+          name: "createdBy",
+          value: "",
+          required: false,
+          readonly: true,
+          clearable: false
+        },
+        {
+          type: "cTextField",
+          label: "Created At",
+          name: "createdAt",
+          value: "",
+          required: false,
+          readonly: true,
+          clearable: false
+        },
+        {
+          type: "cTextField",
+          label: "Updated By",
+          name: "UpdatedBy",
+          value: "",
+          required: false,
+          readonly: true,
+          clearable: false
+        },
+        {
+          type: "cTextField",
+          label: "Updated At",
+          name: "UpdatedAt",
+          value: "",
+          required: false,
+          readonly: true,
+          clearable: false
+        }
+      ]
     };
+  },
+  computed: {
+    ...mapGetters(["getNewOrOldChecker"])
   },
   methods: {},
   created() {
+    //this event will remove extra timestamp field
+    eventBus.$on("removeTimestamp", () => {
+      this.formArray.some(n => n.name == "createdBy")
+        ? this._.times( 4 , ()=>{ this.formArray.pop() } )
+        : "";
+    });
+
+
     //this event is being fired from baseTable viewItem function, the the definition is in the common mixins file
     eventBus.$on("updateForm", itemFromBaseTable => {
       console.log("firing event bus");
-      // console.log(item);
+      //this will ensure that timspamp is not being added multiple times
+      !this.formArray.some(n => n.name == "createdBy")
+        ? this.timestamp.forEach(n => {
+            this.formArray.push(n);
+          })
+        : "";
 
-      // console.log("this is form array");
-      // console.log(this.formArray);
-      // this.formArray[2].value ="2020-02-02";
+      //formArray.name == key of itemFromBaseTable matches
       this.formArray.forEach((n, i) => {
         if (this.R.has(n.name, itemFromBaseTable)) {
-          console.log(itemFromBaseTable[n.name]);
           this.formArray[i].value = itemFromBaseTable[n.name];
         }
       });
@@ -84,12 +135,14 @@ export default {
   },
   updated() {
     // this.$store.commit("setNewOrOldChecker", "updated");
-    console.log(this.$store.getters.getNewOrOldChecker);
   },
   destroy() {},
   watch: {
-    formArray: {
-      handler() {},
+    getNewOrOldChecker: {
+      handler(newVal) {
+        console.log("this is map getters");
+        console.log(newVal);
+      },
       immediate: true,
       deep: true
     }

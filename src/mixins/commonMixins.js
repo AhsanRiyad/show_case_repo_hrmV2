@@ -40,12 +40,12 @@ export default {
             //this will make the dialog visible
             this.myDialogVisible = true;
             console.log(item);
-
+        //setTimeout is useful for firing the event in the first time, other than this it will be fired on the second time
             setTimeout(function () {
                 eventBus.$emit('updateForm', item);
                 // alert("Hello"); 
             },
-                50);
+            50);
 
             //this bus will be captured in the allFormInput components
         },
@@ -59,6 +59,13 @@ export default {
             items.forEach((n, i, a) => {
                 a[i].value = null;
             })
+
+            setTimeout(function () {
+                eventBus.$emit('removeTimestamp');
+            },
+            50);
+
+
         },
         //form validation rules, working for all pages
         fieldRulesProp(required, fieldName) {
