@@ -13,6 +13,9 @@ import accessibleModules from './roleBased/accessibleModules';
 import workStructure from './modules/workStructure';
 import admin from './modules/admin';
 
+
+import * as R from 'ramda'
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -60,7 +63,8 @@ actions: {
 			let headers = {
 				'Authorization': 'Bearer ' + VueCookies.get('accessToken') ,
 				'Content-Type': 'application/json;charset=UTF-8',
-				'createdBy': VueCookies.get('username')
+				[!R.isNil(data.newOrviewOrEditOrCorrection) && data.newOrviewOrEditOrCorrection == 'update' ? 
+				'updatedBy': 'createdBy'] : VueCookies.get('username')
 			}
 			console.log(headers);
 			console.log(data);

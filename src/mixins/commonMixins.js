@@ -89,12 +89,23 @@ export default {
                 k[i].readonly = true;
                 k[i].clearable = false;
             })
-
         },
         actionIsEdit(item){
             this.newOrviewOrEditOrCorrection = 'edit';
             //add timestamp if in the view mode
             this.removeTimeStamp(item);
+            //make readonly
+            this.formArray.forEach((n, i, k) => {
+                k[i].readonly = false;
+                k[i].clearable = true;
+            })
+        },
+        actionIsNew(item){
+            this.newOrviewOrEditOrCorrection = 'new';
+            //add timestamp if in the view mode
+            this.removeTimeStamp(item);
+            //clearInput
+            this.clearInput(item);
             //make readonly
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = false;
@@ -118,15 +129,10 @@ export default {
             this.getData();
         },
         clearInput(items) {
-            this.removeTimeStamp();
             this.$store.commit("setNewOrOldChecker", 'new');
             items.forEach((n, i, a) => {
                 a[i].value = null;
             })
-            /* setTimeout(function () {
-                eventBus.$emit('removeTimestamp');
-            },
-            50); */
         },
         removeTimeStamp() {
             this.formArray.some(n => n.name == "createdBy")
