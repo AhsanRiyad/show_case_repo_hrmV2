@@ -1,11 +1,27 @@
+import eventBus from '@/eventBus/eventBus';
+
 export default {
     data: () => ({
+
+        //table items, autcomplete items
         items: [],
+
+        //baseTable dialog
         myDialogVisible: false,
+
+        //table loader
         tableLoading: false,
+
+        //msg dialog
         dialog: false,
+
+        //table search
         search: "",
+
+        //baseTable slot name variable
         nameOfSlot: 'formBaseTable',
+
+        //for get, post, put , update, delete
         apiRequestData: {
             method: 'get',
             api: '',
@@ -21,8 +37,12 @@ export default {
     },
     methods: {
         viewItem({ item }){
+            //this will make the dialog visible
+            eventBus.$emit('updateForm', item);
             this.myDialogVisible = true;
             console.log(item);
+
+            //this bus will be captured in the allFormInput components
         },
         //closes the commonDialog
         myDialogClose() {
