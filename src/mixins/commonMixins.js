@@ -1,4 +1,4 @@
-import eventBus from '@/eventBus/eventBus';
+import { eventBus } from '@/main';
 
 export default {
     data: () => ({

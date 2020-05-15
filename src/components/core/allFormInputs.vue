@@ -48,7 +48,7 @@
 
 <script>
 import commonMixins from "@/mixins/commonMixins";
-import eventBus from "@/eventBus/eventBus";
+import { eventBus } from "@/main";
 export default {
   name: "allFormInput",
   props: ["formArray", "age2"],

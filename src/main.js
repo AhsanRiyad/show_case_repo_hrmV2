@@ -20,6 +20,9 @@ Vue.prototype.moment = moment;
 import _ from 'lodash'
 Vue.prototype._ = _;
 
+export const eventBus = new Vue();
+
+
 //cookie starts 
 import VueCookies from 'vue-cookies'
 Vue.use(VueCookies);
