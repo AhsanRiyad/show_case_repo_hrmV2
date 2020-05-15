@@ -9,6 +9,7 @@
     color="red darken-1"
     @input="handleValue"
     :rules="fieldRulesProp( rules.required , rules.name )"
+    clearable
   ></v-autocomplete>
 </template>
 

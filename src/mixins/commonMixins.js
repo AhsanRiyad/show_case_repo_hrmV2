@@ -36,17 +36,16 @@ export default {
         }
     },
     methods: {
-        viewItem({ item }){
+        viewItem({ item }) {
             //this will make the dialog visible
             this.myDialogVisible = true;
             console.log(item);
-            
-            setTimeout(function () 
-            { 
+
+            setTimeout(function () {
                 eventBus.$emit('updateForm', item);
-                alert("Hello"); 
-            }, 
-            3000);
+                // alert("Hello"); 
+            },
+                50);
 
             //this bus will be captured in the allFormInput components
         },
@@ -55,10 +54,15 @@ export default {
             this.myDialogVisible = false;
             this.getData();
         },
-
+        clearInput(items) {
+            this.$store.commit("setNewOrOldChecker", 'new');
+            items.forEach((n, i, a) => {
+                a[i].value = '';
+            })
+        },
         //form validation rules, working for all pages
         fieldRulesProp(required, fieldName) {
-            if (!required) {
+            if (!required || this.$store.getters.getNewOrOldChecker == 'new') {
                 return ([
                     v => !!v || true,
                 ]);
@@ -69,47 +73,76 @@ export default {
                     v => !!v || fieldName + ' is required',
                     v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'invalide quantity'
                 ]);
+                
+            }
+            else if (/(name)/g.test(fieldName)) {
 
-            } else if (/(Date|date)/g.test(fieldName)) {
+                return ([
+                    v => !!v || fieldName + ' is required',
+                    v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'invalide quantity'
+                ]);
+            }
+             else if (/(startDate|date|endDate)/g.test(fieldName)) {
                 return ([
                     v => !!v || fieldName + ' is required',
                 ]);
-
             } else {
                 return ([
                     v => !!v || "Field is Required",
                 ]);
             }
         },
+        solveInputValidation(){
+            console.log('in the solve funcitons');
+            this.$store.commit('setNewOrOldChecker', 'updated');
+        },
         //base table functions starts
         submit() {
-            //validate the form
-            if (!this.$refs.form.validate()) return;
 
-            //organize the input form, first formate the array using map, then make the a an object using mergeAll
-            let formInputValues =
-                this.R.pipe(
-                    this.R.map((n) => { return { [n.name]: n.value } }),
-                    this.R.mergeAll()
-                )(this.formArray)
-            console.log(formInputValues);
+            //
+            this.$store.commit("setNewOrOldChecker", 'updated');
 
-            console.log(this.apiBase);
-            // debugger;
+            setTimeout(() => {
+                //validate the form
+                if (!this.$refs.form.validate()) return;
 
-            //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.apiRequestData.method = "post";
-            this.apiRequestData.api = this.$store.getters.getActivePathName;
-            this.apiRequestData.data = formInputValues;
+                //organize the input form, first formate the array using map, then make the a an object using mergeAll
+                let formInputValues =
+                    this.R.pipe(
+                        this.R.map((n) => { return { [n.name]: n.value } }),
+                        this.R.mergeAll()
+                    )(this.formArray)
+                console.log(formInputValues);
 
-            //axios calling, actions will be dispatched asynchronously
-            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-                console.log(response);
-                //success dialog                
-                this.$awn.success(`Successfully`);
-            }).catch(() => {
-                this.tableLoading = false;
-            });
+                console.log(this.apiBase);
+                // debugger;
+
+                //a very common getData function for baseTable, will be call at the created lifeCycle hook
+                this.apiRequestData.method = "post";
+                this.apiRequestData.api = this.$store.getters.getActivePathName;
+                this.apiRequestData.data = formInputValues;
+
+                //axios calling, actions will be dispatched asynchronously
+                this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+                    console.log(response);
+                    //success dialog                
+                    this.$awn.success(`Successfully`);
+                }).catch(() => {
+                    this.tableLoading = false;
+                });
+
+
+
+
+
+
+
+
+
+            }, 50);
+
+
+
         },
         getData() {
             //a very common getData function for baseTable, will be call at the created lifeCycle hook

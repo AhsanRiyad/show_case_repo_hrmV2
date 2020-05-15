@@ -6,7 +6,7 @@
           tile
           color="red darken-1"
           dark
-          @click.stop="myDialogVisible = true "
+          @click.stop="()=>{ myDialogVisible = true; clearInput(formArray) }"
         >{{ getFrontButtonName }}</v-btn>
         <v-spacer></v-spacer>
         <v-text-field

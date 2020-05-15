@@ -17,10 +17,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
 	state: {
-		name: 'riyad',
+		//this is the base api of the project 
 		apiBase: "http://localhost:8090/hrm-server/api",
+		//will be used in calling the url using route name, being used in index.js of router
 		activeRouteName: 'hellow',
+		//will be used in making api automatic, being used in index.js of router
 		activePathName: '',
+		//this checker will be used in allProfileInput components for solving form error issue, and will be 
+		//connected with baseTable createNew method
+		newOrOldChecker: 'old',
 	},
 	getters: {
 		getTabsMenuList : state => state.accessibleModules.admin,
@@ -28,6 +33,7 @@ export default new Vuex.Store({
 		getApiBase: state => state.apiBase,
 		getActiveRouteName: state => state.activeRouteName,
 		getActivePathName: state => state.activePathName,
+		getNewOrOldChecker: state => state.newOrOldChecker,
 	},
 	mutations: {
 		setActiveRouteName(state , name){
@@ -35,7 +41,10 @@ export default new Vuex.Store({
 		},
 		setActivePathName(state , name){
 			state.activePathName = name;
-		}
+		},
+		setNewOrOldChecker(state , name){
+			state.newOrOldChecker = name;
+		},
 	},
 actions: {
 	testActions: context => {
@@ -53,9 +62,7 @@ actions: {
 				'Content-Type': 'application/json;charset=UTF-8',
 				'createdBy': VueCookies.get('username')
 			}
-
 			console.log(headers);
-
 			console.log(data);
 			axios( {  method: data.method, url: url , data: data.data , headers: headers } ).then( ( response )=>{
 				console.log("in the dispatch");
