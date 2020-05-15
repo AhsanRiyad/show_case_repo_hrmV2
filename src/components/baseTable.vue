@@ -22,9 +22,28 @@
         :items="items"
         :search="search"
         class="elevation-1 table-header scroll-y"
-        :loading="table_loading"
+        :loading="tableLoading"
       >
-        <template v-slot:item.actions="">hellow </template>
+        <template v-slot:item.actions="item">
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on" class="ma-1" small @click.stop="()=>viewItem(item)">pageview</v-icon>
+            </template>
+            <span>View</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on" class="ma-1" small @click.stop="">edit</v-icon>
+            </template>
+            <span>Edit</span>
+          </v-tooltip>
+          <v-tooltip bottom>
+            <template v-slot:activator="{ on }">
+              <v-icon v-on="on" class="ma-1" small @click.stop="">spellcheck</v-icon>
+            </template>
+            <span>Correction</span>
+          </v-tooltip>
+        </template>
         <!-- <template v-slot:item.actions="item">hellow {{ checkingHeaders(item) }}</template> -->
       </v-data-table>
     </v-card>

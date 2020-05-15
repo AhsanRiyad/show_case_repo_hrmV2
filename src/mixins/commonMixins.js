@@ -2,7 +2,7 @@ export default {
     data: () => ({
         items: [],
         myDialogVisible: false,
-        table_loading: false,
+        tableLoading: false,
         dialog: false,
         search: "",
         nameOfSlot: 'formBaseTable',
@@ -20,10 +20,13 @@ export default {
         }
     },
     methods: {
-
+        viewItem({ item }){
+            this.myDialogVisible = true;
+            console.log(item);
+        },
         //closes the commonDialog
         myDialogClose() {
-            this.myDialogVisible = false
+            this.myDialogVisible = false;
             this.getData();
         },
 
@@ -79,7 +82,7 @@ export default {
                 //success dialog                
                 this.$awn.success(`Successfully`);
             }).catch(() => {
-                this.table_loading = false;
+                this.tableLoading = false;
             });
         },
         getData() {
@@ -89,15 +92,15 @@ export default {
             this.apiRequestData.data = {};
 
             //table loader
-            this.table_loading = true;
+            this.tableLoading = true;
 
             //axios calling, actions will be dispatched asynchronously
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-                this.table_loading = false;
+                this.tableLoading = false;
                 //saves the items from the database in the table
                 this.items = response;
             }).catch(() => {
-                this.table_loading = false;
+                this.tableLoading = false;
             });
         }
         //base table funcitons ends
