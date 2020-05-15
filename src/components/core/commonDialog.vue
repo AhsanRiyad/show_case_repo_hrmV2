@@ -62,6 +62,7 @@
       return {
         dialog: false,
         parentVal: '',
+        infoOfaIdFromProps : {},
       }
     },
     computed: {
@@ -82,5 +83,16 @@
       console.log('clicked');
     }
   },
+  watch: {
+    infoOfaId : {
+      handler: function (newVal) {
+        this.infoOfaIdFromProps = newVal;
+      },
+      immediate: true,
+    }
+  },
+  created(){
+    this.infoOfaIdFromProps = this.infoOfaId;
+  }
 }
 </script>

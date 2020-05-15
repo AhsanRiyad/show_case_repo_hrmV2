@@ -68,7 +68,7 @@ actions: {
 			}
 			console.log(headers);
 			console.log(data);
-			axios( {  method: data.method, url: url , data: data.data , headers: headers } ).then( ( response )=>{
+			axios( {  method: data.method, url: url , data: data.item , headers: headers } ).then( ( response )=>{
 				console.log("in the dispatch");
 				console.log(response);
 				resolve(response.data);

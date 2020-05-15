@@ -25,7 +25,7 @@ export default {
         apiRequestData: {
             method: 'get',
             api: '',
-            data: {},
+            item: {},
         },
 
         //
@@ -55,7 +55,7 @@ export default {
             {
                 type: "cTextField",
                 label: "Updated By",
-                name: "UpdatedBy",
+                name: "updatedBy",
                 value: "",
                 required: false,
                 readonly: true,
@@ -64,7 +64,7 @@ export default {
             {
                 type: "cTextField",
                 label: "Updated At",
-                name: "UpdatedAt",
+                name: "updatedAt",
                 value: "",
                 required: false,
                 readonly: true,
@@ -120,13 +120,12 @@ export default {
             console.log('checking the items');
             console.log(item);
 
-
             //get Data from server
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.apiRequestData.method = "get";
             this.apiRequestData.api = this.$store.getters.getActivePathName + '/getActive/'+item.id;
-            this.apiRequestData.data = {};
+            this.apiRequestData.item = {};
 
             //table loader
             this.tableLoading = true;
@@ -135,7 +134,12 @@ export default {
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
                 //this variable will send the value to the commonDialog forms so that it can have the data
                 //when it needs to submit
-                this.infoOfaId = response;
+
+                console.log(this.$props);
+                console.log(this.R.has('infoOfaId', this.$props));
+
+                //for preventing the props from mutation
+                !this.R.has('infoOfaId', this.$props) ? this.infoOfaId = { ...response } : this.infoOfaIdFromProps = { ...response } ;
 
                 //saves the items from the database in the table
                 if (action == 'view') {
@@ -198,7 +202,6 @@ export default {
                     v => !!v || fieldName + ' is required',
                     v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'Invalid'
                 ]);
-
             }
             else if (/(name)/g.test(fieldName)) {
 
@@ -232,7 +235,6 @@ export default {
             }).then(() => {
                 if (!this.$refs.form.validate()) return;
             })
-
             // setTimeout(() => {
             //validate the form
 
@@ -246,24 +248,43 @@ export default {
 
             console.log(this.apiBase);
             // debugger;
+            
+            //for preventing the props from mutation
+            let mergedVal = this.R.has('infoOfaId', this.$props) && this.R.isNil(this.infoOfaIdFromProps) ? this.infoOfaId : this.infoOfaIdFromProps ;
+            
+            console.log('in of a id');
+            console.log(this.infoOfaId);
+            console.log('in props this');
+            console.log(this.infoOfaIdFromProps);
+            console.log('in merged val');
+            console.log(mergedVal);
+            console.log('all props');
+            console.log(this.$props);
 
-            newOrviewOrEditOrCorrection == 'edit' ? formInputValues = { ...this.infoOfaId, ...formInputValues} : ''; 
+
+            // merge the value that is required for updating a entity
+            newOrviewOrEditOrCorrection == 'edit' ? formInputValues = { ...mergedVal, ...formInputValues} : ''; 
 
             console.log(formInputValues);
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
             this.apiRequestData.api = this.$store.getters.getActivePathName;
-            this.apiRequestData.data = formInputValues;
+            this.apiRequestData.item = formInputValues;
             //this will help decide the header if it will be createdBy or updatedBy
             this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
 
             //axios calling, actions will be dispatched asynchronously
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+                
+                //reload the form
+                this.doActionOnItem( newOrviewOrEditOrCorrection , this.apiRequestData );
+
                 console.log(response);
                 //success dialog                
                 this.$awn.success(`Successfully`);
             }).catch(() => {
+                this.$awn.alert(`Connection Error`);
                 this.tableLoading = false;
             });
             // }, 50);
@@ -273,7 +294,7 @@ export default {
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.apiRequestData.method = "get";
             this.apiRequestData.api = this.$store.getters.getActivePathName + extention;
-            this.apiRequestData.data = {};
+            this.apiRequestData.item = {};
 
             //table loader
             this.tableLoading = true;

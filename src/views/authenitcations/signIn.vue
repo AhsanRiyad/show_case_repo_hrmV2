@@ -98,7 +98,7 @@ export default {
       //data and config for axios
       this.apiRequestData.method = "post";
       this.apiRequestData.api = "/auth/signin";
-      this.apiRequestData.data = this.formData;
+      this.apiRequestData.item = this.formData;
 
       this.$store
         .dispatch("callApi", this.apiRequestData)

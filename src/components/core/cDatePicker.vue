@@ -20,7 +20,9 @@
         :readonly=" !R.isNil(readonly) ? readonly : true "
       ></v-text-field>
     </template>
-    <v-date-picker :min="min" :max="max" @input="handleValue" v-model="date" no-title scrollable>
+    <v-date-picker :min="min" :max="max" @input="handleValue" v-model="date"
+    :readonly=" !R.isNil(readonly) ? readonly : true "
+     no-title scrollable>
       <v-spacer></v-spacer>
       <v-btn text color="primary" @click="menu = false">Cancel</v-btn>
       <v-btn text color="primary" @click="$refs.menu.save(date)">OK</v-btn>
