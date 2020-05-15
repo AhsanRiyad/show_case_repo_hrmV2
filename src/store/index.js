@@ -64,7 +64,7 @@ actions: {
 				'Authorization': 'Bearer ' + VueCookies.get('accessToken') ,
 				'Content-Type': 'application/json;charset=UTF-8',
 				[!R.isNil(data.newOrviewOrEditOrCorrection) && data.newOrviewOrEditOrCorrection == 'edit' ? 
-				'updatedBy': 'createdBy'] : VueCookies.get('username')
+					'updatedBy' : 'createdBy']: !R.isNil(data.newOrviewOrEditOrCorrection) && data.newOrviewOrEditOrCorrection == 'correction' ? data.item.updatedBy : VueCookies.get('username')
 			}
 			console.log(headers);
 			console.log(data);

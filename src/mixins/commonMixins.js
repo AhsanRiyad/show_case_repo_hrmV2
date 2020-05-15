@@ -144,7 +144,11 @@ export default {
                 //saves the items from the database in the table
                 if (action == 'view') {
                     this.actionIsView(response);
-                } else if (action == 'edit') {
+                } 
+                else if (action == 'edit') {
+                    this.actionIsEdit(response);
+                }
+                else if (action == 'correction') {
                     this.actionIsEdit(response);
                 }
             });
@@ -251,19 +255,9 @@ export default {
             
             //for preventing the props from mutation
             let mergedVal = this.R.has('infoOfaId', this.$props) && this.R.isNil(this.infoOfaIdFromProps) ? this.infoOfaId : this.infoOfaIdFromProps ;
-            
-            console.log('in of a id');
-            console.log(this.infoOfaId);
-            console.log('in props this');
-            console.log(this.infoOfaIdFromProps);
-            console.log('in merged val');
-            console.log(mergedVal);
-            console.log('all props');
-            console.log(this.$props);
-
 
             // merge the value that is required for updating a entity
-            newOrviewOrEditOrCorrection == 'edit' ? formInputValues = { ...mergedVal, ...formInputValues} : ''; 
+            newOrviewOrEditOrCorrection == 'edit' || newOrviewOrEditOrCorrection == 'correction' ? formInputValues = { ...mergedVal, ...formInputValues} : ''; 
 
             console.log(formInputValues);
 
