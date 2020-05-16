@@ -57,8 +57,8 @@
 </template>
 
 <script>
-import commonMixins from "@/mixins/commonMixins";
-// import { eventBus } from "@/main";
+import commonMixins from "../../mixins/commonMixins";
+
 import { mapGetters } from "vuex";
 export default {
   name: "allFormInput",

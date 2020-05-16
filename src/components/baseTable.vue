@@ -91,7 +91,7 @@
 
 <script>
 //a very common mixins for all the components
-import commonMixins from "@/mixins/commonMixins";
+import commonMixins from "../mixins/commonMixins";
 
 export default {
   name: "baseTable",

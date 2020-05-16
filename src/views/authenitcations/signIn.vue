@@ -5,7 +5,7 @@
         <v-col cols xs="12" sm="8" md="8" lg="6" my-3 py-3>
           <v-card class="elevation-5">
             <v-card-text>
-              <v-img :src="require('@/assets/220px.png')" contain height="120" style="padding: 0"></v-img>
+              <v-img :src="require('../../assets/220px.png')" contain height="120" style="padding: 0"></v-img>
               <v-card-text>
                 <h1
                   class="text-xs-center text-md-center display-1 font-weight-light my-1 py-1"
@@ -73,8 +73,7 @@
 </template>
 
 <script>
-import commonMixins from "@/mixins/commonMixins";
-
+import commonMixins from "../../mixins/commonMixins";
 export default {
   name: "login",
   mixins: [commonMixins],

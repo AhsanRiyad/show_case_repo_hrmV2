@@ -17,7 +17,7 @@
 </template>
 
 <script>
-import commonMixins from '@/mixins/commonMixins'
+import commonMixins from '../../mixins/commonMixins'
 export default {
   name: "cAutoComplete",
   props: ["value", "label", "rules", "api" , "readonly"],

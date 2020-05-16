@@ -5,7 +5,7 @@
     <v-content>
     <!-- basic condition is if the route is sign-in then do not show the toobar and breadcrumbs -->
       <breadcrumbs v-if="showOrHideMenu" />
-      <router-view ></router-view>
+      <router-view></router-view>
     </v-content>
   </v-app>
 </template>

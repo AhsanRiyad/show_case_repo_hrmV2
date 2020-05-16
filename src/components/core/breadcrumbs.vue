@@ -21,7 +21,7 @@
     </template>
 
     <script>
-        import updateItemsMixin from '@/mixins/updateItemsFromRouter';
+        import updateItemsMixin from '../../mixins/updateItemsFromRouter';
         import * as R from 'ramda'
 
         export default {

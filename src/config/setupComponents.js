@@ -1,11 +1,11 @@
-import toolbar from '@/components/core/toolbar';
-import breadcrumbs from '@/components/core/breadcrumbs';
-import childPageItems from '@/components/childPageItems';
-import baseTable from '@/components/baseTable';
-import cAutoComplete from '@/components/core/cAutoComplete';
-import cDatePicker from '@/components/core/cDatePicker';
-import allFormInputs from '@/components/core/allFormInputs';
-import commonDialog from '@/components/core/commonDialog';
+import toolbar from '../components/core/toolbar';
+import breadcrumbs from '../components/core/breadcrumbs';
+import childPageItems from '../components/childPageItems';
+import baseTable from '../components/baseTable';
+import cAutoComplete from '../components/core/cAutoComplete';
+import cDatePicker from '../components/core/cDatePicker';
+import allFormInputs from '../components/core/allFormInputs';
+import commonDialog from '../components/core/commonDialog';
 
 
 export function setupComponents(Vue) {

@@ -1,5 +1,5 @@
-const businessGroup = () => import('@/views/workStructure/businessGroup');
-const companyClassType = () => import('@/views/workStructure/companyClassType');
+const businessGroup = () => import('../../views/workStructure/businessGroup');
+const companyClassType = () => import('../../views/workStructure/companyClassType');
 
 export default {
 	path: '/ws',
@@ -7,7 +7,7 @@ export default {
 	title: 'Work Structure',
 	component: () =>
 		import(
-		/* webpackChunkName: "workStructure" */ '@/views/base/workStructureBase'
+		/* webpackChunkName: "workStructure" */ '../../views/base/workStructureBase'
 		),
 	children: [{
 		path: 'business-group',

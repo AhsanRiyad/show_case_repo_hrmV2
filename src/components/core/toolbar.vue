@@ -64,7 +64,7 @@
       <!-- right navigation drawer ends -->
 
       <v-app-bar app fixed dark clipped-left clipped-right class="red darken-1 trying">
-        <img src="@/assets/logo.png" width="46px" alt="logo" />
+        <img src="../../assets/logo.png" width="46px" alt="logo" />
 
         <v-toolbar-title>EXPLORE</v-toolbar-title>
 
@@ -84,7 +84,7 @@
           <!-- future work -->
           <!-- state -->
           <v-avatar color="grey lighten-4" size="36">
-            <img alt="photo" src="@/assets/logo.png" />
+            <img alt="photo" src="../../assets/logo.png" />
           </v-avatar>
         </v-btn>
 
