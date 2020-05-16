@@ -15,6 +15,7 @@
           label="Search"
           single-line
           hide-details
+          autocomplete="off"
         ></v-text-field>
       </v-card-title>
       <v-data-table
@@ -24,6 +25,17 @@
         class="elevation-1 table-header scroll-y"
         :loading="tableLoading"
       >
+
+    <template v-slot:item.startDate="{ item }">
+    {{ getDateFormatted( item.startDate ) }}
+    </template>  
+
+    <template v-slot:item.endDate="{ item }">
+    {{ getDateFormatted( item.endDate ) }}
+    </template>  
+
+
+      <!-- this is for action column -->
         <template v-slot:item.actions="item">
           <v-tooltip bottom>
             <template v-slot:activator="{ on }">

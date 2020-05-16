@@ -1,0 +1,10 @@
+these pages are connected
+
+router->modules->childpages,
+store->accessibleModules,
+store->modules,
+store->modules names,
+allChildItems,
+toolbar,
+
+

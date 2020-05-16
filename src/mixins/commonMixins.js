@@ -76,6 +76,12 @@ export default {
         }
     },
     methods: {
+
+        //format the date as required, here i used moment library
+        getDateFormatted(date) {
+            return this.moment(date).format("DD-MM-YYYY");
+        },
+        //end getDateFormatted
         actionIsView(infoOfaId) {
             this.newOrviewOrEditOrCorrection = 'view';
             //add timestamp if in the view mode
@@ -89,9 +95,9 @@ export default {
             this.newOrviewOrEditOrCorrection = 'edit';
             //add timestamp if in the view mode
             this.removeTimeStamp(infoOfaId);
-            
+
             this.fillItemsIntheForm(infoOfaId);
-            
+
             //make readonly
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = false;
@@ -117,7 +123,7 @@ export default {
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.apiRequestData.method = "get";
-            this.apiRequestData.api = this.$store.getters.getActivePathName + '/getActive/'+item.id;
+            this.apiRequestData.api = this.$store.getters.getActivePathName + '/getActive/' + item.id;
             this.apiRequestData.item = {};
 
             //table loader
@@ -132,12 +138,12 @@ export default {
                 console.log(this.R.has('infoOfaId', this.$props));
 
                 //for preventing the props from mutation
-                !this.R.has('infoOfaId', this.$props) ? this.infoOfaId = { ...response } : this.infoOfaIdFromProps = { ...response } ;
+                !this.R.has('infoOfaId', this.$props) ? this.infoOfaId = { ...response } : this.infoOfaIdFromProps = { ...response };
 
                 //saves the items from the database in the table
                 if (action == 'view') {
                     this.actionIsView(response);
-                } 
+                }
                 else if (action == 'edit') {
                     this.actionIsEdit(response);
                 }
@@ -166,7 +172,7 @@ export default {
                 ? this._.times(4, () => { this.formArray.pop() })
                 : "";
         },
-        fillItemsIntheForm(infoOfaId){
+        fillItemsIntheForm(infoOfaId) {
             //formArray.name == key of infoOfaId matches
             this.formArray.forEach((n, i) => {
                 if (this.R.has(n.name, infoOfaId)) {
@@ -184,7 +190,7 @@ export default {
                 : "";
             //formArray.name == key of infoOfaId matches
             this.fillItemsIntheForm(infoOfaId);
-        
+
         },
         //form validation rules, working for all pages
         fieldRulesProp(required, fieldName) {
@@ -230,52 +236,50 @@ export default {
                 this.$store.commit("setNewOrOldChecker", 'updated');
                 resolve();
             }).then(() => {
+                //validate the form
                 if (!this.$refs.form.validate()) return;
+
+                //organize the input form, first formate the array using map, then make the a an object using mergeAll
+                let formInputValues =
+                    this.R.pipe(
+                        this.R.map((n) => { return { [n.name]: n.value } }),
+                        this.R.mergeAll()
+                    )(this.formArray)
+                console.log(formInputValues);
+
+                console.log(this.apiBase);
+
+
+                //for preventing the props from mutation
+                let mergedVal = this.R.has('infoOfaId', this.$props) && this.R.isNil(this.infoOfaIdFromProps) ? this.infoOfaId : this.infoOfaIdFromProps;
+
+                // merge the value that is required for updating a entity
+                newOrviewOrEditOrCorrection == 'edit' || newOrviewOrEditOrCorrection == 'correction' ? formInputValues = { ...mergedVal, ...formInputValues } : '';
+
+                console.log(formInputValues);
+
+                //a very common getData function for baseTable, will be call at the created lifeCycle hook
+                this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
+                this.apiRequestData.api = this.$store.getters.getActivePathName;
+                this.apiRequestData.item = formInputValues;
+                //this will help decide the header if it will be createdBy or updatedBy
+                this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
+
+                //axios calling, actions will be dispatched asynchronously
+                this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+
+                    //reload the form
+                    this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
+
+                    console.log(response);
+                    //success dialog                
+                    this.$awn.success(`Successfully`);
+                }).catch(() => {
+                    this.$awn.alert(`Connection Error`);
+                    this.tableLoading = false;
+                });
+
             })
-            // setTimeout(() => {
-            //validate the form
-
-            //organize the input form, first formate the array using map, then make the a an object using mergeAll
-            let formInputValues =
-                this.R.pipe(
-                    this.R.map((n) => { return { [n.name]: n.value } }),
-                    this.R.mergeAll()
-                )(this.formArray)
-            console.log(formInputValues);
-
-            console.log(this.apiBase);
-            // debugger;
-            
-            //for preventing the props from mutation
-            let mergedVal = this.R.has('infoOfaId', this.$props) && this.R.isNil(this.infoOfaIdFromProps) ? this.infoOfaId : this.infoOfaIdFromProps ;
-
-            // merge the value that is required for updating a entity
-            newOrviewOrEditOrCorrection == 'edit' || newOrviewOrEditOrCorrection == 'correction' ? formInputValues = { ...mergedVal, ...formInputValues} : ''; 
-
-            console.log(formInputValues);
-
-            //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
-            this.apiRequestData.api = this.$store.getters.getActivePathName;
-            this.apiRequestData.item = formInputValues;
-            //this will help decide the header if it will be createdBy or updatedBy
-            this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
-
-            //axios calling, actions will be dispatched asynchronously
-            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-                
-                //reload the form
-                this.doActionOnItem( newOrviewOrEditOrCorrection , this.apiRequestData );
-
-                console.log(response);
-                //success dialog                
-                this.$awn.success(`Successfully`);
-            }).catch(() => {
-                this.$awn.alert(`Connection Error`);
-                this.tableLoading = false;
-            });
-            // }, 50);
-
         },
         getData(extention) {
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
