@@ -17,7 +17,8 @@
           v-model="n.value"
           :rules="fieldRulesProp( !R.isNil(n.required) ? n.required : true ,  n.name)"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
-          :clearable="!R.isNil(n.clearable) ? n.clearable : true"
+          :clearable="!R.isNil(n.readonly) ? !n.readonly : true"
+          autocomplete="off"
         ></v-textarea>
 
         <!-- here setNewOrOldChecker is for creating new value and for form validation, all are linked up -->
@@ -28,7 +29,8 @@
           v-model="n.value"
           :rules="fieldRulesProp( !R.isNil(n.required) ? n.required : true ,  n.name)"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
-          :clearable="!R.isNil(n.clearable) ? n.clearable : true"
+          :clearable="!R.isNil(n.readonly) ? !n.readonly : true"
+          autocomplete="off"
         ></v-text-field>
 
         <cAutoComplete
@@ -38,7 +40,6 @@
           :api=" !R.isNil(n.api) ? n.api : '' "
           :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
-          :clearable="!R.isNil(n.clearable) ? n.clearable : true"
         ></cAutoComplete>
 
         <cDatePicker
@@ -49,7 +50,6 @@
           :max=" !R.isNil(n.max) ? R.find(R.propEq('name' , n.max))(formArray).value : '' "
           :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
-          :clearable="!R.isNil(n.clearable) ? n.clearable : true"
         ></cDatePicker>
       </v-col>
     </v-row>

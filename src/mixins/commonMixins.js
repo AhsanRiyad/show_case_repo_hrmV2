@@ -41,7 +41,6 @@ export default {
                 value: "",
                 required: false,
                 readonly: true,
-                clearable: false
             },
             {
                 type: "cTextField",
@@ -50,7 +49,6 @@ export default {
                 value: "",
                 required: false,
                 readonly: true,
-                clearable: false
             },
             {
                 type: "cTextField",
@@ -59,7 +57,6 @@ export default {
                 value: "",
                 required: false,
                 readonly: true,
-                clearable: false
             },
             {
                 type: "cTextField",
@@ -68,7 +65,6 @@ export default {
                 value: "",
                 required: false,
                 readonly: true,
-                clearable: false
             }
         ]
     }),
@@ -87,7 +83,6 @@ export default {
             //make readonly
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = true;
-                k[i].clearable = false;
             })
         },
         actionIsEdit(infoOfaId) {
@@ -100,7 +95,6 @@ export default {
             //make readonly
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = false;
-                k[i].clearable = true;
             })
         },
         actionIsNew(item) {
@@ -112,7 +106,6 @@ export default {
             //make readonly
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = false;
-                k[i].clearable = true;
             })
         },
         //view item

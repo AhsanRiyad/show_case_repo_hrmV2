@@ -34,7 +34,7 @@ export default {
     formArray: [
       {
         type: "cTextField",
-        label: "Business Group Name",
+        label: "Business Group Name*",
         name: "name",
         value: "",
         required: true,
@@ -42,7 +42,7 @@ export default {
       },
       {
         type: "cAutoComplete",
-        label: "Company Classification Type",
+        label: "Company Classification Type*",
         name: "companyClassTypeId",
         api: "/ws/companyClassType/getAll/active",
         required: true,
@@ -51,7 +51,7 @@ export default {
       {
         type: "cDatePicker",
         value: "",
-        label: "Start Date",
+        label: "Start Date*",
         name: "startDate",
         required: true,
         max: "endDate"

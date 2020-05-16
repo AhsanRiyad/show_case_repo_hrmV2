@@ -6,11 +6,12 @@
     item-value="id"
     v-model="inputVal"
     cache-items
+    autocomplete="off"
     :filter="customFilter"
     color="red darken-1"
     @input="handleValue"
     :rules="fieldRulesProp( rules.required , rules.name )"
-    :clearable=" !R.isNil(clearable) ? clearable : true "
+    :clearable=" !readonly"
     :readonly=" !R.isNil(readonly) ? readonly : true "
   ></v-autocomplete>
 </template>
@@ -19,7 +20,7 @@
 import commonMixins from '@/mixins/commonMixins'
 export default {
   name: "cAutoComplete",
-  props: ["value", "label", "rules", "api", "clearable" , "readonly"],
+  props: ["value", "label", "rules", "api" , "readonly"],
   mixins: [commonMixins],
   data() {
     return {

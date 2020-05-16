@@ -16,8 +16,9 @@
         prepend-icon="event"
         v-on="on"
         :rules="fieldRulesProp( rules.required , rules.name )"
-        :clearable=" !R.isNil(clearable) ? clearable : true "
+        :clearable=" !readonly "
         :readonly=" !R.isNil(readonly) ? readonly : true "
+        autocomplete="off"
       ></v-text-field>
     </template>
     <v-date-picker :min="min" :max="max" @input="handleValue" v-model="date"
@@ -35,7 +36,7 @@ import commonMixins from "@/mixins/commonMixins";
 
 export default {
   name: "cDatePicker",
-  props: ["value", "label", "min", "max", "rules", "clearable" , "readonly"],
+  props: ["value", "label", "min", "max", "rules", "readonly"],
   mixins: [commonMixins],
   data: () => ({
     date: "",
