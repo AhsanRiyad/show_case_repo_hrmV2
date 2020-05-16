@@ -194,6 +194,8 @@ export default {
         },
         //form validation rules, working for all pages
         fieldRulesProp(required, fieldName) {
+            /* this vuex variable is used in allFormInputs, commonMixins, baseTable,
+            all are connected for validation */
             if (!required || this.$store.getters.getNewOrOldChecker == 'new') {
                 return ([
                     v => !!v || true,
