@@ -5,6 +5,7 @@
     item-text="name"
     item-value="id"
     v-model="inputVal"
+    cache-items
     :filter="customFilter"
     color="red darken-1"
     @input="handleValue"
