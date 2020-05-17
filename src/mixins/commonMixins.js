@@ -158,7 +158,7 @@ export default {
         //closes the commonDialog
         myDialogClose() {
             this.myDialogVisible = false;
-            this.getData("/getAll/active");
+            this.getData("/getAll/active?page=0&pageSize=50")
         },
         clearInput(items) {
             this.$store.commit("setNewOrOldChecker", 'new');

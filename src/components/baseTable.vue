@@ -101,7 +101,7 @@ export default {
     infoOfaId: {},
   }),
   created() {
-    this.getData("/getAll/active");
+    this.getData("/getAll/active?page=0&pageSize=50");
   }
 };
 </script>

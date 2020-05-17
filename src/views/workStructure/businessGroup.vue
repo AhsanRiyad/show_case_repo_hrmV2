@@ -1,5 +1,6 @@
 <template>
   <span>
+
     <baseTable
       apiBase="/ws/businessGroup/"
       v-bind="$attrs"
@@ -14,6 +15,8 @@
 </template>
 <script>
 import commonMixins from "../../mixins/commonMixins";
+
+
 export default {
   name: "businessGroup",
   components: {},
@@ -44,7 +47,7 @@ export default {
         type: "cAutoComplete",
         label: "Company Classification Type*",
         name: "companyClassTypeId",
-        api: "/ws/companyClassType/getAll/active",
+        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
