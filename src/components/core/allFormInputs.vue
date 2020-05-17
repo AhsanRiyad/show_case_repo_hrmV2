@@ -33,6 +33,10 @@
           autocomplete="off"
         ></v-text-field>
 
+        <v-checkbox v-if="n.type == 'cCheckBox' " :label="n.label" v-model="n.value" >
+
+        </v-checkbox>
+
         <cAutoComplete
           v-if="n.type == 'cAutoComplete' "
           :label="n.label"
@@ -65,14 +69,16 @@ export default {
   props: ["formArray", "age2"],
   mixins: [commonMixins],
   data() {
-    return {
-    };
+    return {};
   },
   computed: {
     ...mapGetters(["getNewOrOldChecker"])
   },
   methods: {},
-  created() {},
+  created() {
+    console.log('in the all form input');
+    console.log(this.formArray);
+  },
   updated() {},
   destroy() {},
   watch: {

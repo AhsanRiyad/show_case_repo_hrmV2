@@ -26,6 +26,10 @@
         :loading="tableLoading"
       >
 
+    <template v-slot:item.sol="{ item }">
+    {{ item.sol == true ? 'Yes' : 'No' }}
+    </template>  
+
     <template v-slot:item.startDate="{ item }">
     {{ getDateFormatted( item.startDate ) }}
     </template>  

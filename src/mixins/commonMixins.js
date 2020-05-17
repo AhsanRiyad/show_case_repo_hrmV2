@@ -163,7 +163,7 @@ export default {
         clearInput(items) {
             this.$store.commit("setNewOrOldChecker", 'new');
             items.forEach((n, i, a) => {
-                a[i].value = null;
+                n.type == 'cCheckBox' ? a[i].value = null : a[i].value = false ;
             })
         },
         removeTimeStamp() {

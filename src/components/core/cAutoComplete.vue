@@ -11,6 +11,8 @@
     color="red darken-1"
     @input="handleValue"
     :rules="fieldRulesProp( rules.required , rules.name )"
+    :clearable=" !readonly "
+    :readonly=" !R.isNil(readonly) ? readonly : true "
     >
     </v-autocomplete>
 </template>

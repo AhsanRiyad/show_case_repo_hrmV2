@@ -1,10 +1,11 @@
 these pages are connected
 
-router->modules->childpages,
-store->accessibleModules,
-store->modules,
-store->modules names,
-allChildItems,
-toolbar,
+for setup route: router->module 
+for setup transition in the base page:  router->modules->childpages ,
+for tap module list:  store->accessibleModules,
+for setup left menu :  store->modules->individual module name,
+for setup tab module :  store->modules names,
+showing parent transitions:  allChildItems, 
+main toolbar, right bar, leftbar:  toolbar,
 
 

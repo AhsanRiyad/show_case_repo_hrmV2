@@ -1,5 +1,6 @@
 const businessGroup = () => import('../../views/workStructure/businessGroup');
 const companyClassType = () => import('../../views/workStructure/companyClassType');
+const officeType = () => import('../../views/workStructure/officeType');
 
 export default {
 	path: '/ws',
@@ -32,13 +33,25 @@ export default {
 				{ title: 'Company Classification Type' }
 			]
 		}
+	},
+	{
+		path: 'office-type',
+		name: 'officeType',
+		component: officeType,
+		meta: {
+			title: 'Office Type',
+			breadcrumb: [
+				{ title: 'Work Structure', name: 'workStructure' },
+				{ title: 'Office Type' }
+			]
+		}
 	}
 	],
 	meta: {
 		breadcrumb: [{ title: 'Work Structure' }],
 		childPages: [
 			{ title: 'Business group', name: 'businessGroup' },
-			{ title: 'Office Type', name: 'office_type' },
+			{ title: 'Office Type', name: 'officeType' },
 			{ title: 'Office', name: 'office' },
 			{ title: 'Organization Type', name: 'organization_type' },
 			{ title: 'Organization Head', name: 'organization_head' },

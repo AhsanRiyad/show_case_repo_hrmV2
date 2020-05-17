@@ -1,6 +1,5 @@
 <template>
   <span>
-
     <baseTable
       apiBase="/ws/businessGroup/"
       v-bind="$attrs"
@@ -15,21 +14,21 @@
 </template>
 <script>
 import commonMixins from "../../mixins/commonMixins";
-
-
 export default {
   name: "businessGroup",
   components: {},
   props: ["age"],
   mixins: [commonMixins],
-  data: vm => ({
+  data: () => ({
     tableHeader: [
       {
-        text: "Business Group Name",
+        text: "Office Type Name",
         align: "start",
         sortable: false,
         value: "name"
       },
+      { text: "Office Type Description", value: "description" },
+      { text: "Is Branch", value: "sol" },
       { text: "Start Date", value: "startDate" },
       { text: "End Date", value: "endDate" },
       { text: "Actions", value: "actions" }
@@ -37,19 +36,23 @@ export default {
     formArray: [
       {
         type: "cTextField",
-        label: "Business Group Name*",
-        name: "",
-        value: "",
+        label: "Office Type Name*",
+        name: "name",
+        value: "Name",
         required: true,
-        fun: vm.ch
       },
       {
-        type: "cAutoComplete",
-        label: "Company Classification Type*",
-        name: "companyClassTypeId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        type: "cTextArea",
+        label: "Office Type Description*",
+        name: "description",
+        value: "",
         required: true,
-        value: ""
+      },
+      {
+        type: "cCheckBox",
+        label: "Is Branch*",
+        name: "sol",
+        value: true,
       },
       {
         type: "cDatePicker",
@@ -67,6 +70,7 @@ export default {
         required: false,
         min: "startDate"
       }
+      
     ]
   }),
   computed: {},

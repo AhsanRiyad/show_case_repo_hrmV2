@@ -13,7 +13,7 @@ export default {
             },
             {
                 name: 'Office Type',
-                link: 'office_type',
+                link: 'officeType',
                 icon: 'mdi-file-document-outline'
             },
             {
