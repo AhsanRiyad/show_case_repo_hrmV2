@@ -4,6 +4,7 @@ const officeType = () => import('../../views/workStructure/officeType');
 const office = () => import('../../views/workStructure/office');
 const organizationType = () => import('../../views/workStructure/organizationType');
 const designation = () => import('../../views/workStructure/designation');
+const grade = () => import('../../views/workStructure/grade');
 
 export default {
 	path: '/ws',
@@ -82,6 +83,18 @@ export default {
 			breadcrumb: [
 				{ title: 'Work Structure', name: 'workStructure' },
 				{ title: 'Designation' }
+			]
+		}
+	},
+	{
+		path: 'grade',
+		name: 'grade',
+		component: grade,
+		meta: {
+			title: 'Grade',
+			breadcrumb: [
+				{ title: 'Work Structure', name: 'workStructure' },
+				{ title: 'Grade' }
 			]
 		}
 	}
