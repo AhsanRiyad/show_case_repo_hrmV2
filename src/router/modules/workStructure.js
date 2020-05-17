@@ -3,6 +3,7 @@ const companyClassType = () => import('../../views/workStructure/companyClassTyp
 const officeType = () => import('../../views/workStructure/officeType');
 const office = () => import('../../views/workStructure/office');
 const organizationType = () => import('../../views/workStructure/organizationType');
+const designation = () => import('../../views/workStructure/designation');
 
 export default {
 	path: '/ws',
@@ -69,6 +70,18 @@ export default {
 			breadcrumb: [
 				{ title: 'Work Structure', name: 'workStructure' },
 				{ title: 'Organization Type' }
+			]
+		}
+	},
+	{
+		path: 'organization',
+		name: 'designation',
+		component: designation,
+		meta: {
+			title: 'Designation',
+			breadcrumb: [
+				{ title: 'Work Structure', name: 'workStructure' },
+				{ title: 'Designation' }
 			]
 		}
 	}
