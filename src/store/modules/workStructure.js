@@ -23,7 +23,7 @@ export default {
             },
             {
                 name: 'Organization Type',
-                link: 'organization_type',
+                link: 'organizationType',
                 icon: 'mdi-file-document-outline'
             },
             {

@@ -26,6 +26,7 @@
         :loading="tableLoading"
       >
 
+    <!-- for checkbox -->
     <template v-slot:item.sol="{ item }">
     {{ item.sol == true ? 'Yes' : 'No' }}
     </template>  
@@ -37,7 +38,6 @@
     <template v-slot:item.endDate="{ item }">
     {{ getDateFormatted( item.endDate ) }}
     </template>  
-
 
       <!-- this is for action column -->
         <template v-slot:item.actions="item">

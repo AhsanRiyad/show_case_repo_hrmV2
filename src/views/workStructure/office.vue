@@ -1,6 +1,5 @@
 <template>
   <span>
-
     <baseTable
       apiBase="/ws/businessGroup/"
       v-bind="$attrs"
@@ -8,61 +7,87 @@
       :formArray="formArray"
     >
       <template v-slot:formBaseTable=" age2 ">
-        <allFormInputs  :age2="age2" :formArray.sync="formArray"></allFormInputs>
+        <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
       </template>
     </baseTable>
   </span>
 </template>
 <script>
 import commonMixins from "../../mixins/commonMixins";
-
-
 export default {
   name: "businessGroup",
   components: {},
   props: ["age"],
   mixins: [commonMixins],
-  data: vm => ({
+  data: () => ({
     tableHeader: [
       {
-        text: "Business Group Name",
+        text: "Office Name",
         align: "start",
         sortable: false,
         value: "name"
-      },
+      }, 
       { text: "Start Date", value: "startDate" },
       { text: "End Date", value: "endDate" },
       { text: "Actions", value: "actions" }
     ],
     formArray: [
       {
+        label: "Office Name*",
         type: "cTextField",
-        label: "Business Group Name*",
         name: "name",
-        value: "",
-        required: true,
-        fun: vm.ch
+        value: "Name",
+        required: true
       },
       {
+        label: "Office Type*",
         type: "cAutoComplete",
-        label: "Company Classification Type*",
-        name: "companyClassTypeId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        name: "officeTypeId",
+        api: "/ws/officeType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
       {
+        label: "Office Description*",
+        type: "cTextArea",
+        name: "description",
+        value: "",
+        required: true
+      },
+      {
+        label: "Office Location*",
+        type: "cAutoComplete",
+        name: "locationId",
+        api: "/ws/location/getAll/active?page=0&pageSize=50",
+        required: true,
+        value: ""
+      },
+      {
+        label: "Office Phone*",
+        type: "cTextField",
+        name: "phone",
+        value: "",
+        required: true
+      },
+      {
+        label: "Office Email*",
+        type: "cTextField",
+        name: "email",
+        value: "",
+        required: true
+      },
+      {
+        label: "Start Date*",
         type: "cDatePicker",
         value: "",
-        label: "Start Date*",
         name: "startDate",
         required: true,
         max: "endDate"
       },
       {
+        label: "End Date",
         type: "cDatePicker",
         value: "",
-        label: "End Date",
         name: "endDate",
         required: false,
         min: "startDate"
