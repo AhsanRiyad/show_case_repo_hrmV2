@@ -26,11 +26,17 @@
         :loading="tableLoading"
       >
 
-    <!-- for checkbox -->
-    <template v-slot:item.sol="{ item }">
+    <!-- for checkbox starts-->
+    <template v-slot:item.sol ="{ item }">
     {{ item.sol == true ? 'Yes' : 'No' }}
     </template>  
+    <template v-slot:item.costCenter ="{ item }">
+    {{ item.costCenter == true ? 'Yes' : 'No' }}
+    </template>  
+    <!-- for checkbox ends-->
 
+
+    <!-- start date and end date starts -->
     <template v-slot:item.startDate="{ item }">
     {{ getDateFormatted( item.startDate ) }}
     </template>  
@@ -38,6 +44,7 @@
     <template v-slot:item.endDate="{ item }">
     {{ getDateFormatted( item.endDate ) }}
     </template>  
+    <!-- start date and end date starts -->
 
       <!-- this is for action column -->
         <template v-slot:item.actions="item">
@@ -76,6 +83,7 @@
           </v-tooltip>
         </template>
         <!-- <template v-slot:item.actions="item">hellow {{ checkingHeaders(item) }}</template> -->
+  
       </v-data-table>
     </v-card>
 
@@ -100,7 +108,23 @@ import commonMixins from "../mixins/commonMixins";
 export default {
   name: "baseTable",
   mixins: [commonMixins],
-  props: ["tableHeader", "formArray", "apiBase"],
+  // props: ["tableHeader", "formArray", "apiBase"],
+  props: {
+    tableHeader: {
+      type: [Array, Object],
+      default: undefined,
+    },
+    formArray: {
+      type: [Array],
+      default: undefined
+    },
+    apiBase: {
+      type: [String],
+      default: undefined,
+    }
+
+  },
+
   data: () => ({
     infoOfaId: {},
   }),

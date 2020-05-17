@@ -30,6 +30,7 @@ export default {
         sortable: false,
         value: "name"
       },
+      { text: "Company Classification Type Name", value: "companyClassTypeName" },
       { text: "Start Date", value: "startDate" },
       { text: "End Date", value: "endDate" },
       { text: "Actions", value: "actions" }

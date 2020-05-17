@@ -28,7 +28,7 @@ export default {
             },
             {
                 name: 'Organization Head',
-                link: 'organization_head',
+                link: 'organizationHead',
                 icon: 'mdi-file-document-outline'
             },
             {

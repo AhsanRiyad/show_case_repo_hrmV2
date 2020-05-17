@@ -45,7 +45,6 @@
 
               <v-expansion-panel-content>
                 <v-expansion-panels popout v-if=" !Array.isArray(item.item) ">{{ item.item }}</v-expansion-panels>
-
                 <v-expansion-panels popout v-else>
                   <v-expansion-panel v-for="(n,i) in item.item" :key="i">
                     <v-expansion-panel-header>
@@ -134,61 +133,7 @@ export default {
         xls: "mdi-file-excel"
       },
       tree: [],
-      itemsTreeView: [
-        {
-          name: ".git"
-        },
-        {
-          name: "node_modules"
-        },
-        {
-          name: "public",
-          children: [
-            {
-              name: "static",
-              children: [
-                {
-                  name:
-                    "logoaerfaffffffffffffffffffffffffffffffffffffffffffffffff.png",
-                  file: "png"
-                }
-              ]
-            },
-            {
-              name: "favicon.ico",
-              file: "png"
-            },
-            {
-              name: "index.html",
-              file: "html"
-            }
-          ]
-        },
-        {
-          name: ".gitignore",
-          file: "txt"
-        },
-        {
-          name: "babel.config.js",
-          file: "js"
-        },
-        {
-          name: "package.json",
-          file: "json"
-        },
-        {
-          name: "README.md",
-          file: "md"
-        },
-        {
-          name: "vue.config.js",
-          file: "js"
-        },
-        {
-          name: "yarn.lock",
-          file: "txt"
-        }
-      ],
+      itemsTreeView: [],
 
       //notification items
       notificationItems: [
@@ -252,6 +197,9 @@ export default {
   created() {
     // console.log(this.$store.getters.get_tabs_menu_list);
     // console.log(this.$store.state);
+
+    this.itemsTreeView = this.$store.getters.getState.workStructure.subModules;
+
   }
 };
 </script>
