@@ -1,8 +1,8 @@
 {
   "name": "hrm_babl",
-  "author": "Riyad Ahsan <riyad298@gmail.com>",
   "version": "0.1.0",
   "private": true,
+  "author": "Riyad Ahsan <riyad298@gmail.com>",
   "scripts": {
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build",
@@ -28,7 +28,7 @@
     "@fortawesome/fontawesome-free": "^5.13.0",
     "@vue/cli-plugin-babel": "~4.3.0",
     "@vue/cli-plugin-eslint": "~4.3.0",
-    "@vue/cli-plugin-pwa": "~4.3.0",
+    "@vue/cli-plugin-pwa": "^4.3.1",
     "@vue/cli-plugin-router": "~4.3.0",
     "@vue/cli-plugin-vuex": "~4.3.0",
     "@vue/cli-service": "~4.3.0",
