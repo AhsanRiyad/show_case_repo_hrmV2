@@ -87,7 +87,7 @@
           </v-avatar>
         </v-btn>
 
-        <v-btn color="white" class="black--text">Logout</v-btn>
+        <v-btn color="white" class="black--text" rotuer :to="{ name: 'signIn' }" >Logout</v-btn>
 
         <template v-slot:extension>
           <v-tabs show-arrows v-model="tab">

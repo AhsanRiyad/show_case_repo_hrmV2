@@ -121,7 +121,6 @@ export default {
   },
   mounted() {
     // this.myDialogVisible = true;
-
     //remove all cookies
     this.$cookies.keys().forEach(cookie => this.$cookies.remove(cookie));
   }

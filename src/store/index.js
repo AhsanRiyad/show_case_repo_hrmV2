@@ -21,7 +21,8 @@ export default new Vuex.Store({
 	state: {
 		//this is the base api of the project 
 		// apiBase: "http://localhost:8090/hrm-server/api",
-		apiBase: "http://192.168.10.220:9085/hrm-server-v2/api",
+		// apiBase: "http://192.168.10.220:9085/hrm-server-v2/api",
+		apiBase: "http://hrm.babl.xyz/hrm-server-v2/api",
 		//will be used in calling the url using route name, being used in index.js of router
 		activeRouteName: 'hellow',
 		//will be used in making api automatic, being used in index.js of router
