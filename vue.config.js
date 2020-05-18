@@ -21,15 +21,14 @@ module.exports = {
       // swSrc is required in InjectManifest mode.
       swSrc: 'src/registerServiceWorker.js',
       // ...other Workbox options...
- 
-      
     },
     iconPaths: {
       favicon32: 'favicon.ico',
       favicon16: 'favicon.ico',
       appleTouchIcon: 'favicon.ico',
       maskIcon: 'favicon.ico',
-      msTileImage: 'favicon.ico'
+      msTileImage: 'favicon.ico',
+      androidIcon: 'favicon.ico'
     }
 
 }

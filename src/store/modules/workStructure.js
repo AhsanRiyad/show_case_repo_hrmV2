@@ -2,53 +2,53 @@ export default {
     state: {
         subModules: [
             {
-                name: 'Company Classification Type',
-                link: 'companyClassType',
+                title: 'Company Classification Type',
+                name: 'companyClassType',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Business group',
-                link: 'businessGroup',
+                title: 'Business group',
+                name: 'businessGroup',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Office Type',
-                link: 'officeType',
+                title: 'Office Type',
+                name: 'officeType',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Office',
-                link: 'office',
+                title: 'Office',
+                name: 'office',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Organization Type',
-                link: 'organizationType',
+                title: 'Organization Type',
+                name: 'organizationType',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Organization Head',
-                link: 'organizationHead',
+                title: 'Organization Head',
+                name: 'organizationHead',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Organization Tree',
-                link: 'organization_tree',
+                title: 'Organization Tree',
+                name: 'organization_tree',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Designation',
-                link: 'designation',
+                title: 'Designation',
+                name: 'designation',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Grade',
-                link: 'grade',
+                title: 'Grade',
+                name: 'grade',
                 icon: 'mdi-file-document-outline'
             },
             {
-                name: 'Location',
-                link: 'location',
+                title: 'Location',
+                name: 'location',
                 icon: 'mdi-file-document-outline'
             }
         ]

@@ -78,6 +78,7 @@ export default {
 
         //format the date as required, here i used moment library
         getDateFormatted(date) {
+            if( this.R.isNil(date)  ) return '';
             return this.moment(date).format("DD-MM-YYYY");
         },
         //end getDateFormatted

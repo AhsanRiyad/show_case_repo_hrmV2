@@ -8,19 +8,19 @@
           :open="open"
           :items="itemsTreeView"
           activatable
-          item-key="link"
+          item-key="name"
           open-on-click
         >
           <template v-slot:prepend="{ item, open }">
             <v-icon
               v-if="item.icon == 'mdi-folder-open'"
             >{{ open ? 'mdi-folder-open' : 'mdi-folder' }}</v-icon>
-            <v-icon v-else router :to="{ name: item.link }">{{ item.icon }}</v-icon>
+            <v-icon v-else router :to="{ name: item.name }">{{ item.icon }}</v-icon>
           </template>
 
           <template slot="label" slot-scope="{ item }">
             <router-link
-              :to="{ name: item.link }"
+              :to="{ name: item.name }"
               style="color: black; text-decoration: none;"
             >{{ item.name }}</router-link>
           </template>
@@ -90,12 +90,12 @@
         <v-btn color="white" class="black--text" rotuer :to="{ name: 'signIn' }" >Logout</v-btn>
 
         <template v-slot:extension>
-          <v-tabs show-arrows v-model="tab">
-            <v-tabs-slider color="white"></v-tabs-slider>
+          <v-tabs show-arrows v-model="active_tab">
+            <v-tabs-slider  color="white"></v-tabs-slider>
             <v-tab
               v-for="item in $store.getters.getTabsMenuList"
               :key="item.title"
-              class="tab-hover"
+              class="tab-hover "
               @click="()=>changeTab(item)"
             >{{ item.title }}</v-tab>
           </v-tabs>
@@ -160,7 +160,7 @@ export default {
         }
       ],
       //dummy data for tab
-      tab: null,
+      active_tab : null,
       text:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.  "
     };
@@ -178,6 +178,9 @@ export default {
       // this.$router.push({ name: })
     },
     changeTab(tab) {
+      console.log('this is the active tab');
+      console.log(this.active_tab);
+
       console.log(tab.name);
       let leftSideBarItems = this.$store.getters.getState;
       // console.log(leftSideBarItems);
