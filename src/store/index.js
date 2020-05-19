@@ -30,6 +30,9 @@ export default new Vuex.Store({
 		//this checker will be used in allProfileInput components for solving form error issue, and will be 
 		//connected with baseTable createNew method
 		newOrOldChecker: 'old',
+		//tree saver
+		// treeInfo: [],
+
 	},
 	getters: {
 		getTabsMenuList : state => state.accessibleModules.admin,
@@ -38,6 +41,7 @@ export default new Vuex.Store({
 		getActiveRouteName: state => state.activeRouteName,
 		getActivePathName: state => state.activePathName,
 		getNewOrOldChecker: state => state.newOrOldChecker,
+		// getTreeInfo: state => state.treeInfo,
 	},
 	mutations: {
 		setActiveRouteName(state , name){
@@ -49,6 +53,9 @@ export default new Vuex.Store({
 		setNewOrOldChecker(state , name){
 			state.newOrOldChecker = name;
 		},
+		/* setTreeInfo(state , name){
+			state.treeInfo = name;
+		}, */
 	},
 actions: {
 	testActions: context => {

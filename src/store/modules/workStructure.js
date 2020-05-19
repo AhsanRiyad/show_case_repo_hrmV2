@@ -33,7 +33,7 @@ export default {
             },
             {
                 title: 'Organization Tree',
-                name: 'organization_tree',
+                name: 'organizationTree',
                 icon: 'mdi-file-document-outline'
             },
             {

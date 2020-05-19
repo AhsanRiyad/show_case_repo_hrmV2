@@ -27,9 +27,9 @@ export default {
             item: {},
         },
 
-        //
+        //for common dialog props
         newOrviewOrEditOrCorrection: '',
-
+        
 
         //for all form input
         timestamp: [
@@ -75,7 +75,6 @@ export default {
         }
     },
     methods: {
-
         //format the date as required, here i used moment library
         getDateFormatted(date) {
             if( this.R.isNil(date)  ) return '';
@@ -95,9 +94,7 @@ export default {
             this.newOrviewOrEditOrCorrection = 'edit';
             //add timestamp if in the view mode
             this.removeTimeStamp(infoOfaId);
-
             this.fillItemsIntheForm(infoOfaId);
-
             //make readonly
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = false;
@@ -159,7 +156,7 @@ export default {
         //closes the commonDialog
         myDialogClose() {
             this.myDialogVisible = false;
-            this.getData("/getAll/active?page=0&pageSize=50")
+            !this.$store.getters('getActiveRouteName') == 'organizationTree' ? this.getData() : '';
         },
         clearInput(items) {
             this.$store.commit("setNewOrOldChecker", 'new');

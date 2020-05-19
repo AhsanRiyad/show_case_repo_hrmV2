@@ -5,7 +5,7 @@ module.exports = {
   configureWebpack: {
     devtool: 'source-map'
   },
-  devServer: { port: 3000 },
+  devServer: { port: 3020 },
   publicPath: process.env.NODE_ENV === 'production' ? '/hrm-babl-v2/' : '/',
   pwa: {
     name: 'hrm_babl',

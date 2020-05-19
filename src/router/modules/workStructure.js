@@ -7,6 +7,7 @@ const designation = () => import('../../views/workStructure/designation');
 const grade = () => import('../../views/workStructure/grade');
 const location = () => import('../../views/workStructure/location');
 const organizationHead = () => import('../../views/workStructure/organizationHead');
+const organizationTree = () => import('../../views/workStructure/organizationTree');
 
 export default {
 	path: '/ws',
@@ -123,6 +124,18 @@ export default {
 				{ title: 'Location' }
 			]
 		}
+	},
+	{
+		path: 'organization-tree',
+		name: 'organizationTree',
+		component: organizationTree,
+		meta: {
+			title: 'Organization Tree',
+			breadcrumb: [
+				{ title: 'Work Structure', name: 'workStructure' },
+				{ title: 'Organization Tree' }
+			]
+		}
 	}
 	],
 	meta: {
@@ -133,7 +146,7 @@ export default {
 			{ title: 'Office', name: 'office' },
 			{ title: 'Organization Type', name: 'organizationType' },
 			{ title: 'Organization Head', name: 'organizationHead' },
-			{ title: 'Organization Tree', name: 'organization_tree' },
+			{ title: 'Organization Tree', name: 'organizationTree' },
 			{ title: 'Designation', name: 'designation' },
 			{
 				title: 'Company Classification Type',

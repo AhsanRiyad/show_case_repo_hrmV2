@@ -33,9 +33,15 @@
           autocomplete="off"
         ></v-text-field>
 
-        <v-checkbox v-if="n.type == 'cCheckBox' " :label="n.label" v-model="n.value" >
+        <v-checkbox v-if="n.type == 'cCheckBox' " :label="n.label" v-model="n.value"></v-checkbox>
 
-        </v-checkbox>
+        <cTreeSelect
+        v-if=" n.type=='cTreeSelect' "
+        v-model="n.value" 
+        placeholder="n.label"
+        :api=" !R.isNil(n.api) ? n.api : '' "
+        >
+        </cTreeSelect>
 
         <cAutoComplete
           v-if="n.type == 'cAutoComplete' "
@@ -76,7 +82,7 @@ export default {
   },
   methods: {},
   created() {
-    console.log('in the all form input');
+    console.log("in the all form input");
     console.log(this.formArray);
   },
   updated() {},

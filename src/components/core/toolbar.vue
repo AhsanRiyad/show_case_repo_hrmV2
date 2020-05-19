@@ -22,7 +22,7 @@
             <router-link
               :to="{ name: item.name }"
               style="color: black; text-decoration: none;"
-            >{{ item.name }}</router-link>
+            >{{ item.title }}</router-link>
           </template>
         </v-treeview>
       </v-navigation-drawer>
