@@ -24,6 +24,7 @@
         <!-- here setNewOrOldChecker is for creating new value and for form validation, all are linked up -->
         <v-text-field
           v-if=" n.type == 'cTextField' "
+          v-show=" !R.isNil(n.visible) ? n.visible : true "
           color="red darken-1"
           :label="n.label"
           v-model="n.value"

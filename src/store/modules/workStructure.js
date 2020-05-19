@@ -32,8 +32,8 @@ export default {
                 icon: 'mdi-file-document-outline'
             },
             {
-                title: 'Organization Tree',
-                name: 'organizationTree',
+                title: 'Organization',
+                name: 'organization',
                 icon: 'mdi-file-document-outline'
             },
             {

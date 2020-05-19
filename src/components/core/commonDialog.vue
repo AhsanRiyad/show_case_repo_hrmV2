@@ -55,6 +55,10 @@
       infoOfaId: {
         type: [Object, Array],
         default: undefined
+      },
+      infoTree: {
+        type: [Object, Array],
+        default: undefined
       }
     },
     mixins: [ commonMixins ],

@@ -29,7 +29,7 @@ export default {
 
         //for common dialog props
         newOrviewOrEditOrCorrection: '',
-        
+
 
         //for all form input
         timestamp: [
@@ -77,7 +77,7 @@ export default {
     methods: {
         //format the date as required, here i used moment library
         getDateFormatted(date) {
-            if( this.R.isNil(date)  ) return '';
+            if (this.R.isNil(date)) return '';
             return this.moment(date).format("DD-MM-YYYY");
         },
         //end getDateFormatted
@@ -135,7 +135,8 @@ export default {
                 console.log(this.R.has('infoOfaId', this.$props));
 
                 //for preventing the props from mutation
-                !this.R.has('infoOfaId', this.$props) ? this.infoOfaId = { ...response } : this.infoOfaIdFromProps = { ...response };
+                !this.R.has('infoOfaId', this.$props) ? this.infoOfaId = { ...response } :
+                    this.infoOfaIdFromProps = { ...response };
 
                 //saves the items from the database in the table
                 if (action == 'view') {
@@ -156,22 +157,28 @@ export default {
         //closes the commonDialog
         myDialogClose() {
             this.myDialogVisible = false;
-            !this.$store.getters('getActiveRouteName') == 'organizationTree' ? this.getData() : '';
+            //here is a decision point for organization tree
+            this.$store.getters.getActiveRouteName !== 'organization' ? this.getData() : '';
         },
         clearInput(items) {
             this.$store.commit("setNewOrOldChecker", 'new');
             items.forEach((n, i, a) => {
                 // this is because checkbox should be null, it should be boolean
-                n.type == 'cCheckBox' ? a[i].value = false : a[i].value = null ;
+                n.type == 'cCheckBox' ? a[i].value = false :
+                    //invisible field's value should not be removed, used in organization tree
+                    n.visible == false ? a[i].value = n.value :
+                        a[i].value = null;
             })
         },
         removeTimeStamp() {
+            //time stamp should be removed for creating new item
             this.formArray.some(n => n.name == "createdBy")
                 ? this._.times(4, () => { this.formArray.pop() })
                 : "";
         },
         fillItemsIntheForm(infoOfaId) {
             //formArray.name == key of infoOfaId matches
+            //this is used for view an item's details
             this.formArray.forEach((n, i) => {
                 if (this.R.has(n.name, infoOfaId)) {
                     this.formArray[i].value = infoOfaId[n.name];
@@ -181,6 +188,7 @@ export default {
         addTimeStamp(infoOfaId) {
             console.log("firing event bus");
             //this will ensure that timspamp is not being added multiple times
+            //timestamp should be added for edit/view mode
             !this.formArray.some(n => n.name == "createdBy")
                 ? this.timestamp.forEach(n => {
                     this.formArray.push(n);
@@ -200,14 +208,12 @@ export default {
                 ]);
             }
             else if (/(Email|email)/g.test(fieldName)) {
-
                 return ([
                     v => !!v || fieldName + ' is required',
                     v => /^[a-zA-Z]{1}[a-zA-Z1-9._]{3,15}@[a-zA-Z]{1}[a-zA-Z1-9]{3,15}\.[a-zA-Z]{2,10}(\.[a-zA-Z]{2})*$/g.test(v) || 'Invalid'
                 ]);
             }
             else if (/(name)/g.test(fieldName)) {
-
                 return ([
                     v => !!v || fieldName + ' is required',
                 ]);
@@ -223,6 +229,7 @@ export default {
             }
         },
         solveInputValidation() {
+            //this function is for form validation, initiated in basetable when tries to create new entry
             console.log('in the solve funcitons');
             this.$store.commit('setNewOrOldChecker', 'updated');
         },
@@ -236,9 +243,9 @@ export default {
                 this.$store.commit("setNewOrOldChecker", 'updated');
                 resolve();
             }).then(() => {
+                console.log(this.formArray);
                 //validate the form
                 if (!this.$refs.form.validate()) return;
-
                 //organize the input form, first formate the array using map, then make the a an object using mergeAll
                 let formInputValues =
                     this.R.pipe(
@@ -246,31 +253,25 @@ export default {
                         this.R.mergeAll()
                     )(this.formArray)
                 console.log(formInputValues);
-
                 console.log(this.apiBase);
-
-
                 //for preventing the props from mutation
                 let mergedVal = this.R.has('infoOfaId', this.$props) && this.R.isNil(this.infoOfaIdFromProps) ? this.infoOfaId : this.infoOfaIdFromProps;
-
                 // merge the value that is required for updating a entity
                 newOrviewOrEditOrCorrection == 'edit' || newOrviewOrEditOrCorrection == 'correction' ? formInputValues = { ...mergedVal, ...formInputValues } : '';
-
                 console.log(formInputValues);
-
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
                 this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
                 this.apiRequestData.api = this.$store.getters.getActivePathName;
                 this.apiRequestData.item = formInputValues;
                 //this will help decide the header if it will be createdBy or updatedBy
                 this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
-
                 //axios calling, actions will be dispatched asynchronously
                 this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-
                     //reload the form
-                    this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
-
+                    //exception for organization tree , when there is a child node successfully inserted this, should
+                    this.$store.getters.getActiveRouteName == 'organization' ? '' :
+                        this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
+                    console.log(this.infoTree);
                     console.log(response);
                     //success dialog                
                     this.$awn.success(`Successfully`);
@@ -278,7 +279,6 @@ export default {
                     this.$awn.alert(`Connection Error`);
                     this.tableLoading = false;
                 });
-
             })
         },
         getData(extention) {
@@ -286,10 +286,8 @@ export default {
             this.apiRequestData.method = "get";
             this.apiRequestData.api = this.$store.getters.getActivePathName + extention;
             this.apiRequestData.item = {};
-
             //table loader
             this.tableLoading = true;
-
             //axios calling, actions will be dispatched asynchronously
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
                 this.tableLoading = false;
@@ -300,7 +298,6 @@ export default {
             });
         }
         //base table funcitons ends
-
     },
     watch: {},
     mounted() { }

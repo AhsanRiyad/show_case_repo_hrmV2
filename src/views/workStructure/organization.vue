@@ -16,9 +16,12 @@
       </template>
     </v-jstree>
 
-    <commonDialog :dialogVisible="myDialogVisible" @close="myDialogClose">
+    <commonDialog :infoTree="data" :formArray.sync="formArray" newOrviewOrEditOrCorrectionProps="new" :dialogVisible="myDialogVisible" @close="myDialogClose">
+      <template v-slot:formDialog>
+        <allFormInputs  :formArray.sync="formArray" ></allFormInputs>
+      </template>
     </commonDialog>
-    
+  
   </span>
 </template>
 <script>
@@ -33,10 +36,67 @@ export default {
   mixins: [commonMixins],
   data: () => {
     return {
+      nameOfSlot: "",
       ready: false,
       data: [],
-      formArray: [],
-      infoOfaId: {},
+      
+      formArray: [
+      {
+        type: "cTextField",
+        label: "Organization Name*",
+        name: "name",
+        value: "",
+        required: true,
+      },
+      {
+        type: "cAutoComplete",
+        label: "Office Type*",
+        name: "officeId",
+        api: "/ws/office/getAll/active?page=0&pageSize=50",
+        required: true,
+        value: ""
+      },
+      {
+        type: "cAutoComplete",
+        label: "Organization Type*",
+        name: "orgTypeId",
+        api: "/ws/organizationType/getAll/active?page=0&pageSize=50",
+        required: true,
+        value: ""
+      },
+      {
+        type: "cTextField",
+        label: "Cost Center Code*",
+        name: "costCenterCode",
+        value: "",
+        required: true,
+      },
+      {
+        type: "cDatePicker",
+        value: "",
+        label: "Start Date*",
+        name: "startDate",
+        required: true,
+        max: "endDate"
+      },
+      {
+        type: "cDatePicker",
+        value: "",
+        label: "End Date",
+        name: "endDate",
+        required: false,
+        min: "startDate"
+      },
+      //invisible field
+      {
+        type: "cTextField",
+        label: "orgParentId",
+        name: "orgParentId",
+        value: "",
+        visible: false,
+        required: true,
+      },
+    ]
     };
   },
   created() {
@@ -63,14 +123,18 @@ export default {
     showItem(node) {
       console.log(node);
       console.log(node.model.label + "show clicked !");
-      
-      this.myDialogVisible = true;
       console.log(this.data);
-
     },
     addItem(node) {
       console.log(node);
       console.log(node.model.label + " add clicked !");
+      console.log(node.model);
+
+      this.formArray[
+      this._.findIndex( this.formArray, { name: 'orgParentId' } )
+      ].value =  node.model.id ;
+
+      this.myDialogVisible = true;
     }
   }
 };
