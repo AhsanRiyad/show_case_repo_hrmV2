@@ -56,8 +56,8 @@
         type: [Object, Array],
         default: undefined
       },
-      infoTree: {
-        type: [Object, Array],
+      addChild: {
+        type: [Function],
         default: undefined
       }
     },

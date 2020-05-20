@@ -14,7 +14,7 @@
       @select="select"
       :placeholder="label"
     >
-      <!--  <label
+       <label
         slot="option-label"
         slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
         :class="labelClassName"
@@ -24,7 +24,7 @@
           v-if="shouldShowCount"
           :class="countClassName"
         >({{ count }})</span>
-      </label>-->
+      </label>
       <treeselect-value :value="inputVal" />
     </treeselect>
   </span>

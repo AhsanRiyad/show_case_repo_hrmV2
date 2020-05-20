@@ -5,7 +5,7 @@
       <template scope="_">
         <div style="display: inherit; width: 100%">
           <i :class="_.vm.themeIconClasses" role="presentation"></i>
-          <span @click="showItem(_.vm, _.model, $event)">{{ _.model.label }}</span>
+          <span @click="showItem(_.vm, _.model, $event)">{{ _.model.name }}</span>
           <button
             style="border: 0px; background-color: transparent; cursor: pointer; margin-left: 2px;"
             @click="addItem(_.vm, _.model, $event)"
@@ -16,7 +16,7 @@
       </template>
     </v-jstree>
 
-    <commonDialog :infoTree="data" :formArray.sync="formArray" newOrviewOrEditOrCorrectionProps="new" :dialogVisible="myDialogVisible" @close="myDialogClose">
+    <commonDialog :addChild="addChild" :formArray.sync="formArray" newOrviewOrEditOrCorrectionProps="new" :dialogVisible="myDialogVisible" @close="myDialogClose">
       <template v-slot:formDialog>
         <allFormInputs  :formArray.sync="formArray" ></allFormInputs>
       </template>
@@ -28,7 +28,6 @@
 // import the component
 import VJstree from "vue-jstree";
 import commonMixins from "@/mixins/commonMixins";
-
 export default {
   components: {
     VJstree: VJstree
@@ -39,7 +38,11 @@ export default {
       nameOfSlot: "",
       ready: false,
       data: [],
-      
+
+      addChild: ()=>{  },
+
+
+      //for creating and updating node of the tree
       formArray: [
       {
         type: "cTextField",
@@ -127,12 +130,15 @@ export default {
     },
     addItem(node) {
       console.log(node);
-      console.log(node.model.label + " add clicked !");
+      console.log(node.model.name + " add clicked !");
       console.log(node.model);
 
       this.formArray[
       this._.findIndex( this.formArray, { name: 'orgParentId' } )
       ].value =  node.model.id ;
+
+      //child will be added to the parent node
+      this.addChild = node.model.addChild;
 
       this.myDialogVisible = true;
     }

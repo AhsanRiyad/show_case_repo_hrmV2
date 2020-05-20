@@ -269,7 +269,7 @@ export default {
                 this.$store.dispatch("callApi", this.apiRequestData).then(response => {
                     //reload the form
                     //exception for organization tree , when there is a child node successfully inserted this, should
-                    this.$store.getters.getActiveRouteName == 'organization' ? '' :
+                    this.$store.getters.getActiveRouteName == 'organization' ? this.addChild(response) :
                         this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
                     console.log(this.infoTree);
                     console.log(response);

@@ -8,7 +8,6 @@ import workStructure from './modules/workStructure';
 import * as R from 'ramda'
 import VueCookies from 'vue-cookies'
 
-
 Vue.use(Router);
 
 const routes = new Router({
