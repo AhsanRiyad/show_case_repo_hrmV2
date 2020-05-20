@@ -13,13 +13,17 @@
       @input="updateValue"
       @select="select"
       :placeholder="label"
+      :matchKeys="['name']"
     >
+      <div slot="value-label" slot-scope="{ node }">{{ node.raw.name }}</div>
+
+
        <label
         slot="option-label"
         slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
         :class="labelClassName"
       >
-        {{ node.isBranch ? '' : '' }}: {{ node.label }}
+        {{ node.isBranch ? '' : '' }}  {{ node.raw.name }}
         <span
           v-if="shouldShowCount"
           :class="countClassName"
