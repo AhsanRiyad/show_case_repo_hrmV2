@@ -13,6 +13,7 @@
     :rules="fieldRulesProp( rules.required , rules.name )"
     :clearable=" !readonly "
     :readonly=" !R.isNil(readonly) ? readonly : true "
+    :disabled="!R.isNil(disabled) ? disabled : false"
     >
     </v-autocomplete>
 </template>
@@ -21,7 +22,7 @@
 import commonMixins from '../../mixins/commonMixins'
 export default {
   name: "cAutoComplete",
-  props: ["value", "label", "rules", "api" , "readonly"],
+  props: ["value", "label", "rules", "api" , "readonly", "disabled"],
   mixins: [commonMixins],
   data() {
     return {

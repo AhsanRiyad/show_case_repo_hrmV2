@@ -14,10 +14,9 @@
       @select="select"
       :placeholder="label"
       :matchKeys="['name']"
+      :disabled="!R.isNil(disabled) ? disabled : false"
     >
       <div slot="value-label" slot-scope="{ node }">{{ node.raw.name }}</div>
-
-
        <label
         slot="option-label"
         slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
@@ -44,7 +43,7 @@ export default {
   // register the component
   components: { Treeselect },
   mixins: [commonMixins],
-  props: ['value', 'label' , "api"],
+  props: ['value', 'label' , "api", "disabled"],
   data() {
     return {
       // define the default value

@@ -16,12 +16,17 @@
       </template>
     </v-jstree>
 
-    <commonDialog :addChild="addChild" :formArray.sync="formArray" newOrviewOrEditOrCorrectionProps="new" :dialogVisible="myDialogVisible" @close="myDialogClose">
+    <commonDialog
+      :addChild="addChild"
+      :formArray.sync="formArray"
+      newOrviewOrEditOrCorrectionProps="new"
+      :dialogVisible="myDialogVisible"
+      @close="myDialogClose"
+    >
       <template v-slot:formDialog>
-        <allFormInputs  :formArray.sync="formArray" ></allFormInputs>
+        <allFormInputs :formArray.sync="formArray"></allFormInputs>
       </template>
     </commonDialog>
-  
   </span>
 </template>
 <script>
@@ -36,70 +41,77 @@ export default {
   data: () => {
     return {
       nameOfSlot: "",
+
+      // if data is ready then load the tree
       ready: false,
+
+      // this is for tree data
       data: [],
 
-      addChild: ()=>{  },
-
+      //this will be sent as a prop to extend node
+      addChild: () => {},
 
       //for creating and updating node of the tree
       formArray: [
-      {
-        type: "cTextField",
-        label: "Organization Name*",
-        name: "name",
-        value: "",
-        required: true,
-      },
-      {
-        type: "cAutoComplete",
-        label: "Office Type*",
-        name: "officeId",
-        api: "/ws/office/getAll/active?page=0&pageSize=50",
-        required: true,
-        value: ""
-      },
-      {
-        type: "cAutoComplete",
-        label: "Organization Type*",
-        name: "orgTypeId",
-        api: "/ws/organizationType/getAll/active?page=0&pageSize=50",
-        required: true,
-        value: ""
-      },
-      {
-        type: "cTextField",
-        label: "Cost Center Code*",
-        name: "costCenterCode",
-        value: "",
-        required: true,
-      },
-      {
-        type: "cDatePicker",
-        value: "",
-        label: "Start Date*",
-        name: "startDate",
-        required: true,
-        max: "endDate"
-      },
-      {
-        type: "cDatePicker",
-        value: "",
-        label: "End Date",
-        name: "endDate",
-        required: false,
-        min: "startDate"
-      },
-      //invisible field
-      {
-        type: "cTextField",
-        label: "orgParentId",
-        name: "orgParentId",
-        value: "",
-        visible: false,
-        required: true,
-      },
-    ]
+        //invisible field
+        {
+          type: "cTreeSelect",
+          label: "orgParentId",
+          name: "orgParentId",
+          value: "",
+          visible: true,
+          required: true,
+          clearData: false,
+          disabled: true
+        },
+
+        {
+          type: "cTextField",
+          label: "Organization Name*",
+          name: "name",
+          value: "",
+          required: true
+        },
+        {
+          type: "cAutoComplete",
+          label: "Office Type*",
+          name: "officeId",
+          api: "/ws/office/getAll/active?page=0&pageSize=50",
+          required: true,
+          value: ""
+        },
+        {
+          type: "cAutoComplete",
+          label: "Organization Type*",
+          name: "orgTypeId",
+          api: "/ws/organizationType/getAll/active?page=0&pageSize=50",
+          required: true,
+          value: ""
+        },
+        {
+          type: "cTextField",
+          label: "Cost Center Code*",
+          name: "costCenterCode",
+          value: "",
+          required: true
+        },
+        {
+          type: "cDatePicker",
+          value: "",
+          label: "Start Date*",
+          name: "startDate",
+          required: true,
+          max: "endDate"
+        },
+        {
+          type: "cDatePicker",
+          value: "",
+          label: "End Date",
+          name: "endDate",
+          required: false,
+          min: "startDate"
+        }
+      ]
     };
   },
   created() {
@@ -124,9 +136,24 @@ export default {
         .catch(() => {});
     },
     showItem(node) {
-      console.log(node);
-      console.log(node.model.label + "show clicked !");
+      console.log("this is the full node");
+      console.log(node.model);
+      console.log(node.model.name + "show clicked !");
       console.log(this.data);
+      console.log(node.model);
+
+      //this formating is required for matching with table view edit/correction
+      let obj = {
+        item: {
+          id: node.model.id
+        }
+      };
+
+      this.formArray[
+        this.R.findIndex(this.R.propEq("name", "orgParentId")) (this.formArray)
+      ].disabled = false;
+
+      this.doActionOnItem("edit", obj);
     },
     addItem(node) {
       console.log(node);
@@ -134,8 +161,8 @@ export default {
       console.log(node.model);
 
       this.formArray[
-      this._.findIndex( this.formArray, { name: 'orgParentId' } )
-      ].value =  node.model.id ;
+        this._.findIndex(this.formArray, { name: "orgParentId" })
+      ].value = node.model.id;
 
       //child will be added to the parent node
       this.addChild = node.model.addChild;

@@ -4,7 +4,7 @@
       <v-col
         cols="12"
         sm="12"
-        :md="n.type == 'cTextArea' ?  12 : 6"
+        :md="n.type == 'cTextArea' || n.type == 'cTreeSelect' ?  12 : 6"
         v-for="(n, i) in formArray"
         :key="i"
         @click.stop="solveInputValidation"
@@ -18,6 +18,7 @@
           :rules="fieldRulesProp( !R.isNil(n.required) ? n.required : true ,  n.name)"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
           :clearable="!R.isNil(n.readonly) ? !n.readonly : true"
+          :disabled="!R.isNil(n.disabled) ? !n.disabled : false"
           autocomplete="off"
         ></v-textarea>
 
@@ -31,6 +32,7 @@
           :rules="fieldRulesProp( !R.isNil(n.required) ? n.required : true ,  n.name)"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
           :clearable="!R.isNil(n.readonly) ? !n.readonly : true"
+          :disabled="!R.isNil(n.disabled) ? !n.disabled : false"
           autocomplete="off"
         ></v-text-field>
 
@@ -41,6 +43,7 @@
         v-model="n.value" 
         placeholder="n.label"
         :api=" !R.isNil(n.api) ? n.api : '' "
+        :disabled="!R.isNil(n.disabled) ? n.disabled : false"
         >
         </cTreeSelect>
 
@@ -51,6 +54,7 @@
           :api=" !R.isNil(n.api) ? n.api : '' "
           :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
+          :disabled="!R.isNil(n.disabled) ? n.disabled : false"
         ></cAutoComplete>
 
         <cDatePicker

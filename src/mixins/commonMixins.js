@@ -112,7 +112,7 @@ export default {
             })
         },
         //view item
-        doActionOnItem(action, { item }) {
+        doActionOnItem(action, { item } ) {
             console.log('checking the items');
             console.log(item);
 
@@ -166,7 +166,7 @@ export default {
                 // this is because checkbox should be null, it should be boolean
                 n.type == 'cCheckBox' ? a[i].value = false :
                     //invisible field's value should not be removed, used in organization tree
-                    n.visible == false ? a[i].value = n.value :
+                    !n.clearData ? a[i].value = n.value :
                         a[i].value = null;
             })
         },
