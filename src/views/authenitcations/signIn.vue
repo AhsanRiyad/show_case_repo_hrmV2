@@ -16,9 +16,9 @@
                   color="red darken-1"
                   prepend-icon="person"
                   name="login"
-                  label="Username"
+                  label="UserId"
                   type="text"
-                  v-model="formData.username"
+                  v-model="formData.userId"
                   required
                 ></v-text-field>
                 <v-text-field
@@ -84,7 +84,7 @@ export default {
       loading: false,
       //form data
       formData: {
-        username: "",
+        userId: "",
         password: ""
       }
     };
@@ -96,7 +96,7 @@ export default {
 
       //data and config for axios
       this.apiRequestData.method = "post";
-      this.apiRequestData.api = "/auth/signin";
+      this.apiRequestData.api = this.$store.getters.getActivePathName;
       this.apiRequestData.item = this.formData;
 
       this.$store
@@ -105,7 +105,7 @@ export default {
           this.loading = false;
           //set cookie
           this.$cookies.set("accessToken", response.accessToken);
-          this.$cookies.set("username", this.formData.username);
+          this.$cookies.set("userId", this.formData.userId);
 
           //show msg
           this.$awn.success("Success");

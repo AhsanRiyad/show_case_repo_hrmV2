@@ -13,7 +13,7 @@ Vue.use(Router);
 const routes = new Router({
     routes: [
         {
-            path: '/sign-in',
+            path: '/signIn',
             name: 'signIn',
             component: () =>
                 import(/* webpackChunkName: "auth" */ '../views/authenitcations/signIn')
