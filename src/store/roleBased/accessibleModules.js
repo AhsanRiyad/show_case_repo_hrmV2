@@ -128,12 +128,9 @@ export default {
         admin: [
             { title: 'Admin', name: 'admin', img: 'keep.png' },
             { title: 'Work Structure', name: 'workStructure', img: 'inbox.png' },
+            { title: 'Employee Management', name: 'employeeManagement', img: 'inbox.png' },
             { title: 'Workflow', name: 'home', img: 'messenger.png' },
-            {
-                title: 'Employee Self Service',
-                name: 'employeeSelfService',
-                img: 'inbox.png'
-            },
+            { title: 'Employee Self Service', name: 'employeeSelfService', img: 'inbox.png' },
             { title: 'Work List', name: 'home', img: 'google.png' },
             { title: 'Alert Admin', name: 'home', img: 'inbox.png' },
             { title: 'HR Admin', name: 'hrAdmin', img: 'hangouts.png' },

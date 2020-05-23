@@ -12,6 +12,7 @@ import accessibleModules from './roleBased/accessibleModules';
 //imported state
 import workStructure from './modules/workStructure';
 import admin from './modules/admin';
+import employeeManagement from './modules/employeeManagement';
 
 import * as R from 'ramda'
 
@@ -90,5 +91,6 @@ modules: {
 	workStructure: workStructure,
 	accessibleModules: accessibleModules,
 	admin: admin,
+	employeeManagement: employeeManagement,
 }
 });
