@@ -15,12 +15,14 @@
       :placeholder="label"
       :matchKeys="['name']"
       :disabled="!R.isNil(disabled) ? disabled : false"
+      
     >
       <div slot="value-label" slot-scope="{ node }">{{ node.raw.name }}</div>
        <label
         slot="option-label"
         slot-scope="{ node, shouldShowCount, count, labelClassName, countClassName }"
         :class="labelClassName"
+        :id="id"
       >
         {{ node.isBranch ? '' : '' }}  {{ node.raw.name }}
         <span
@@ -28,7 +30,7 @@
           :class="countClassName"
         >({{ count }})</span>
       </label>
-      <treeselect-value :value="inputVal" />
+      <treeselect-value  :value="inputVal" />
     </treeselect>
   </span>
 </template>
@@ -43,11 +45,11 @@ export default {
   // register the component
   components: { Treeselect },
   mixins: [commonMixins],
-  props: ['value', 'label' , "api", "disabled"],
+  props: ['value', 'label' , "api", "disabled", "id"],
   data() {
     return {
       // define the default value
-      my_value: 9,
+      my_value: 1,
       // define options
       options: [
         {
@@ -92,6 +94,12 @@ export default {
   computed: {
      inputVal: {
       get() {
+        // if( this.R.isNil( this.value) ){
+        //   return 1;
+        // }
+        // return 1;
+        // console.log('return value');
+        // console.log(this.value);
         return this.value;
       },
       set(val) {
@@ -134,13 +142,6 @@ export default {
     }
   },
   watch: {
-    value: {
-      handler: function name(newVal, oldVal) {
-        console.log(newVal);
-        console.log(oldVal);
-      },
-      immediate: true
-    }
   }
 };
 </script>

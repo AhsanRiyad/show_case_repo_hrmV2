@@ -10,6 +10,7 @@
         @click.stop="solveInputValidation"
       >
         <v-textarea
+          :id="n.name"
           v-if=" n.type == 'cTextArea' "
           filled
           rows="2"
@@ -24,6 +25,7 @@
 
         <!-- here setNewOrOldChecker is for creating new value and for form validation, all are linked up -->
         <v-text-field
+          :id="n.name"
           v-if=" n.type == 'cTextField' "
           v-show=" !R.isNil(n.visible) ? n.visible : true "
           color="red darken-1"
@@ -39,14 +41,17 @@
         <v-checkbox v-if="n.type == 'cCheckBox' " :label="n.label" v-model="n.value"></v-checkbox>
 
         <cTreeSelect
+          :id="n.name"
           v-if=" n.type=='cTreeSelect' "
           v-model="n.value"
+          :label="n.label"
           placeholder="n.label"
           :api=" !R.isNil(n.api) ? n.api : '' "
           :disabled="!R.isNil(n.disabled) ? n.disabled : false"
         ></cTreeSelect>
 
         <cAutoComplete
+          :id="n.name"
           v-if="n.type == 'cAutoComplete'"
           :label="n.label"
           v-model="n.value"
@@ -55,10 +60,11 @@
           :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
           :disabled="!R.isNil(n.disabled) ? n.disabled : false"
-          @input="!R.isNil(n.changeEvent) ? n.changeEvent( $event ) : ()=>{} "
+          :changeEvent="!R.isNil(n.changeEvent) ? n.changeEvent : ()=>{}"
         ></cAutoComplete>
 
         <cDatePicker
+          :id="n.name"
           v-if="n.type == 'cDatePicker'"
           :label="n.label"
           v-model="n.value"

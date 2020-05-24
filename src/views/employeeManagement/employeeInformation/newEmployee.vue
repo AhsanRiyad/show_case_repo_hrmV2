@@ -1,31 +1,36 @@
 <template>
   <span>
-    <v-subheader>
-      Personal Information
-      <v-divider inset></v-divider>
-    </v-subheader>
+    <v-form ref="form">
+      <v-subheader>
+        Personal Information
+        <v-divider inset></v-divider>
+      </v-subheader>
 
-    <v-card class="ml-2 mr-2">
-      <allFormInputs :formArray.sync="personalInfo"></allFormInputs>
-    </v-card>
+      <v-card class="ml-2 mr-2">
+        <allFormInputs :formArray.sync="personalInfo"></allFormInputs>
+      </v-card>
 
-    <v-subheader>
-      Office Information
-      <v-divider inset></v-divider>
-    </v-subheader>
+      <v-subheader>
+        Office Information
+        <v-divider inset></v-divider>
+      </v-subheader>
 
-    <v-card class="ml-2 mr-2">
-      <allFormInputs :formArray.sync="officeInfo"></allFormInputs>
-    </v-card>
+      <v-card class="ml-2 mr-2">
+        <allFormInputs :formArray.sync="officeInfo"></allFormInputs>
+      </v-card>
 
-    <v-subheader>
-      Effective Date
-      <v-divider inset></v-divider>
-    </v-subheader>
+      <v-subheader>
+        Effective Date
+        <v-divider inset></v-divider>
+      </v-subheader>
 
-    <v-card class="ml-2 mr-2">
-      <allFormInputs :formArray.sync="effectiveDate"></allFormInputs>
-    </v-card>
+      <v-card class="ml-2 mr-2">
+        <allFormInputs :formArray.sync="effectiveDate"></allFormInputs>
+      </v-card>
+
+      <v-btn @click.stop="tryD"> Submit </v-btn>
+
+    </v-form>
   </span>
 </template>
 
@@ -37,7 +42,7 @@ export default {
   components: {},
   props: ["age"],
   mixins: [commonMixins],
-  data: (vm) => ({
+  data: vm => ({
     tableHeader: [
       {
         text: "Business Group Name",
@@ -233,13 +238,21 @@ export default {
         api: "/em/employeeType/getAll/active?page=0&pageSize=50",
         required: true,
         value: "",
-        changeEvent: vm.updateSubType,
+        changeEvent: vm.updateSubType
+      },
+      {
+        type: "cAutoComplete",
+        label: "Employee Sub Type*",
+        name: "employeeSubtypeId",
+        required: true,
+        value: "",
+        items: [{ id: "ff", name: "dd" }]
       },
       {
         type: "cTreeSelect",
-        label: "orgParentId",
-        name: "orgParentId",
-        value: "",
+        label: "Select Organization Tree",
+        name: "organizationId",
+        value: null,
         visible: true,
         required: true,
         clearData: false
@@ -343,7 +356,7 @@ export default {
         type: "cCheckBox",
         label: "Has Target",
         name: "sol",
-        value: true,
+        value: true
       },
       {
         type: "cDatePicker",
@@ -365,7 +378,7 @@ export default {
         name: "statusTow",
         value: "",
         required: false
-      },
+      }
     ],
     effectiveDate: [
       {
@@ -379,19 +392,48 @@ export default {
         type: "cDatePicker",
         value: "",
         label: "Effective End Date",
-        name: "endtDate",
+        name: "endDate",
         required: false
-      },
-
-
+      }
     ]
-
   }),
   computed: {},
   methods: {
-    updateSubType($event){
-      console.log('in the update subtype');
-      console.log($event);
+    updateSubType(val) {
+      console.log("in the update subtype");
+      console.log(val);
+      let index = this.R.findIndex(this.R.propEq("name", "employeeSubtypeId"))(
+        this.officeInfo
+      );
+      console.log(index);
+
+      this.officeInfo[index].items = [{ name: "cc", id: "cc" }];
+      // this.officeInfo[index].type ='cTextField';
+    },
+    tryD(){
+      /* console.log(this.$refs.form.inputs) */
+      /* let  abc = 
+      this.$refs.form.inputs.map((n)=>{
+        return {
+          [n.id] : n.value,
+        }
+      }) */
+      /* let ind = 
+      this.officeInfo.findIndex((n)=> n.name == 'orgParentId' ) 
+      console.log(ind);
+      console.log(this.officeInfo[ind]); */
+
+      this.$refs.form.validate();
+      let merge = [ ...this.personalInfo , ...this.officeInfo, ...this.effectiveDate ]
+      let  abc = 
+      merge.map((n)=>{
+        return {
+          [n.name] : n.value,
+        }
+      })
+      console.log(this.R.mergeAll(abc));
+
+
     }
   },
   watch: {},

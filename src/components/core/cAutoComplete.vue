@@ -5,7 +5,6 @@
     item-text="name"
     item-value="id"
     v-model="inputVal"
-    cache-items
     autocomplete="off"
     :filter="customFilter"
     color="red darken-1"
@@ -14,20 +13,30 @@
     :clearable=" !readonly "
     :readonly=" !R.isNil(readonly) ? readonly : true "
     :disabled="!R.isNil(disabled) ? disabled : false"
-    >
-    </v-autocomplete>
+    :id="id"
+  ></v-autocomplete>
 </template>
 
 <script>
-import commonMixins from '../../mixins/commonMixins'
+import commonMixins from "../../mixins/commonMixins";
 export default {
   name: "cAutoComplete",
-  props: ["value", "label", "rules", "api" , "readonly", "disabled", "itemsFromProps"],
+  props: {
+    value: [String, Number],
+    label: [String, Number],
+    rules: [String, Number, Array, Object],
+    api: [String],
+    readonly: [Boolean],
+    disabled: [Boolean],
+    itemsFromProps: [String, Number, Array, Object],
+    changeEvent: [Function],
+    id: [String, Number],
+  },
   mixins: [commonMixins],
   data() {
     return {
       content: "",
-      model: null,
+      model: null
     };
   },
   computed: {
@@ -36,6 +45,7 @@ export default {
         return this.value;
       },
       set(val) {
+        this.changeEvent(val);
         this.$emit("input", val);
       }
     }
@@ -47,7 +57,8 @@ export default {
       const searchText = queryText.toLowerCase();
 
       return (
-        textOne.indexOf(searchText) > -1 /* || textTwo.indexOf(searchText) > -1 */
+        textOne.indexOf(searchText) >
+        -1 /* || textTwo.indexOf(searchText) > -1 */
       );
     },
     handleValue() {
@@ -55,19 +66,36 @@ export default {
       console.log(this.value);
     },
     getData() {
-            //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.apiRequestData.method = "get";
-            this.apiRequestData.api = this.api;
-            this.apiRequestData.data = {};
+      //a very common getData function for baseTable, will be call at the created lifeCycle hook
+      this.apiRequestData.method = "get";
+      this.apiRequestData.api = this.api;
+      this.apiRequestData.data = {};
 
-            //axios calling, actions will be dispatched asynchronously
-            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-                this.items = response;
-            }).catch(() => {});
-        }
+      //axios calling, actions will be dispatched asynchronously
+      this.$store
+        .dispatch("callApi", this.apiRequestData)
+        .then(response => {
+          this.items = response;
+        })
+        .catch(() => {});
+    }
   },
-  mounted(){
-    this.R.isNil(this.itemsFromProps) ? this.getData() : this.items = this.itemsFromProps ;
+  mounted() {
+    this.R.isNil(this.itemsFromProps)
+      ? this.getData()
+      : (this.items = this.itemsFromProps);
+  },
+  watch:{
+    itemsFromProps:{
+      handler: function (newVal, oldVal) {
+        console.log(newVal);
+        console.log(oldVal);
+
+        this.items = newVal;
+
+      },
+      immediate: true,
+    }
   }
 };
 </script>
