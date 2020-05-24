@@ -3,7 +3,7 @@
 
 export default [
     {
-        path: 'employee',
+        path: 'new-employee',
         name: 'newEmployee',
         component: () =>
             import(
@@ -15,6 +15,23 @@ export default [
                 {  title: 'Employee Management' , name: 'employeeManagement' },
                 {  title: 'Employee Information' , name: 'employeeInformation' },
                 {  title: 'New Employee' , name: '' }
+            ],
+            
+        }
+    },
+    {
+        path: 'employee',
+        name: 'employee',
+        component: () =>
+            import(
+                /* webpackChunkName: "employee_management" */ '@/views/employeeManagement/employeeInformation/employee'
+            ),
+        meta: {
+            title: "Employee",
+            breadcrumb: [
+                {  title: 'Employee Management' , name: 'employeeManagement' },
+                {  title: 'Employee Information' , name: 'employeeInformation' },
+                {  title: 'Employee List' , name: '' }
             ],
             
         }

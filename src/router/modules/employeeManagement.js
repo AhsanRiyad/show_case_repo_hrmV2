@@ -25,6 +25,7 @@ export default {
             ],
             childPages: [
                 { title: 'New Employee', name: 'newEmployee' },
+                { title: 'Employee List', name: 'employee' },
             ]
         }
     },

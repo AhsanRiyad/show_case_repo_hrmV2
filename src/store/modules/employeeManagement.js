@@ -14,7 +14,7 @@ export default {
                     {
                         title: 'Employees List',
                         icon: 'mdi-file-document-outline',
-                        name: 'emp_list'
+                        name: 'employee'
                     } /*
                     {
                         title: 'Email Assignment',

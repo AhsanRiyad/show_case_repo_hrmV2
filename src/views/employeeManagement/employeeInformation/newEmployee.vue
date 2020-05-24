@@ -68,7 +68,6 @@ export default {
       this.officeInfo.findIndex((n)=> n.name == 'orgParentId' ) 
       console.log(ind);
       console.log(this.officeInfo[ind]); */
-      this.$refs.form.validate();
       // console.log(this.$refs.officeInfo.officeInfo);
       /* let merge = [
         ...this.$refs.officeInfo.officeInfo,
@@ -83,10 +82,12 @@ export default {
 
        */
       /*  console.log(
-      this.R.concat(this.$refs.officeInfo.officeInfo , this.$refs.personalInfo.personalInfo, this.effectiveDate)
+        this.R.concat(this.$refs.officeInfo.officeInfo , this.$refs.personalInfo.personalInfo, this.effectiveDate)
       ); */
 
-      let abc = this.R.pipe(
+      //form data
+      this.$refs.form.validate();
+      let employeeInfo = this.R.pipe(
         this.R.concat,
         this.R.map(n => ({ [n.name]: n.value })),
         this.R.mergeAll,
@@ -96,10 +97,20 @@ export default {
         this.$refs.personalInfo.personalInfo,
         this.effectiveDate
       );
+      this.apiRequestData.method = "post";
+      this.apiRequestData.api = this.$store.getters.getActivePathName;
+      this.apiRequestData.item = employeeInfo;
 
-      console.log(abc);
-
-      // console.log(this.R.mergeAll(abc));
+      this.$store
+        .dispatch("callApi", this.apiRequestData)
+        .then(response => {
+          console.log(response);
+          //success dialog
+          this.$awn.success(`Successfully`);
+        })
+        .catch(() => {
+          this.$awn.alert(`Connection Error`);
+        });
     }
   },
   watch: {},
