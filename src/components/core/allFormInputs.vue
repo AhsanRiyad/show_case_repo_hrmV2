@@ -35,7 +35,11 @@
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
           :clearable="!R.isNil(n.readonly) ? !n.readonly : true"
           :disabled="!R.isNil(n.disabled) ? !n.disabled : false"
+          :append-icon="!R.isNil(n.appendIcon) ? n.appendIcon : null"
+          :prepend-icon="!R.isNil(n.prependIcon) ? n.prependIcon : null"
+          :filled="!R.isNil(n.filled) ? n.filled : false"
           autocomplete="off"
+          @keyup.stop="!R.isNil(n.keyUpEvent) ? n.keyUpEvent(n) : ()=>{}"
         ></v-text-field>
 
         <v-checkbox v-if="n.type == 'cCheckBox' " :label="n.label" v-model="n.value"></v-checkbox>

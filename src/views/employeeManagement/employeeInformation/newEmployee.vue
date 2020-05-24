@@ -28,8 +28,11 @@
         <allFormInputs :formArray.sync="effectiveDate"></allFormInputs>
       </v-card>
 
-      <v-btn @click.stop="tryD"> Submit </v-btn>
+      <v-btn class="m-3 white--text" color="red darken-1" @click.stop="tryD">Submit</v-btn>
+      <v-spacer></v-spacer>
+      <v-btn class="m-3 white--text" color="red darken-1" @click.stop="tryD">Submit</v-btn>
 
+      
     </v-form>
   </span>
 </template>
@@ -238,7 +241,7 @@ export default {
         api: "/em/employeeType/getAll/active?page=0&pageSize=50",
         required: true,
         value: "",
-        changeEvent: vm.updateSubType
+        changeEvent: vm.updateEmployeeSubType
       },
       {
         type: "cAutoComplete",
@@ -256,6 +259,24 @@ export default {
         visible: true,
         required: true,
         clearData: false
+      },
+      {
+        type: "cAutoComplete",
+        label: "Supervisor Name*",
+        name: "supervisorId",
+        api: "/em/employee/getAll/active?page=0&pageSize=50",
+        required: true,
+        value: ""
+      },
+      {
+        type: "cTextField",
+        label: "Search Supervisor by Id",
+        name: "searchSupervisor",
+        value: "",
+        filled: true,
+        appendIcon: "search",
+        required: false,
+        keyUpEvent: vm.updateSuperVisorList
       },
       {
         type: "cTextField",
@@ -399,18 +420,42 @@ export default {
   }),
   computed: {},
   methods: {
-    updateSubType(val) {
+    updateEmployeeSubType(id) {
       console.log("in the update subtype");
-      console.log(val);
+      console.log(id);
       let index = this.R.findIndex(this.R.propEq("name", "employeeSubtypeId"))(
         this.officeInfo
       );
       console.log(index);
 
-      this.officeInfo[index].items = [{ name: "cc", id: "cc" }];
+      //a very common getData function for baseTable, will be call at the created lifeCycle hook
+      this.apiRequestData.method = "get";
+      this.apiRequestData.api = "/em/employeeSubtype/getActive/" + id;
+      this.apiRequestData.item = {};
+
+      //axios calling, actions will be dispatched asynchronously
+      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+        console.log(response);
+        this.officeInfo[index].items = response;
+      });
+
+      // this.officeInfo[index].items = [{ name: "cc", id: "cc" }];
       // this.officeInfo[index].type ='cTextField';
     },
-    tryD(){
+    updateSuperVisorList(n) {
+      let index = this.R.findIndex(this.R.propEq("name", "supervisorId"))(
+        this.officeInfo
+      );
+      //a very common getData function for baseTable, will be call at the created lifeCycle hook
+      this.apiRequestData.method = "get";
+      this.apiRequestData.api = "/em/employeeSubtype/getActive/" + n.id;
+      this.apiRequestData.item = {};
+      //axios calling, actions will be dispatched asynchronously
+      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+        this.officeInfo[index].items = response;
+      });
+    },
+    tryD() {
       /* console.log(this.$refs.form.inputs) */
       /* let  abc = 
       this.$refs.form.inputs.map((n)=>{
@@ -424,16 +469,17 @@ export default {
       console.log(this.officeInfo[ind]); */
 
       this.$refs.form.validate();
-      let merge = [ ...this.personalInfo , ...this.officeInfo, ...this.effectiveDate ]
-      let  abc = 
-      merge.map((n)=>{
+      let merge = [
+        ...this.personalInfo,
+        ...this.officeInfo,
+        ...this.effectiveDate
+      ];
+      let abc = merge.map(n => {
         return {
-          [n.name] : n.value,
-        }
-      })
+          [n.name]: n.value
+        };
+      });
       console.log(this.R.mergeAll(abc));
-
-
     }
   },
   watch: {},
