@@ -1,5 +1,5 @@
 <template>
-    <span>
+    <span v-cloak v-if="[rootPath].includes(this.$route.name)">
         <v-container>
           <v-row justify="center">
             <v-col
@@ -8,7 +8,7 @@
             lg="auto"
             v-for="(n, i) in items"
             :key = "i"
-            >
+             >
             <v-hover
             v-slot:default="{ hover }"
             open-delay="200"
@@ -54,21 +54,31 @@
         mixins: [updateItemsMixin],
         methods: {
             updateItemsMixins() {
+                console.log('this is the child page');
                 this.items = this.$route.meta.childPages;
                 console.log(this.items);
                 console.log(this.$route)
             }
+        },
+        mounted(){
+            // console.log('in the child page items');
+            // console.log(this.$route.meta.childPages);
         }
     };
 </script>
 
 <style scoped>
+    
     .rounded-card{
         border-radius:30px;
     }
 
     .v-application .grey--text{
         padding-top: 60px;
+    }
+    
+    [v-cloak] {
+    display: none;
     }
 
 </style>

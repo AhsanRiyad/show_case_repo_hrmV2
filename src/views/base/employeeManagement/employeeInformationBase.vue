@@ -1,6 +1,6 @@
 <template>
     <span>
-        <child-menus :root-path="pageRouteName" />
+        <childPageItems :root-path="pageRouteName" />
         <router-view></router-view>
     </span>
 </template>
@@ -9,7 +9,7 @@
 export default {
     name: 'EmployeeInformationBase',
     data: () => ({
-        pageRouteName: 'emaployeeInformation'
+        pageRouteName: 'employeeInformation'
     })
 };
 </script>

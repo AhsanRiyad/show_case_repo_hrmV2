@@ -4,17 +4,19 @@
 export default [
     {
         path: 'create-employee',
-        name: 'new_emp',
+        name: 'newEmployee',
         component: () =>
             import(
-                /* webpackChunkName: "employee_management" */ '../../../views/emp-management/emp-information/NewEmployee'
+                /* webpackChunkName: "employee_management" */ '@/views/employeeManagement/employeeInformation/newEmployee'
             ),
         meta: {
+            title: "New Employee",
             breadcrumb: [
-                { name: 'Employee Management', link: 'employee_management' },
-                { name: 'Employee Information', link: 'emp_information' },
-                { name: 'New Employee' }
-            ]
+                {  title: 'Employee Management' , name: 'employeeManagement' },
+                {  title: 'Employee Information' , name: 'employeeInformation' },
+                {  title: 'New Employee' , name: '' }
+            ],
+            
         }
     },
 ];

@@ -39,22 +39,23 @@
         <v-checkbox v-if="n.type == 'cCheckBox' " :label="n.label" v-model="n.value"></v-checkbox>
 
         <cTreeSelect
-        v-if=" n.type=='cTreeSelect' "
-        v-model="n.value" 
-        placeholder="n.label"
-        :api=" !R.isNil(n.api) ? n.api : '' "
-        :disabled="!R.isNil(n.disabled) ? n.disabled : false"
-        >
-        </cTreeSelect>
+          v-if=" n.type=='cTreeSelect' "
+          v-model="n.value"
+          placeholder="n.label"
+          :api=" !R.isNil(n.api) ? n.api : '' "
+          :disabled="!R.isNil(n.disabled) ? n.disabled : false"
+        ></cTreeSelect>
 
         <cAutoComplete
-          v-if="n.type == 'cAutoComplete' "
+          v-if="n.type == 'cAutoComplete'"
           :label="n.label"
           v-model="n.value"
+          :itemsFromProps="!R.isNil(n.items) ? n.items : undefined"
           :api=" !R.isNil(n.api) ? n.api : '' "
           :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
           :disabled="!R.isNil(n.disabled) ? n.disabled : false"
+          @input="!R.isNil(n.changeEvent) ? n.changeEvent( $event ) : ()=>{} "
         ></cAutoComplete>
 
         <cDatePicker
@@ -85,7 +86,11 @@ export default {
   computed: {
     ...mapGetters(["getNewOrOldChecker"])
   },
-  methods: {},
+  methods: {
+    changeEvent($event) {
+      console.log($event);
+    }
+  },
   created() {
     console.log("in the all form input");
     console.log(this.formArray);
