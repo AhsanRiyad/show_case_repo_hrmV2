@@ -3,7 +3,6 @@
     <v-form ref="form">
       <personalInfo ref="personalInfo" />
       <officeInfo ref="officeInfo" />
-
       <v-subheader>
         Effective Date
         <v-divider inset></v-divider>
@@ -11,11 +10,14 @@
       <v-card class="ml-2 mr-2">
         <allFormInputs :formArray.sync="effectiveDate"></allFormInputs>
       </v-card>
-
       <v-container>
         <v-row>
           <v-col>
-            <v-btn class="m-3 white--text" color="red darken-1" @click.stop=" $refs.form.reset()">Reset</v-btn>
+            <v-btn
+              class="m-3 white--text"
+              color="red darken-1"
+              @click.stop=" $refs.form.reset()"
+            >Reset</v-btn>
           </v-col>
           <v-col align="right">
             <v-btn class="m-3 white--text" color="red darken-1" @click.stop="tryD">Submit</v-btn>
@@ -25,8 +27,6 @@
     </v-form>
   </span>
 </template>
-
-
 <script>
 import commonMixins from "@/mixins/commonMixins";
 import personalInfo from "./personalInfo";
@@ -68,22 +68,38 @@ export default {
       this.officeInfo.findIndex((n)=> n.name == 'orgParentId' ) 
       console.log(ind);
       console.log(this.officeInfo[ind]); */
-
       this.$refs.form.validate();
-
       // console.log(this.$refs.officeInfo.officeInfo);
-
-      let merge = [
+      /* let merge = [
         ...this.$refs.officeInfo.officeInfo,
         ...this.$refs.personalInfo.personalInfo,
         ...this.effectiveDate
-      ];
-      let abc = merge.map(n => {
+      ]; */
+      /* let abc = merge.map(n => {
         return {
           [n.name]: n.value
         };
       });
-      console.log(this.R.mergeAll(abc));
+
+       */
+      /*  console.log(
+      this.R.concat(this.$refs.officeInfo.officeInfo , this.$refs.personalInfo.personalInfo, this.effectiveDate)
+      ); */
+
+      let abc = this.R.pipe(
+        this.R.concat,
+        this.R.map(n => ({ [n.name]: n.value })),
+        this.R.mergeAll,
+        this.R.omit(["searchSupervisor"])
+      )(
+        this.$refs.officeInfo.officeInfo,
+        this.$refs.personalInfo.personalInfo,
+        this.effectiveDate
+      );
+
+      console.log(abc);
+
+      // console.log(this.R.mergeAll(abc));
     }
   },
   watch: {},

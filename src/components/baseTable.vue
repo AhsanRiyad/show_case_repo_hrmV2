@@ -84,6 +84,7 @@
       :dialogVisible="myDialogVisible"
       :infoOfaId="infoOfaId"
       @close="myDialogClose"
+      ref="commonDialog"
     >
       <template v-slot:formDialog>
         <slot age2="22" ref="slotForm" :name="nameOfSlot"></slot>

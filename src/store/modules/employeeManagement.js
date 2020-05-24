@@ -3,13 +3,13 @@ export default {
         subModules: [
             {
                 title: 'Employee Information',
-                name: 'Employee Information',
+                name: 'employeeInformation',
                 icon: 'mdi-folder-open',
                 children: [
                     {
                         title: 'New Employee',
                         icon: 'mdi-file-document-outline',
-                        name: 'new_emp'
+                        name: 'newEmployee'
                     },
                     {
                         title: 'Employees List',

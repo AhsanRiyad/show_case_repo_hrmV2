@@ -3,7 +3,7 @@
 
 export default [
     {
-        path: 'create-employee',
+        path: 'employee',
         name: 'newEmployee',
         component: () =>
             import(

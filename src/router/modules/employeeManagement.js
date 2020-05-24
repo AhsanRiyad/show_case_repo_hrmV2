@@ -13,7 +13,7 @@ export default {
 		/* webpackChunkName: "workStructure" */ '@/views/base/employeeManagementBase'
         ),
     children: [{
-        path: 'employee-information',
+        path: 'ei',
         name: 'employeeInformation',
         component: employeeInformationBase,
         children: employeeInformationRouter,
