@@ -14,13 +14,14 @@
         <v-row>
           <v-col>
             <v-btn
+              v-if=" $route.name == 'newEmployee' "
               class="m-3 white--text"
               color="red darken-1"
-              @click.stop=" $refs.form.reset()"
+              @click.stop="$refs.form.reset()"
             >Reset</v-btn>
           </v-col>
           <v-col align="right">
-            <v-btn class="m-3 white--text" color="red darken-1" @click.stop="tryD">Submit</v-btn>
+            <v-btn v-if=" $route.name == 'newEmployee' "  class="m-3 white--text" color="red darken-1" @click.stop="submit">Submit</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -56,9 +57,12 @@ export default {
   }),
   computed: {},
   methods: {
-    tryD() {
+    closeDialog(){
+      console.log(this.$parent.$children);
+    },
+    submit() {
       /* console.log(this.$refs.form.inputs) */
-      /* let  abc = 
+      /* let abc = 
       this.$refs.form.inputs.map((n)=>{
         return {
           [n.id] : n.value,
@@ -84,7 +88,7 @@ export default {
       /*  console.log(
         this.R.concat(this.$refs.officeInfo.officeInfo , this.$refs.personalInfo.personalInfo, this.effectiveDate)
       ); */
-
+      console.log('newEmployee submit');
       //form data
       this.$refs.form.validate();
       let employeeInfo = this.R.pipe(

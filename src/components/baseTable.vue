@@ -6,8 +6,9 @@
           tile
           color="red darken-1"
           dark
-          @click.stop="()=>{ myDialogVisible = true; actionIsNew(formArray); newOrviewOrEditOrCorrection = 'new'; }"
-        >{{ getFrontButtonName }}</v-btn>
+          @click.stop="()=>{ actionIsNew(formArray) }"
+        >{{ getFrontButtonName }}
+        </v-btn>
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"

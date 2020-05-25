@@ -19,6 +19,12 @@ const routes = new Router({
             component: () =>
                 import(/* webpackChunkName: "auth" */ '../views/authenitcations/signIn')
         },
+        {
+            path: '/test',
+            name: 'test',
+            component: () =>
+                import(/* webpackChunkName: "auth" */ '../views/test')
+        },
         workStructure,
         employeeManagement
     ]

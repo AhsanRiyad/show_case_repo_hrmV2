@@ -101,18 +101,17 @@ export default {
             })
         },
         actionIsNew(item) {
+            
             this.newOrviewOrEditOrCorrection = 'new';
+            this.$store.commit("setNewOrOldChecker", 'new');
             //add timestamp if in the view mode
-            this.removeTimeStamp(item);
-            //clearInput
-            this.clearInput(item);
-            //make readonly
-            this.formArray.forEach((n, i, k) => {
-                k[i].readonly = false;
-            })
+            !this.R.isNil(item) || this.removeTimeStamp(item); 
+            
+            this.myDialogVisible = true;
+
         },
         //view item
-        doActionOnItem(action, { item } ) {
+        doActionOnItem(action, { item }) {
             console.log('checking the items');
             console.log(item);
 
@@ -149,19 +148,17 @@ export default {
                     this.actionIsEdit(response);
                 }
             });
-
             //this will make the dialog visible
             this.myDialogVisible = true;
-
         },
         //closes the commonDialog
         myDialogClose() {
             this.myDialogVisible = false;
             //here is a decision point for organization tree
-            this.$store.getters.getActiveRouteName !== 'organization' ? this.getData() : '';
+            
+            this.$store.getters.getActiveRouteName !== 'organization' ? this.getData("/getAll/active?page=0&pageSize=50") : '';
         },
         clearInput(items) {
-            this.$store.commit("setNewOrOldChecker", 'new');
             items.forEach((n, i, a) => {
                 // this is because checkbox should be null, it should be boolean
                 n.type == 'cCheckBox' ? a[i].value = false :
@@ -202,7 +199,7 @@ export default {
         fieldRulesProp(required, fieldName) {
             /* this vuex variable is used in allFormInputs, commonMixins, baseTable,
             all are connected for validation */
-            if (!required || this.$store.getters.getNewOrOldChecker == 'new') {
+            if (!required) {
                 return ([
                     v => !!v || true,
                 ]);

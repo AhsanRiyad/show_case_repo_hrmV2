@@ -38,7 +38,7 @@ export default {
         type: "cTextField",
         label: "Office Type Name*",
         name: "name",
-        value: "Name",
+        value: "",
         required: true,
       },
       {

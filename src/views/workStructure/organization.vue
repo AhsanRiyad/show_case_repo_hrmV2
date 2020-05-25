@@ -150,7 +150,7 @@ export default {
       };
 
       this.formArray[
-        this.R.findIndex(this.R.propEq("name", "orgParentId")) (this.formArray)
+        this.R.findIndex(this.R.propEq("name", "orgParentId"))(this.formArray)
       ].disabled = false;
 
       this.doActionOnItem("edit", obj);
@@ -166,7 +166,7 @@ export default {
 
       //child will be added to the parent node
       this.addChild = node.model.addChild;
-
+      this.$store.commit("setNewOrOldChecker", "new");
       this.myDialogVisible = true;
     }
   }
