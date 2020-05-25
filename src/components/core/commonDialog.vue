@@ -116,11 +116,11 @@ export default {
     if (this.$store.getters.getNewOrOldChecker == "new") {
       this.$refs.form.reset();
       //make readonly
-      this.formArray.forEach((n, i, a) => {
+      !this.R.isNil(this.formArray) ?  this.formArray.forEach((n, i, a) => {
         a[i].readonly = false;
         // this is because checkbox should be null, it should be boolean
         n.type == "cCheckBox" ? (a[i].value = false) : "";
-      });
+      }): '';
       this.$store.commit("setNewOrOldChecker", "updated");
     }
   }

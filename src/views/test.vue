@@ -1,13 +1,9 @@
 <template>
   <v-card>
-    <v-tabs v-model="tab" background-color="red darken-1" centered dark >
+    <v-tabs v-model="tab" background-color="red darken-1" centered dark>
       <v-tabs-slider></v-tabs-slider>
 
-      <v-tab href="#tab-1">Personal</v-tab>
-
-      <v-tab href="#tab-2">Office</v-tab>
-
-      <v-tab href="#tab-3">Nearby</v-tab>
+      <v-tab v-for="n in tabItems" :href="n.href" :key="n.href">{{ n.title }}</v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
@@ -17,13 +13,13 @@
         </v-card>
       </v-tab-item>
 
-      <v-tab-item value="tab-2">
+      <v-tab-item value="office">
         <v-card flat>
           <officeInfo />
         </v-card>
       </v-tab-item>
 
-      <v-tab-item value="tab-1">
+      <v-tab-item value="personal">
         <v-card flat>
           <personalInfo />
         </v-card>
@@ -53,8 +49,22 @@ export default {
   data() {
     return {
       activeBtn: 1,
-      activeTab: '',
+      activeTab: "",
       tab: null,
+
+      tabItems: [
+        {
+          href: "#personal",
+          title: "Personal",
+          component: "<personalInfo/>"
+        },
+        {
+          href: "#office",
+          title: "Office",
+          component: "<officeInfo/>"
+        }
+      ],
+
       text:
         "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.",
       bottomTabs: [

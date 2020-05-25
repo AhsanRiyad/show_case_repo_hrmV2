@@ -105,7 +105,7 @@ export default {
             this.newOrviewOrEditOrCorrection = 'new';
             this.$store.commit("setNewOrOldChecker", 'new');
             //add timestamp if in the view mode
-            !this.R.isNil(item) || this.removeTimeStamp(item); 
+            !this.R.isNil(item) ?  this.removeTimeStamp(item) :  ''; 
             
             this.myDialogVisible = true;
 
