@@ -2,31 +2,22 @@
   <v-card>
     <v-tabs v-model="tab" background-color="red darken-1" centered dark>
       <v-tabs-slider></v-tabs-slider>
-
-      <v-tab v-for="n in tabItems" :href="n.href" :key="n.href">{{ n.title }}</v-tab>
+      <v-tab v-for="n in tabItems" :href="'#'+n.href" :key="n.href">{{ n.title }}</v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
-      <v-tab-item value="tab-3">
+      <v-tab-item v-for="n in tabItems" :value="n.href" :key="n.href">
         <v-card flat>
-          <v-card-text>{{ text }}</v-card-text>
-        </v-card>
-      </v-tab-item>
-
-      <v-tab-item value="office">
-        <v-card flat>
-          <officeInfo />
-        </v-card>
-      </v-tab-item>
-
-      <v-tab-item value="personal">
-        <v-card flat>
-          <personalInfo />
+          <v-card-text>
+            <keep-alive>
+              <component v-bind:is="n.component"></component>
+            </keep-alive>
+          </v-card-text>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
 
-    <v-bottom-navigation dark :active.sync="activeTab" :value="true" color="primary" horizontal>
+    <v-bottom-navigation dark v-model="activeTab" :value="true" color="primary" horizontal>
       <v-btn
         v-for="(n, i) in bottomTabs"
         :key="i"
@@ -41,10 +32,12 @@
 export default {
   name: "test",
   components: {
+    /*eslint-disable */
     personalInfo: () =>
       import("./employeeManagement/employeeInformation/personalInfo"),
     officeInfo: () =>
       import("./employeeManagement/employeeInformation/officeInfo")
+    /*eslint-enable */
   },
   data() {
     return {
@@ -54,14 +47,14 @@ export default {
 
       tabItems: [
         {
-          href: "#personal",
+          href: "personal",
           title: "Personal",
-          component: "<personalInfo/>"
+          component: "personalInfo"
         },
         {
-          href: "#office",
+          href: "office",
           title: "Office",
-          component: "<officeInfo/>"
+          component: "officeInfo"
         }
       ],
 
