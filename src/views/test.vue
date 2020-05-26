@@ -1,5 +1,10 @@
 <template>
   <v-card>
+
+    <employeeBasic/>
+
+
+
     <v-tabs v-model="tab" background-color="red darken-1" centered dark>
       <v-tabs-slider></v-tabs-slider>
       <v-tab v-for="n in tabItems" :href="'#'+n.href" :key="n.href">{{ n.title }}</v-tab>
@@ -22,22 +27,37 @@
         v-for="(n, i) in bottomTabs"
         :key="i"
         :value="n.cName"
+        @click="()=>openDialog(n.cName)"
         class="red darken-1 white--text"
       >{{ n.name }}</v-btn>
     </v-bottom-navigation>
+
+    <commonDialog @close="myDialogClose" :dialogVisible="myDialogVisible" ref="commonDialog">
+      <template v-slot:tableDialog>
+        <component v-bind:is="activeTab"></component>
+      </template>
+    </commonDialog>
   </v-card>
 </template>
 
 <script>
+import commonMixins from "../mixins/commonMixins";
+
 export default {
   name: "test",
+  mixins: [commonMixins],
   components: {
     /*eslint-disable */
+    /*eslint-enable */
+     businessGroup: () =>
+      import("./workStructure/businessGroup"),
+     
+     employeeBasic: () =>
+      import("./employeeManagement/employeeInformation/employeeBasic"),
     personalInfo: () =>
       import("./employeeManagement/employeeInformation/personalInfo"),
     officeInfo: () =>
       import("./employeeManagement/employeeInformation/officeInfo")
-    /*eslint-enable */
   },
   data() {
     return {
@@ -91,6 +111,13 @@ export default {
             }*/
       ]
     };
+  },
+  methods: {
+    openDialog(name){
+      console.log(name);
+      console.log(this.activeTab);
+      this.myDialogVisible = true;
+    }
   }
 };
 </script>

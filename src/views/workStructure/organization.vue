@@ -148,11 +148,9 @@ export default {
           id: node.model.id
         }
       };
-
       this.formArray[
         this.R.findIndex(this.R.propEq("name", "orgParentId"))(this.formArray)
       ].disabled = false;
-
       this.doActionOnItem("edit", obj);
     },
     addItem(node) {

@@ -5,9 +5,15 @@
         <v-toolbar class="white--text" color="red darken-1">City Bank</v-toolbar>
         <v-container>
           <v-form ref="form">
+            <!-- this pareVal is data passing props for its parent, previously it was used by scopped slot -->
             <slot ref="slotForm" :parentVal="parentVal" name="formDialog"></slot>
           </v-form>
         </v-container>
+
+        <v-container>
+          <slot ref="slotTable" :parentVal="parentVal" name="tableDialog"></slot>
+        </v-container>
+
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn
@@ -116,11 +122,13 @@ export default {
     if (this.$store.getters.getNewOrOldChecker == "new") {
       this.$refs.form.reset();
       //make readonly
-      !this.R.isNil(this.formArray) ?  this.formArray.forEach((n, i, a) => {
-        a[i].readonly = false;
-        // this is because checkbox should be null, it should be boolean
-        n.type == "cCheckBox" ? (a[i].value = false) : "";
-      }): '';
+      !this.R.isNil(this.formArray)
+        ? this.formArray.forEach((n, i, a) => {
+            a[i].readonly = false;
+            // this is because checkbox should be null, it should be boolean
+            n.type == "cCheckBox" ? (a[i].value = false) : "";
+          })
+        : "";
       this.$store.commit("setNewOrOldChecker", "updated");
     }
   }
