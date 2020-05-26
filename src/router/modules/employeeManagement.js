@@ -26,14 +26,18 @@ export default {
             childPages: [
                 { title: 'New Employee', name: 'newEmployee' },
                 { title: 'Employee List', name: 'employee' },
+                { title: 'Bank Account Assignment', name: 'bankAccountAssignment' },
             ]
         }
     },
+    
+
     ],
     meta: {
         breadcrumb: [{ title: 'Employee Management' }],
         childPages: [
             { title: 'Employee Information', name: 'employeeInformation' },
+            
         ]
     }
 };

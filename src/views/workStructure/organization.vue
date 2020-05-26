@@ -18,8 +18,9 @@
 
     <commonDialog
       :addChild="addChild"
+      :infoOfaId="infoOfaId"
       :formArray.sync="formArray"
-      newOrviewOrEditOrCorrectionProps="new"
+      :newOrviewOrEditOrCorrectionProps="newOrviewOrEditOrCorrection"
       :dialogVisible="myDialogVisible"
       @close="myDialogClose"
     >
@@ -40,6 +41,8 @@ export default {
   mixins: [commonMixins],
   data: () => {
     return {
+      infoOfaId: {},
+
       nameOfSlot: "",
 
       // if data is ready then load the tree
@@ -141,6 +144,7 @@ export default {
       console.log(node.model.name + "show clicked !");
       console.log(this.data);
       console.log(node.model);
+
 
       //this formating is required for matching with table view edit/correction
       let obj = {

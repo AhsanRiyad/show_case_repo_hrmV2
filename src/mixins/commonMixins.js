@@ -92,6 +92,8 @@ export default {
         },
         actionIsEdit(infoOfaId) {
             this.newOrviewOrEditOrCorrection = 'edit';
+            //this is applicable only for organization tree as there is not table. that why no props
+
             //add timestamp if in the view mode
             this.removeTimeStamp(infoOfaId);
             this.fillItemsIntheForm(infoOfaId);
@@ -101,12 +103,12 @@ export default {
             })
         },
         actionIsNew(item) {
-            
+
             this.newOrviewOrEditOrCorrection = 'new';
             this.$store.commit("setNewOrOldChecker", 'new');
             //add timestamp if in the view mode
-            !this.R.isNil(item) ?  this.removeTimeStamp(item) :  ''; 
-            
+            !this.R.isNil(item) ? this.removeTimeStamp(item) : '';
+
             this.myDialogVisible = true;
 
         },
@@ -155,7 +157,7 @@ export default {
         myDialogClose() {
             this.myDialogVisible = false;
             //here is a decision point for organization tree
-            
+
             this.$store.getters.getActiveRouteName !== 'organization' ? this.getData("/getAll/active?page=0&pageSize=50") : '';
         },
         clearInput(items) {
@@ -241,20 +243,34 @@ export default {
                 resolve();
             }).then(() => {
                 console.log(this.formArray);
+                
+                
                 //validate the form
                 if (!this.$refs.form.validate()) return;
+                
+                //remove the search or non-takenable fields
+                let formArray =[ ...this.R.reject(n => n.shouldInclude == false)(this.formArray) ];
+                console.log('should include')
+                console.log(formArray);
+
                 //organize the input form, first formate the array using map, then make the a an object using mergeAll
                 let formInputValues =
                     this.R.pipe(
                         this.R.map((n) => { return { [n.name]: n.value } }),
                         this.R.mergeAll()
-                    )(this.formArray)
+                    )(formArray)
                 console.log(formInputValues);
                 console.log(this.apiBase);
                 //for preventing the props from mutation
                 let mergedVal = this.R.has('infoOfaId', this.$props) && this.R.isNil(this.infoOfaIdFromProps) ? this.infoOfaId : this.infoOfaIdFromProps;
+
+
+                console.log('in the submit function');
+                console.log(mergedVal);
+
                 // merge the value that is required for updating a entity
                 newOrviewOrEditOrCorrection == 'edit' || newOrviewOrEditOrCorrection == 'correction' ? formInputValues = { ...mergedVal, ...formInputValues } : '';
+                console.log('after merging');
                 console.log(formInputValues);
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
                 this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
@@ -293,8 +309,10 @@ export default {
             }).catch(() => {
                 this.tableLoading = false;
             });
-        }
+        },
         //base table funcitons ends
+
+
     },
     watch: {},
     mounted() { }

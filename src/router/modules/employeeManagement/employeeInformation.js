@@ -36,4 +36,21 @@ export default [
             
         }
     },
+    {
+        path: 'bank-account-assignment',
+        name: 'bankAccountAssignment',
+        component: () =>
+            import(
+                /* webpackChunkName: "employee_management" */ '../../../views/employeeManagement/bankAccountAssignment'
+            ),
+        meta: {
+            title: "Bank Account Assignment",
+            breadcrumb: [
+                {  title: 'Employee Management' , name: 'employeeManagement' },
+                {  title: 'Employee Information' , name: 'employeeInformation' },
+                {  title: 'Bank Account Assignment' , name: '' }
+            ],
+            
+        }
+    },
 ];
