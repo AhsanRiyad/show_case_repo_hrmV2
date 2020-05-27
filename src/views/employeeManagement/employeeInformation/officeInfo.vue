@@ -48,6 +48,7 @@ export default {
         name: "supervisorId",
         items: [],
         required: true,
+        api: "/em/ei/employee/getAll/active/dropdown/",
         value: "",
 
       },

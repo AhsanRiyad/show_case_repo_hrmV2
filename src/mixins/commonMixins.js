@@ -1,7 +1,4 @@
 import { eventBus } from '@/main';
-
-
-
 export default {
     data: () => ({
 

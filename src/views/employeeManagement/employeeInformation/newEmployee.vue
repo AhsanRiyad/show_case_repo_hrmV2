@@ -1,15 +1,13 @@
 <template>
   <span>
     <v-form ref="form">
+
+
       <personalInfo ref="personalInfo" />
       <officeInfo ref="officeInfo" />
-      <v-subheader>
-        Effective Date
-        <v-divider inset></v-divider>
-      </v-subheader>
-      <v-card class="ml-2 mr-2">
-        <allFormInputs :formArray.sync="effectiveDate"></allFormInputs>
-      </v-card>
+      <effectiveDate ref="effectiveDate" />
+      <reason v-if="showReason" ref="reason" />
+
       <v-container>
         <v-row>
           <v-col>
@@ -30,6 +28,7 @@
           </v-col>
         </v-row>
       </v-container>
+
     </v-form>
   </span>
 </template>
@@ -37,29 +36,16 @@
 import commonMixins from "@/mixins/commonMixins";
 import personalInfo from "./personalInfo";
 import officeInfo from "./officeInfo";
+import effectiveDate from "./effectiveDate";
+import reason from "./reason";
 import { eventBus } from "@/main";
 
 export default {
   name: "newEmployee",
-  components: { personalInfo, officeInfo },
+  components: { personalInfo, officeInfo, effectiveDate, reason },
   mixins: [commonMixins],
   data: () => ({
-    effectiveDate: [
-      {
-        type: "cDatePicker",
-        value: "",
-        label: "Effective Start Date",
-        name: "startDate",
-        required: false
-      },
-      {
-        type: "cDatePicker",
-        value: "",
-        label: "Effective End Date",
-        name: "endDate",
-        required: false
-      }
-    ]
+    showReason: false,
   }),
   computed: {},
   methods: {
@@ -68,9 +54,11 @@ export default {
     //it would be fired from baseTable, under action button menu
     //this is only applicable for employee route name
     fillItemsIntheForm(infoOfaId) {
-      this.effectiveDate.forEach((n, i) => {
+      this.showReason = true;
+
+      this.$refs.effectiveDate.effectiveDate.forEach((n, i) => {
         if (this.R.has(n.name, infoOfaId)) {
-          this.effectiveDate[i].value = infoOfaId[n.name];
+          this.$refs.effectiveDate.effectiveDate[i].value = infoOfaId[n.name];
         }
       });
       this.$refs.officeInfo.officeInfo.forEach((n, i) => {
@@ -88,7 +76,6 @@ export default {
       console.log(this.$parent.$children);
     },
     submit() {
-      console.log(this.effectiveDate);
       /* console.log(this.$refs.form.inputs) */
       /* let abc = 
       this.$refs.form.inputs.map((n)=>{
@@ -121,7 +108,7 @@ export default {
       this.$refs.form.validate();
       let employeeInfo = this.R.pipe(
         this.R.concat,
-        this.R.concat(this.effectiveDate),
+        this.R.concat(this.$refs.effectiveDate.effectiveDate),
         this.R.map(n => ({ [n.name]: n.value })),
         this.R.mergeAll,
         this.R.omit(["searchSupervisor"])

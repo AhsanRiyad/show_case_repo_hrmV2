@@ -33,6 +33,7 @@ export default new Vuex.Store({
 		newOrOldChecker: 'old',
 		//tree saver
 		// treeInfo: [],
+		requestMethod: 'get',
 
 	},
 	getters: {
@@ -53,6 +54,9 @@ export default new Vuex.Store({
 		},
 		setNewOrOldChecker(state , name){
 			state.newOrOldChecker = name;
+		},
+		setRequestMethod(state , name){
+			state.requestMethod = name;
 		},
 		/* setTreeInfo(state , name){
 			state.treeInfo = name;

@@ -81,7 +81,7 @@ export default {
     }
   },
   mounted() {
-    this.R.isNil(this.itemsFromProps)
+    this.R.isNil(this.itemsFromProps) || this.R.isEmpty(this.itemsFromProps) 
       ? this.getData()
       : (this.items = this.itemsFromProps);
   },
@@ -90,9 +90,7 @@ export default {
       handler: function (newVal, oldVal) {
         console.log(newVal);
         console.log(oldVal);
-
         this.items = newVal;
-
       },
       immediate: true,
     }
