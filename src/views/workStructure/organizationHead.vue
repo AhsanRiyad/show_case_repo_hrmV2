@@ -90,7 +90,7 @@ export default {
             console.log(index);
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.apiRequestData.method = "get";
+            this.$store.commit('setRequestMethod', 'get');
             this.apiRequestData.api = "/em/employeeSubtype/getActive/" + id;
             this.apiRequestData.item = {};
 
@@ -108,7 +108,7 @@ export default {
                 this.officeInfo
             );
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.apiRequestData.method = "get";
+            this.$store.commit('setRequestMethod', 'get');
             this.apiRequestData.api = "/em/employeeSubtype/getActive/" + n.id;
             this.apiRequestData.item = {};
             //axios calling, actions will be dispatched asynchronously

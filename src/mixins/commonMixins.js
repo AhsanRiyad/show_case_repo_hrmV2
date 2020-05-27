@@ -92,6 +92,7 @@ export default {
             // this.fillItemsIntheForm method will be called at add timestamp method
         },
         actionIsEdit(infoOfaId) {
+            this.$store.commit("setRequestMethod", "put");
             this.newOrviewOrEditOrCorrection = 'edit';
             //this is applicable only for organization tree as there is not table. that why no props
             if (this.$route.name == 'employee') {
@@ -109,9 +110,8 @@ export default {
             }
         },
         actionIsNew(item) {
-
+            this.$store.commit("setRequestMethod", "post");
             this.newOrviewOrEditOrCorrection = 'new';
-            this.$store.commit("setNewOrOldChecker", 'new');
             //add timestamp if in the view mode
             !this.R.isNil(item) ? this.removeTimeStamp(item) : '';
 
@@ -126,7 +126,7 @@ export default {
             //get Data from server
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.apiRequestData.method = "get";
+            this.$store.commit('setRequestMethod', 'get');
             this.apiRequestData.api = this.$store.getters.getActivePathName + '/getActive/' + item.id;
             this.apiRequestData.item = {};
 
@@ -238,11 +238,6 @@ export default {
                 ]);
             }
         },
-        solveInputValidation() {
-            //this function is for form validation, initiated in basetable when tries to create new entry
-            console.log('in the solve funcitons');
-            this.$store.commit('setNewOrOldChecker', 'updated');
-        },
         //base table functions starts
         submit(newOrviewOrEditOrCorrection) {
             //this is for input form validation
@@ -250,7 +245,6 @@ export default {
                 //remove timestamp if there is any
                 this.removeTimeStamp();
                 //this is only for form validation issues, connected with allFormInputs components
-                this.$store.commit("setNewOrOldChecker", 'updated');
                 resolve();
             }).then(() => {
                 console.log(this.formArray);
@@ -284,7 +278,7 @@ export default {
                 console.log('after merging');
                 console.log(formInputValues);
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
-                this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
+                // this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
                 this.apiRequestData.api = this.$store.getters.getActivePathName;
                 this.apiRequestData.item = formInputValues;
                 //this will help decide the header if it will be createdBy or updatedBy
@@ -307,7 +301,7 @@ export default {
         },
         getData(extention) {
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.apiRequestData.method = "get";
+            this.$store.commit('setRequestMethod', 'get');
             this.apiRequestData.api = this.$store.getters.getActivePathName + extention;
             this.apiRequestData.item = {};
             //table loader

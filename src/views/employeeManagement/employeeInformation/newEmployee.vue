@@ -6,7 +6,7 @@
       <personalInfo ref="personalInfo" />
       <officeInfo ref="officeInfo" />
       <effectiveDate ref="effectiveDate" />
-      <reason v-if="showReason" ref="reason" />
+      <reason v-if="this.$store.getters.getRequestMethod == 'put'" ref="reason" />
 
       <v-container>
         <v-row>
@@ -45,7 +45,7 @@ export default {
   components: { personalInfo, officeInfo, effectiveDate, reason },
   mixins: [commonMixins],
   data: () => ({
-    showReason: false,
+  
   }),
   computed: {},
   methods: {
@@ -54,8 +54,7 @@ export default {
     //it would be fired from baseTable, under action button menu
     //this is only applicable for employee route name
     fillItemsIntheForm(infoOfaId) {
-      this.showReason = true;
-
+    
       this.$refs.effectiveDate.effectiveDate.forEach((n, i) => {
         if (this.R.has(n.name, infoOfaId)) {
           this.$refs.effectiveDate.effectiveDate[i].value = infoOfaId[n.name];
@@ -113,7 +112,6 @@ export default {
         this.R.mergeAll,
         this.R.omit(["searchSupervisor"])
       )(this.$refs.officeInfo.officeInfo, this.$refs.personalInfo.personalInfo);
-      this.apiRequestData.method = "post";
       this.apiRequestData.api = "/em/ei/employee";
       this.apiRequestData.item = employeeInfo;
 

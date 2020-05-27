@@ -30,7 +30,7 @@ export default {
     disabled: [Boolean],
     itemsFromProps: [String, Number, Array, Object],
     changeEvent: [Function],
-    id: [String, Number],
+    id: [String, Number]
   },
   mixins: [commonMixins],
   data() {
@@ -67,7 +67,7 @@ export default {
     },
     getData() {
       //a very common getData function for baseTable, will be call at the created lifeCycle hook
-      this.apiRequestData.method = "get";
+      this.$store.commit("setRequestMethod", "get");
       this.apiRequestData.api = this.api;
       this.apiRequestData.data = {};
 
@@ -81,18 +81,18 @@ export default {
     }
   },
   mounted() {
-    this.R.isNil(this.itemsFromProps) || this.R.isEmpty(this.itemsFromProps) 
+    this.R.isNil(this.itemsFromProps) || this.R.isEmpty(this.itemsFromProps)
       ? this.getData()
       : (this.items = this.itemsFromProps);
   },
-  watch:{
-    itemsFromProps:{
-      handler: function (newVal, oldVal) {
+  watch: {
+    itemsFromProps: {
+      handler: function(newVal, oldVal) {
         console.log(newVal);
         console.log(oldVal);
         this.items = newVal;
       },
-      immediate: true,
+      immediate: true
     }
   }
 };

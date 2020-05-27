@@ -1,6 +1,6 @@
 <template>
   <v-row justify="center">
-    <v-dialog v-model="intDialogVisible" persistent max-width="800px">
+    <v-dialog fullscreen  v-model="intDialogVisible" persistent max-width="800px">
       <v-card>
         <v-toolbar class="white--text" color="red darken-1">City Bank</v-toolbar>
         <v-container>
@@ -119,7 +119,7 @@ export default {
     console.log("this is common dialog");
   },
   updated() {
-    if (this.$store.getters.getNewOrOldChecker == "new") {
+    if (this.$store.getters.getRequestMethod == 'post') {
       this.$refs.form.reset();
       //make readonly
       !this.R.isNil(this.formArray)
@@ -129,7 +129,6 @@ export default {
             n.type == "cCheckBox" ? (a[i].value = false) : "";
           })
         : "";
-      this.$store.commit("setNewOrOldChecker", "updated");
     }
   }
 };

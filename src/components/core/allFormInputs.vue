@@ -23,7 +23,6 @@
           autocomplete="off"
         ></v-textarea>
 
-        <!-- here setNewOrOldChecker is for creating new value and for form validation, all are linked up -->
         <v-text-field
           :id="n.name"
           v-if=" n.type == 'cTextField' "

@@ -28,11 +28,9 @@ export default new Vuex.Store({
 		activeRouteName: 'hellow',
 		//will be used in making api automatic, being used in index.js of router
 		activePathName: '',
-		//this checker will be used in allProfileInput components for solving form error issue, and will be 
-		//connected with baseTable createNew method
-		newOrOldChecker: 'old',
 		//tree saver
 		// treeInfo: [],
+		//this is api request method
 		requestMethod: 'get',
 
 	},
@@ -42,7 +40,7 @@ export default new Vuex.Store({
 		getApiBase: state => state.apiBase,
 		getActiveRouteName: state => state.activeRouteName,
 		getActivePathName: state => state.activePathName,
-		getNewOrOldChecker: state => state.newOrOldChecker,
+		getRequestMethod: state => state.requestMethod,
 		// getTreeInfo: state => state.treeInfo,
 	},
 	mutations: {
@@ -51,9 +49,6 @@ export default new Vuex.Store({
 		},
 		setActivePathName(state , name){
 			state.activePathName = name;
-		},
-		setNewOrOldChecker(state , name){
-			state.newOrOldChecker = name;
 		},
 		setRequestMethod(state , name){
 			state.requestMethod = name;
@@ -81,7 +76,7 @@ actions: {
 			}
 			console.log(headers);
 			console.log(data);
-			axios( {  method: data.method, url: url , data: data.item , headers: headers } ).then( ( response )=>{
+			axios({ method: context.state.requestMethod, url: url , data: data.item , headers: headers } ).then( ( response )=>{
 				console.log("in the dispatch");
 				console.log(response);
 				resolve(response.data);

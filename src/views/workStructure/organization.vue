@@ -122,7 +122,7 @@ export default {
   },
   methods: {
     getData() {
-      this.apiRequestData.method = "get";
+      this.$store.commit("setRequestMethod", "get");
       this.apiRequestData.api = "/ws/organization/getTree";
       this.apiRequestData.item = {};
       //axios calling, actions will be dispatched asynchronously
@@ -168,7 +168,6 @@ export default {
 
       //child will be added to the parent node
       this.addChild = node.model.addChild;
-      this.$store.commit("setNewOrOldChecker", "new");
       this.myDialogVisible = true;
     }
   }

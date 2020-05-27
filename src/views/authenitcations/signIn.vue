@@ -95,7 +95,7 @@ export default {
       this.loading = true;
 
       //data and config for axios
-      this.apiRequestData.method = "post";
+      this.$store.commit('setRequestMethod' , 'post');
       this.apiRequestData.api = this.$store.getters.getActivePathName;
       this.apiRequestData.item = this.formData;
 

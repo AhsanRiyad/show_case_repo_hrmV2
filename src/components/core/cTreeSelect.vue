@@ -124,7 +124,7 @@ export default {
     //base table funcitons ends
     getData() {
       //a very common getData function for baseTable, will be call at the created lifeCycle hook
-      this.apiRequestData.method = "get";
+      this.$store.commit("setRequestMethod", "get");
       this.apiRequestData.api = "/ws/organization/getTree";
       this.apiRequestData.item = {};
       //table loader
