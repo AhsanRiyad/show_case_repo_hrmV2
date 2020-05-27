@@ -1,8 +1,6 @@
 <template>
   <span>
     <v-form ref="form">
-
-
       <personalInfo ref="personalInfo" />
       <officeInfo ref="officeInfo" />
       <effectiveDate ref="effectiveDate" />
@@ -28,7 +26,6 @@
           </v-col>
         </v-row>
       </v-container>
-
     </v-form>
   </span>
 </template>
@@ -44,23 +41,15 @@ export default {
   name: "newEmployee",
   components: { personalInfo, officeInfo, effectiveDate, reason },
   mixins: [commonMixins],
-  data: () => ({
-  
-  }),
+  data: () => ({}),
   computed: {},
   methods: {
-
     //this function will be fired to fill in the form when clicked on the view/edit/correction
     //it would be fired from baseTable, under action button menu
     //this is only applicable for employee route name
     fillItemsIntheForm(infoOfaId) {
-    
-      this.$refs.effectiveDate.effectiveDate.forEach((n, i) => {
-        if (this.R.has(n.name, infoOfaId)) {
-          this.$refs.effectiveDate.effectiveDate[i].value = infoOfaId[n.name];
-        }
-      });
-      this.$refs.officeInfo.officeInfo.forEach((n, i) => {
+      try {
+        this.$refs.officeInfo.officeInfo.forEach((n, i) => {
         if (this.R.has(n.name, infoOfaId)) {
           this.$refs.officeInfo.officeInfo[i].value = infoOfaId[n.name];
         }
@@ -70,6 +59,16 @@ export default {
           this.$refs.personalInfo.personalInfo[i].value = infoOfaId[n.name];
         }
       });
+      this.$refs.effectiveDate.effectiveDate.forEach((n, i) => {
+        if (this.R.has(n.name, infoOfaId)) {
+          this.$refs.effectiveDate.effectiveDate[i].value = infoOfaId[n.name];
+        }
+      });
+      } catch (err) {
+        console.log(err);
+      }
+
+      
     },
     closeDialog() {
       console.log(this.$parent.$children);
@@ -133,7 +132,9 @@ export default {
   created() {
     //this event is being fired from baseTable viewItem function, the the definition is in the common mixins file
     eventBus.$on("updateForm", infoOfaId => {
-      this.fillItemsIntheForm(infoOfaId);
+      setTimeout(() => {
+        this.fillItemsIntheForm(infoOfaId);
+      }, 100);
     });
   }
 };

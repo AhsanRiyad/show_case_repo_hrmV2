@@ -1,8 +1,23 @@
 <template>
   <v-row justify="center">
-    <v-dialog fullscreen  v-model="intDialogVisible" persistent max-width="800px">
+    <v-dialog
+      transition="dialog-bottom-transition"
+      v-model="intDialogVisible"
+      persistent
+      max-width="800px"
+    >
       <v-card>
-        <v-toolbar class="white--text" color="red darken-1">City Bank</v-toolbar>
+        <v-app-bar class="white--text" dark color="red darken-1">
+          <v-btn icon dark @click="intDialogVisible = false">
+            <v-icon>mdi-close</v-icon>
+          </v-btn>
+          <v-toolbar-title>City Bank</v-toolbar-title>
+          <v-spacer></v-spacer>
+          <v-toolbar-items>
+            <v-btn dark text @click="intDialogVisible = false">Close</v-btn>
+          </v-toolbar-items>
+        </v-app-bar>
+
         <v-container>
           <v-form ref="form">
             <!-- this pareVal is data passing props for its parent, previously it was used by scopped slot -->
@@ -28,6 +43,15 @@
             text
             @click.stop="nativeSubmit"
           >Save</v-btn>
+
+
+          <v-btn
+            color="red darken-1"
+            text
+            @click.stop="$refs.form.reset()"
+          >reset</v-btn>
+
+
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -35,6 +59,7 @@
 </template>
 <script>
 import commonMixins from "../../mixins/commonMixins";
+import { mapGetters } from "vuex";
 export default {
   props: {
     dialogVisible: {
@@ -71,6 +96,7 @@ export default {
     };
   },
   computed: {
+    ...mapGetters(["getRequestMethod"]),
     showOrHideSaveButton() {
       if (this.newOrviewOrEditOrCorrectionProps == "view") return false;
       else return true;
@@ -110,17 +136,33 @@ export default {
         this.infoOfaIdFromProps = newVal;
       },
       immediate: true
+    },
+    getRequestMethod: {
+      handler: function(newVal) {
+        console.log("in the new");
+        if (newVal == "post") {
+          console.log(newVal);
+          // this.$refs.form.reset();
+        }
+      },
+      immediate: true
     }
   },
   created() {
     this.infoOfaIdFromProps = this.infoOfaId;
+    console.log("form mounted");
   },
   mounted() {
     console.log("this is common dialog");
   },
   updated() {
-    if (this.$store.getters.getRequestMethod == 'post') {
+    if (this.$store.getters.getRequestMethod == "post") {
+      console.log("in the updated");
       this.$refs.form.reset();
+
+      console.log(this.$refs);
+
+
       //make readonly
       !this.R.isNil(this.formArray)
         ? this.formArray.forEach((n, i, a) => {

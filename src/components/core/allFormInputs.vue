@@ -7,7 +7,6 @@
         :md="n.type == 'cTextArea' || n.type == 'cTreeSelect' ?  12 : 6"
         v-for="(n, i) in formArray"
         :key="i"
-        @click.stop="solveInputValidation"
       >
         <v-textarea
           :id="n.name"
@@ -84,7 +83,6 @@
 <script>
 import commonMixins from "../../mixins/commonMixins";
 
-import { mapGetters } from "vuex";
 export default {
   name: "allFormInput",
   props: ["formArray", "age2"],
@@ -93,7 +91,7 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["getNewOrOldChecker"])
+    
   },
   methods: {
     changeEvent($event) {
@@ -106,15 +104,6 @@ export default {
   },
   updated() {},
   destroy() {},
-  watch: {
-    getNewOrOldChecker: {
-      handler(newVal) {
-        console.log("this is map getters");
-        console.log(newVal);
-      },
-      immediate: true,
-      deep: true
-    }
-  }
+  watch: {}
 };
 </script>
