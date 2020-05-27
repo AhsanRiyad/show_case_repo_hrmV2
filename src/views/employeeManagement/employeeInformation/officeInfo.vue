@@ -46,9 +46,10 @@ export default {
         type: "cAutoComplete",
         label: "Supervisor Name*",
         name: "supervisorId",
-        api: "/em/employee/getAll/active?page=0&pageSize=50",
+        items: [],
         required: true,
-        value: ""
+        value: "",
+
       },
       {
         type: "cTextField",
@@ -123,7 +124,7 @@ export default {
         type: "cAutoComplete",
         label: "Assignment Category*",
         name: "assignmentCategoryId",
-        api: "/em/assignment/getAll/active?page=0&pageSize=50",
+        api: "/em/assignmentCategory/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
@@ -214,10 +215,11 @@ export default {
       );
       //a very common getData function for baseTable, will be call at the created lifeCycle hook
       this.apiRequestData.method = "get";
-      this.apiRequestData.api = "/em/employeeSubtype/getActive/" + n.id;
+      this.apiRequestData.api = "/em/ei/employee/getAll/active/dropdown/" + n.value;
       this.apiRequestData.item = {};
       //axios calling, actions will be dispatched asynchronously
       this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+        console.log(response);
         this.officeInfo[index].items = response;
       });
     },

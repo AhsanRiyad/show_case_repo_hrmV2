@@ -2,37 +2,37 @@ export default {
     state: {
         subModules: [
             {
-                name: 'User Management',
+                title: 'User Management',
                 icon: 'mdi-folder-open',
                 children: [
                     {
-                        name: 'Unlock Account',
-                        link: 'unlock',
+                        title: 'Unlock Account',
+                        name: 'unlock',
                         icon: 'mdi-file-document-outline'
                     },
                     {
-                        name: 'Never Lock Accounts',
-                        link: 'neverlock',
+                        title: 'Never Lock Accounts',
+                        name: 'neverlock',
                         icon: 'mdi-file-document-outline'
                     },
                     {
-                        name: 'Users',
-                        link: 'users',
+                        title: 'Users',
+                        name: 'users',
                         icon: 'mdi-file-document-outline'
                     },
                     {
-                        name: 'Roles',
-                        link: 'role',
+                        title: 'Roles',
+                        name: 'role',
                         icon: 'mdi-file-document-outline'
                     },
                     {
-                        name: 'Modules',
-                        link: 'privileges',
+                        title: 'Modules',
+                        name: 'privileges',
                         icon: 'mdi-file-document-outline'
                     },
                     {
-                        name: 'Assign Role & Modules',
-                        link: 'assign_roles_privileges',
+                        title: 'Assign Role & Modules',
+                        name: 'assign_roles_privileges',
                         icon: 'mdi-file-document-outline'
                     }
                 ]
