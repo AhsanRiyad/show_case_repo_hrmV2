@@ -61,6 +61,9 @@ export default {
       console.log(this.$parent.$children);
     },
     submit() {
+      console.log(this.effectiveDate);
+
+
       /* console.log(this.$refs.form.inputs) */
       /* let abc = 
       this.$refs.form.inputs.map((n)=>{
@@ -93,17 +96,20 @@ export default {
       this.$refs.form.validate();
       let employeeInfo = this.R.pipe(
         this.R.concat,
+        this.R.concat(this.effectiveDate),
         this.R.map(n => ({ [n.name]: n.value })),
         this.R.mergeAll,
         this.R.omit(["searchSupervisor"])
       )(
         this.$refs.officeInfo.officeInfo,
         this.$refs.personalInfo.personalInfo,
-        this.effectiveDate
       );
       this.apiRequestData.method = "post";
-      this.apiRequestData.api = this.$store.getters.getActivePathName;
+      this.apiRequestData.api = "/em/ei/employee";
       this.apiRequestData.item = employeeInfo;
+
+      console.log(employeeInfo);
+
 
       this.$store
         .dispatch("callApi", this.apiRequestData)
