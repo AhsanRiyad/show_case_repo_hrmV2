@@ -44,14 +44,6 @@
             @click.stop="nativeSubmit"
           >Save</v-btn>
 
-
-          <v-btn
-            color="red darken-1"
-            text
-            @click.stop="$refs.form.reset()"
-          >reset</v-btn>
-
-
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -118,9 +110,11 @@ export default {
   methods: {
     //this function will decide which function to call
     nativeSubmit() {
+      this.newOrviewOrEditOrCorrectionProps == 'new' ?  this.$store.commit("setRequestMethod", "post"):  this.$store.commit("setRequestMethod", "put");
+
       if (this.$route.name == "employee") {
         //form slot->children named newEmployee.vue ->submit function
-        this.$refs.form.$children[0].submit();
+        this.$refs.form.$children[0].submit(this.newOrviewOrEditOrCorrectionProps);
       } else {
         this.submit(this.newOrviewOrEditOrCorrectionProps);
       }

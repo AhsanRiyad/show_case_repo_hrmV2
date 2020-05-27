@@ -36,7 +36,7 @@ export default {
       {
         type: "cTreeSelect",
         label: "Select Organiztion",
-        name: "orgParentId",
+        name: "organizationId",
         value: null,
         visible: true,
         required: true
@@ -44,20 +44,21 @@ export default {
       {
         type: "cAutoComplete",
         label: "Employee*",
-        name: "supervisorId",
-        api: "/em/employee/getAll/active?page=0&pageSize=50",
+        name: "employeeId",
+        api: "/em/ei/employee/getAll/active/dropdown/",
         required: true,
+        items: [],
         value: ""
       },
       {
         type: "cTextField",
         label: "Search Employee*",
-        name: "searchSupervisor",
+        name: "searchEmployee",
         value: "",
         filled: true,
         appendIcon: "search",
         required: false,
-        keyUpEvent: vm.updateSuperVisorList,
+        keyUpEvent: vm.updateEmployeeList,
         shouldInclude: false,
       },
       {
@@ -79,45 +80,20 @@ export default {
     ]
   }),
   methods:{
-
-    
-        updateEmployeeSubType(id) {
-            console.log("in the update subtype");
-            console.log(id);
-            let index = this.R.findIndex(this.R.propEq("name", "employeeSubtypeId"))(
-                this.officeInfo
-            );
-            console.log(index);
-
-            //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.$store.commit('setRequestMethod', 'get');
-            this.apiRequestData.api = "/em/employeeSubtype/getActive/" + id;
-            this.apiRequestData.item = {};
-
-            //axios calling, actions will be dispatched asynchronously
-            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-                console.log(response);
-                this.officeInfo[index].items = response;
-            });
-
-            // this.officeInfo[index].items = [{ name: "cc", id: "cc" }];
-            // this.officeInfo[index].type ='cTextField';
-        },
-        updateSuperVisorList(n) {
-            let index = this.R.findIndex(this.R.propEq("name", "supervisorId"))(
-                this.officeInfo
-            );
-            //a very common getData function for baseTable, will be call at the created lifeCycle hook
-            this.$store.commit('setRequestMethod', 'get');
-            this.apiRequestData.api = "/em/employeeSubtype/getActive/" + n.id;
-            this.apiRequestData.item = {};
-            //axios calling, actions will be dispatched asynchronously
-            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-                this.officeInfo[index].items = response;
-            });
-        },
-
-
+    updateEmployeeList(n) {
+      let index = this.R.findIndex(this.R.propEq("name", "employeeId"))(
+        this.formArray
+      );
+      //a very common getData function for baseTable, will be call at the created lifeCycle hook
+      this.$store.commit('setRequestMethod', 'get');
+      this.apiRequestData.api = "/em/ei/employee/getAll/active/dropdown/" + n.value;
+      this.apiRequestData.item = {};
+      //axios calling, actions will be dispatched asynchronously
+      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+        console.log(response);
+        this.formArray[index].items = response;
+      });
+    },
   },
   computed: {},
   watch: {},

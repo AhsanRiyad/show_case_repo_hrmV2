@@ -4,7 +4,7 @@
       <personalInfo ref="personalInfo" />
       <officeInfo ref="officeInfo" />
       <effectiveDate ref="effectiveDate" />
-      <reason v-if="this.$store.getters.getRequestMethod == 'put'" ref="reason" />
+      <changeReason v-show="this.$store.getters.getRequestMethod == 'put'" ref="changeReason" />
 
       <v-container>
         <v-row>
@@ -34,49 +34,55 @@ import commonMixins from "@/mixins/commonMixins";
 import personalInfo from "./personalInfo";
 import officeInfo from "./officeInfo";
 import effectiveDate from "./effectiveDate";
-import reason from "./reason";
+import changeReason from "./changeReason";
 import { eventBus } from "@/main";
 
 export default {
   name: "newEmployee",
-  components: { personalInfo, officeInfo, effectiveDate, reason },
+  components: { personalInfo, officeInfo, effectiveDate, changeReason },
   mixins: [commonMixins],
-  data: () => ({}),
+  data: () => ({
+    infoOfaId: {}
+  }),
   computed: {},
   methods: {
     //this function will be fired to fill in the form when clicked on the view/edit/correction
     //it would be fired from baseTable, under action button menu
     //this is only applicable for employee route name
     fillItemsIntheForm(infoOfaId) {
+      this.infoOfaId = infoOfaId;
       try {
         this.$refs.officeInfo.officeInfo.forEach((n, i) => {
-        if (this.R.has(n.name, infoOfaId)) {
-          this.$refs.officeInfo.officeInfo[i].value = infoOfaId[n.name];
-        }
-      });
-      this.$refs.personalInfo.personalInfo.forEach((n, i) => {
-        if (this.R.has(n.name, infoOfaId)) {
-          this.$refs.personalInfo.personalInfo[i].value = infoOfaId[n.name];
-        }
-      });
-      this.$refs.effectiveDate.effectiveDate.forEach((n, i) => {
-        if (this.R.has(n.name, infoOfaId)) {
-          this.$refs.effectiveDate.effectiveDate[i].value = infoOfaId[n.name];
-        }
-      });
+          if (this.R.has(n.name, infoOfaId)) {
+            this.$refs.officeInfo.officeInfo[i].value = infoOfaId[n.name];
+          }
+        });
+        this.$refs.personalInfo.personalInfo.forEach((n, i) => {
+          if (this.R.has(n.name, infoOfaId)) {
+            this.$refs.personalInfo.personalInfo[i].value = infoOfaId[n.name];
+          }
+        });
+        this.$refs.effectiveDate.effectiveDate.forEach((n, i) => {
+          if (this.R.has(n.name, infoOfaId)) {
+            this.$refs.effectiveDate.effectiveDate[i].value = infoOfaId[n.name];
+          }
+        });
+        this.$refs.changeReason.changeReason.forEach((n, i) => {
+          if (this.R.has(n.name, infoOfaId)) {
+            this.$refs.changeReason.changeReason[i].value = infoOfaId[n.name];
+          }
+        });
       } catch (err) {
         console.log(err);
       }
-
-      
     },
     closeDialog() {
       console.log(this.$parent.$children);
     },
-    reset(){
-      this.$refs.form.reset()
+    reset() {
+      this.$refs.form.reset();
     },
-    submit() {
+    submit(newOrviewOrEditOrCorrection) {
       /* console.log(this.$refs.form.inputs) */
       /* let abc = 
       this.$refs.form.inputs.map((n)=>{
@@ -106,16 +112,26 @@ export default {
       ); */
       console.log("newEmployee submit");
       //form data
-       if(!this.$refs.form.validate()) return;
+      if (!this.$refs.form.validate()) return;
       let employeeInfo = this.R.pipe(
         this.R.concat,
         this.R.concat(this.$refs.effectiveDate.effectiveDate),
+        this.R.concat(this.$refs.changeReason.changeReason),
         this.R.map(n => ({ [n.name]: n.value })),
         this.R.mergeAll,
         this.R.omit(["searchSupervisor"])
       )(this.$refs.officeInfo.officeInfo, this.$refs.personalInfo.personalInfo);
+
+      employeeInfo = this.R.mergeRight(this.infoOfaId, employeeInfo);
+      /* eslint-disable  */
+      console.log(employeeInfo);
+      // if (1<2) return;
+      /* eslint-enable  */
+
       this.apiRequestData.api = "/em/ei/employee";
       this.apiRequestData.item = employeeInfo;
+      //this will help decide the header if it will be createdBy or updatedBy
+      this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
 
       console.log(employeeInfo);
 
@@ -123,6 +139,7 @@ export default {
         .dispatch("callApi", this.apiRequestData)
         .then(response => {
           console.log(response);
+          this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
           //success dialog
           this.$awn.success(`Successfully`);
         })

@@ -110,12 +110,12 @@ export default {
             }
         },
         actionIsNew(item) {
-            this.$store.commit("setRequestMethod", "post");
             this.newOrviewOrEditOrCorrection = 'new';
             //add timestamp if in the view mode
             !this.R.isNil(item) ? this.removeTimeStamp(item) : '';
-
+            
             this.myDialogVisible = true;
+            this.$store.commit("setRequestMethod", "post");
 
         },
         //view item
@@ -240,6 +240,11 @@ export default {
         },
         //base table functions starts
         submit(newOrviewOrEditOrCorrection) {
+            
+            console.log('in the submit method');
+            console.log( this.$store.getters.getRequestMethod );
+
+
             //this is for input form validation
             new Promise((resolve) => {
                 //remove timestamp if there is any
