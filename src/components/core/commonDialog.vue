@@ -158,10 +158,11 @@ export default {
   updated() {
     if (this.$store.getters.getRequestMethod == "post") {
       console.log("in the updated");
+      console.log(this);
+
+      //decision point
+      this.$route.name == 'employee' ? this.$refs.form.$children[0].reset() : 
       this.$refs.form.reset();
-
-      console.log(this.$refs);
-
 
       //make readonly
       !this.R.isNil(this.formArray)

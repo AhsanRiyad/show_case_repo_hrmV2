@@ -73,6 +73,9 @@ export default {
     closeDialog() {
       console.log(this.$parent.$children);
     },
+    reset(){
+      this.$refs.form.reset()
+    },
     submit() {
       /* console.log(this.$refs.form.inputs) */
       /* let abc = 
@@ -103,7 +106,7 @@ export default {
       ); */
       console.log("newEmployee submit");
       //form data
-      this.$refs.form.validate();
+       if(!this.$refs.form.validate()) return;
       let employeeInfo = this.R.pipe(
         this.R.concat,
         this.R.concat(this.$refs.effectiveDate.effectiveDate),
