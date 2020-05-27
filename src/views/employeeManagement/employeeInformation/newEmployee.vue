@@ -21,7 +21,12 @@
             >Reset</v-btn>
           </v-col>
           <v-col align="right">
-            <v-btn v-if=" $route.name == 'newEmployee' "  class="m-3 white--text" color="red darken-1" @click.stop="submit">Submit</v-btn>
+            <v-btn
+              v-if=" $route.name == 'newEmployee' "
+              class="m-3 white--text"
+              color="red darken-1"
+              @click.stop="submit"
+            >Submit</v-btn>
           </v-col>
         </v-row>
       </v-container>
@@ -32,6 +37,7 @@
 import commonMixins from "@/mixins/commonMixins";
 import personalInfo from "./personalInfo";
 import officeInfo from "./officeInfo";
+import { eventBus } from "@/main";
 
 export default {
   name: "newEmployee",
@@ -57,13 +63,32 @@ export default {
   }),
   computed: {},
   methods: {
-    closeDialog(){
+
+    //this function will be fired to fill in the form when clicked on the view/edit/correction
+    //it would be fired from baseTable, under action button menu
+    //this is only applicable for employee route name
+    fillItemsIntheForm(infoOfaId) {
+      this.effectiveDate.forEach((n, i) => {
+        if (this.R.has(n.name, infoOfaId)) {
+          this.effectiveDate[i].value = infoOfaId[n.name];
+        }
+      });
+      this.$refs.officeInfo.officeInfo.forEach((n, i) => {
+        if (this.R.has(n.name, infoOfaId)) {
+          this.$refs.officeInfo.officeInfo[i].value = infoOfaId[n.name];
+        }
+      });
+      this.$refs.personalInfo.personalInfo.forEach((n, i) => {
+        if (this.R.has(n.name, infoOfaId)) {
+          this.$refs.personalInfo.personalInfo[i].value = infoOfaId[n.name];
+        }
+      });
+    },
+    closeDialog() {
       console.log(this.$parent.$children);
     },
     submit() {
       console.log(this.effectiveDate);
-
-
       /* console.log(this.$refs.form.inputs) */
       /* let abc = 
       this.$refs.form.inputs.map((n)=>{
@@ -91,7 +116,7 @@ export default {
       /*  console.log(
         this.R.concat(this.$refs.officeInfo.officeInfo , this.$refs.personalInfo.personalInfo, this.effectiveDate)
       ); */
-      console.log('newEmployee submit');
+      console.log("newEmployee submit");
       //form data
       this.$refs.form.validate();
       let employeeInfo = this.R.pipe(
@@ -100,16 +125,12 @@ export default {
         this.R.map(n => ({ [n.name]: n.value })),
         this.R.mergeAll,
         this.R.omit(["searchSupervisor"])
-      )(
-        this.$refs.officeInfo.officeInfo,
-        this.$refs.personalInfo.personalInfo,
-      );
+      )(this.$refs.officeInfo.officeInfo, this.$refs.personalInfo.personalInfo);
       this.apiRequestData.method = "post";
       this.apiRequestData.api = "/em/ei/employee";
       this.apiRequestData.item = employeeInfo;
 
       console.log(employeeInfo);
-
 
       this.$store
         .dispatch("callApi", this.apiRequestData)
@@ -124,7 +145,12 @@ export default {
     }
   },
   watch: {},
-  created() {}
+  created() {
+    //this event is being fired from baseTable viewItem function, the the definition is in the common mixins file
+    eventBus.$on("updateForm", infoOfaId => {
+      this.fillItemsIntheForm(infoOfaId);
+    });
+  }
 };
 </script>
 <style scoped></style>

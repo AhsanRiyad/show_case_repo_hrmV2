@@ -22,6 +22,8 @@ Vue.prototype.moment = moment;
 import _ from 'lodash'
 Vue.prototype._ = _;
 
+
+//event bus
 export const eventBus = new Vue();
 
 

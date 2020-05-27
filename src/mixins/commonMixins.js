@@ -1,3 +1,6 @@
+import { eventBus } from '@/main';
+
+
 
 export default {
     data: () => ({
@@ -89,18 +92,24 @@ export default {
             this.formArray.forEach((n, i, k) => {
                 k[i].readonly = true;
             })
+            // this.fillItemsIntheForm method will be called at add timestamp method
         },
         actionIsEdit(infoOfaId) {
             this.newOrviewOrEditOrCorrection = 'edit';
             //this is applicable only for organization tree as there is not table. that why no props
+            if (this.$route.name == 'employee') {
+                //this event bus is fired here and will be received in employee.vue component to update the form
+                eventBus.$emit('updateForm', infoOfaId);
+            } else {
+                //add timestamp if in the view mode
+                this.removeTimeStamp(infoOfaId);
+                this.fillItemsIntheForm(infoOfaId);
+                //make readonly
+                this.formArray.forEach((n, i, k) => {
+                    k[i].readonly = false;
+                });
 
-            //add timestamp if in the view mode
-            this.removeTimeStamp(infoOfaId);
-            this.fillItemsIntheForm(infoOfaId);
-            //make readonly
-            this.formArray.forEach((n, i, k) => {
-                k[i].readonly = false;
-            })
+            }
         },
         actionIsNew(item) {
 
@@ -129,8 +138,13 @@ export default {
 
             //axios calling, actions will be dispatched asynchronously
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+                this.tableLoading = false;
+
                 //this variable will send the value to the commonDialog forms so that it can have the data
                 //when it needs to submit
+
+                console.log('getting the response');
+                console.log(response);
 
                 console.log(this.$props);
                 console.log(this.R.has('infoOfaId', this.$props));
@@ -243,13 +257,13 @@ export default {
                 resolve();
             }).then(() => {
                 console.log(this.formArray);
-                
-                
+
+
                 //validate the form
                 if (!this.$refs.form.validate()) return;
-                
+
                 //remove the search or non-takenable fields
-                let formArray =[ ...this.R.reject(n => n.shouldInclude == false)(this.formArray) ];
+                let formArray = [...this.R.reject(n => n.shouldInclude == false)(this.formArray)];
                 console.log('should include')
                 console.log(formArray);
 

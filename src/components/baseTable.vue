@@ -69,7 +69,7 @@
                 v-on="on"
                 class="ma-1"
                 small
-                @click.stop="()=>doActionOnItem('edit', item )"
+                @click.stop="()=>doActionOnItem('correction', item )"
               >spellcheck</v-icon>
             </template>
             <span>Correction</span>
