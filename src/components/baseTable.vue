@@ -90,6 +90,11 @@
       <template v-slot:formDialog>
         <slot age2="22" ref="slotForm" :name="nameOfSlot"></slot>
       </template>
+
+      <template v-slot:otherDialog>
+        <slot age2="22" ref="slotForm" name="otherDialog"></slot>
+      </template>
+    
     </commonDialog>
   </span>
 </template>

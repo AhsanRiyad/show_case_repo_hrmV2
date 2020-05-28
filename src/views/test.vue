@@ -1,13 +1,10 @@
 <template>
   <v-card>
-
-    <employeeBasic/>
-
-
+    <employeeBasic />
 
     <v-tabs v-model="tab" background-color="red darken-1" centered dark>
       <v-tabs-slider></v-tabs-slider>
-      <v-tab v-for="n in tabItems" :href="'#'+n.href" :key="n.href">{{ n.title }}</v-tab>
+      <v-tab @click="tabClick" v-for="n in tabItems" :href="'#'+n.href" :key="n.href">{{ n.title }}</v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
@@ -15,7 +12,20 @@
         <v-card flat>
           <v-card-text>
             <keep-alive>
-              <component v-bind:is="n.component"></component>
+                <component ref="componentR" v-bind="{ complexView: true}" v-bind:is="n.component">
+                  <template v-slot:buttons="reset">
+                    <v-container>
+                      <v-row>
+                        <v-col>
+                          <v-btn color="red darken-1" class="white--text" @click="reset.reset">Reset</v-btn>
+                        </v-col>
+                        <v-col align="right">
+                          <v-btn color="red darken-1" class="white--text">Submit</v-btn>
+                        </v-col>
+                      </v-row>
+                    </v-container>
+                  </template>
+                </component>
             </keep-alive>
           </v-card-text>
         </v-card>
@@ -33,7 +43,7 @@
     </v-bottom-navigation>
 
     <commonDialog @close="myDialogClose" :dialogVisible="myDialogVisible" ref="commonDialog">
-      <template v-slot:tableDialog>
+      <template v-slot:otherDialog>
         <component v-bind:is="activeTab"></component>
       </template>
     </commonDialog>
@@ -42,17 +52,15 @@
 
 <script>
 import commonMixins from "../mixins/commonMixins";
-
 export default {
   name: "test",
   mixins: [commonMixins],
   components: {
     /*eslint-disable */
     /*eslint-enable */
-     businessGroup: () =>
-      import("./workStructure/businessGroup"),
-     
-     employeeBasic: () =>
+    businessGroup: () => import("./workStructure/businessGroup"),
+
+    employeeBasic: () =>
       import("./employeeManagement/employeeInformation/employeeBasic"),
     personalInfo: () =>
       import("./employeeManagement/employeeInformation/personalInfo"),
@@ -113,7 +121,16 @@ export default {
     };
   },
   methods: {
-    openDialog(name){
+    reset(){
+      alert('in my reset function');
+      console.log(this.$refs);
+    },
+    tabClick() {
+      console.log(this);
+    },
+    openDialog(name) {
+      console.log(this);
+
       console.log(name);
       console.log(this.activeTab);
       this.myDialogVisible = true;

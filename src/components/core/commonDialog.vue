@@ -26,7 +26,7 @@
         </v-container>
 
         <v-container>
-          <slot ref="slotTable" :parentVal="parentVal" name="tableDialog"></slot>
+          <slot ref="slotTable" :parentVal="parentVal" name="otherDialog"></slot>
         </v-container>
 
         <v-card-actions>

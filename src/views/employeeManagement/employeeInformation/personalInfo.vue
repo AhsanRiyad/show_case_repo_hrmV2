@@ -1,16 +1,20 @@
 <template>
   <span>
- 
-      <v-subheader>
-        Personal Information
-        <v-divider inset></v-divider>
-      </v-subheader>
+    <v-subheader>
+      Personal Information
+      <v-divider inset></v-divider>
+    </v-subheader>
 
-      <v-card class="ml-2 mr-2">
+    <v-card class="ml-2 mr-2" v-if="complexView !== undefined">
+      <v-form ref="form" > 
         <allFormInputs :formArray.sync="personalInfo"></allFormInputs>
-      </v-card>
+        <slot name="buttons" v-bind:reset="reset"></slot>
+      </v-form>
+    </v-card>
 
-
+    <v-card class="ml-2 mr-2" v-else>
+      <allFormInputs :formArray.sync="personalInfo"></allFormInputs>
+    </v-card>
   </span>
 </template>
 
@@ -20,7 +24,7 @@ import commonMixins from "@/mixins/commonMixins";
 export default {
   name: "personalInfo",
   components: {},
-  props: ["age"],
+  props: ["age", "complexView"],
   mixins: [commonMixins],
   data: () => ({
     personalInfo: [
@@ -194,10 +198,15 @@ export default {
         value: "",
         required: true
       }
-    ],
+    ]
   }),
   computed: {},
-  methods: {},
+  methods: {
+    reset() {
+      console.log(this.$refs.form.reset());
+      alert("clicked");
+    }
+  },
   watch: {},
   created() {}
 };
