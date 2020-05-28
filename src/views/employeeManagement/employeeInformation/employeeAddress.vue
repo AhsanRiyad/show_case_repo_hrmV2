@@ -9,7 +9,6 @@
           </v-subheader>
           <v-card class="ml-2 mr-2">
             <v-textarea
-              :id="formArray[0].name"
               filled
               rows="2"
               :label="formArray[0].label"
@@ -22,7 +21,6 @@
             ></v-textarea>
 
             <v-textarea
-              :id="formArray[1].name"
               filled
               rows="2"
               :label="formArray[1].label"
@@ -43,7 +41,6 @@
           </v-subheader>
           <v-card class="ml-2 mr-2">
             <v-textarea
-              :id="formArray[2].name"
               filled
               rows="2"
               :label="formArray[2].label"
@@ -56,7 +53,6 @@
             ></v-textarea>
 
             <v-textarea
-              :id="formArray[3].name"
               filled
               rows="2"
               :label="formArray[3].label"
@@ -67,7 +63,6 @@
               :disabled="!R.isNil(formArray[3].disabled) ? !formArray[3].disabled : false"
               autocomplete="off"
             ></v-textarea>
-
           </v-card>
         </v-col>
       </v-row>
@@ -79,7 +74,7 @@
 import commonMixins from "@/mixins/commonMixins";
 // import { eventBus } from "@/main";
 export default {
-  name: "address",
+  name: "employeeAddress",
   components: {},
   props: ["age"],
   mixins: [commonMixins],

@@ -79,14 +79,16 @@
     </v-card>
 
     <commonDialog
+      :apiBase="apiBase"
       :newOrviewOrEditOrCorrectionProps="newOrviewOrEditOrCorrection"
       :formArray.sync="formArray"
       :dialogVisible="myDialogVisible"
       :infoOfaId="infoOfaId"
       @close="myDialogClose"
       :fullscreen="fullscreen"
-      ref="commonDialog">
-      <template v-slot:formDialog >
+      ref="commonDialog"
+    >
+      <template v-slot:formDialog>
         <slot age2="22" ref="slotForm" :name="nameOfSlot"></slot>
       </template>
     </commonDialog>
@@ -97,13 +99,13 @@
       :dialogVisible="complexView"
       :infoOfaId="infoOfaId"
       @close="complexView = false"
-      ref="commonDialog">
+      ref="commonDialog"
+      :apiBase="apiBase"
+    >
       <template v-slot:otherDialog>
         <slot age2="22" ref="slotForm" name="otherDialog"></slot>
       </template>
     </commonDialog>
-
-
   </span>
 </template>
 
@@ -137,7 +139,7 @@ export default {
     infoOfaId: {}
   }),
   created() {
-    this.getData("/getAll/active?page=0&pageSize=50");
+    this.getData("getAll/active?page=0&pageSize=50");
   }
 };
 </script>

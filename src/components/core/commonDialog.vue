@@ -82,6 +82,10 @@ export default {
     fullscreen: {
       type: [Boolean],
       default: false
+    },
+    apiBase: {
+      type: [String],
+      default: undefined
     }
   },
   mixins: [commonMixins],
@@ -117,7 +121,7 @@ export default {
     nativeSubmit() {
       this.newOrviewOrEditOrCorrectionProps == 'new' ?  this.$store.commit("setRequestMethod", "post"):  this.$store.commit("setRequestMethod", "put");
 
-      if (this.$route.name == "employee") {
+      if (this.apiBase == '/em/ei/employee/') {
         //form slot->children named newEmployee.vue ->submit function
         this.$refs.form.$children[0].submit(this.newOrviewOrEditOrCorrectionProps);
       } else {

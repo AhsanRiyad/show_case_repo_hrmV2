@@ -17,6 +17,7 @@
     </v-jstree>
 
     <commonDialog
+      :apiBase="apiBase"
       :addChild="addChild"
       :infoOfaId="infoOfaId"
       :formArray.sync="formArray"

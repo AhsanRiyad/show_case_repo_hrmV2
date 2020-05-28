@@ -20,7 +20,7 @@ export default {
   props: ["age"],
   mixins: [commonMixins],
   data: (vm) => ({
-    apiBase: "/ws/apiBase/",
+    apiBase: "/ws/organizationHead/",
     tableHeader: [
       {
         text: "Organization Name",

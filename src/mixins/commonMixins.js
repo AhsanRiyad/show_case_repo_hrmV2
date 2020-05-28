@@ -122,7 +122,7 @@ export default {
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.$store.commit('setRequestMethod', 'get');
-            this.apiRequestData.api = this.$store.getters.getActivePathName + '/getActive/' + item.id;
+            this.apiRequestData.api = this.apiBase + 'getActive/' + item.id;
             this.apiRequestData.item = {};
 
             //table loader
@@ -155,7 +155,7 @@ export default {
                 //saves the items from the database in the table
                 if (action == 'view') {
                     //decision making point
-                    if (this.$route.name == 'employee' && action == 'view') return;
+                    if (this.apiBase == '/em/ei/employee/' && action == 'view') return;
                     this.actionIsView(response);
                 }
                 else if (action == 'edit') {
@@ -166,7 +166,7 @@ export default {
                 }
             });
             //this will make the dialog visible
-            if (this.$route.name == 'employee' && action == 'view') {
+            if (this.apiBase == '/em/ei/employee/' && action == 'view') {
                 //this event bus will be received by employeeBasic.vue
                 this.complexView = true;
             } else {
@@ -293,7 +293,7 @@ export default {
                 console.log(formInputValues);
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
                 // this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
-                this.apiRequestData.api = this.$store.getters.getActivePathName;
+                this.apiRequestData.api = this.apiBase;
                 this.apiRequestData.item = formInputValues;
                 //this will help decide the header if it will be createdBy or updatedBy
                 this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
@@ -316,7 +316,7 @@ export default {
         getData(extention) {
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.$store.commit('setRequestMethod', 'get');
-            this.apiRequestData.api = this.$store.getters.getActivePathName + extention;
+            this.apiRequestData.api = this.apiBase + extention;
             this.apiRequestData.item = {};
             //table loader
             this.tableLoading = true;

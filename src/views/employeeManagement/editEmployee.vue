@@ -74,6 +74,7 @@ export default {
     employeeEmail: () => import("./employeeInformation/employeeEmail"),
     employeePicture: () => import("./employeeInformation/employeePicture"),
     employeeSignature: () => import("./employeeInformation/employeeSignature"),
+    employeeFamilyMember: () => import("./employeeInformation/employeeFamilyMember"),
   },
   data() {
     return {
@@ -104,7 +105,7 @@ export default {
           component: "bankAccount"
         },
         {
-          href: "address",
+          href: "employeeAddress",
           title: "Address",
           component: "employeeAddress"
         },
@@ -130,7 +131,7 @@ export default {
       bottomTabs: [
         {
           name: "Family Member Info",
-          cName: "familyMember"
+          cName: "employeeFamilyMember"
         },
         {
           name: "Nominee Info",

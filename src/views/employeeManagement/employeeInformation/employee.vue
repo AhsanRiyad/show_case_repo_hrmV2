@@ -1,6 +1,8 @@
 <template>
   <span>
-    <baseTable :tableHeader="tableHeader">
+    <baseTable
+      :apiBase="apiBase"
+     :tableHeader="tableHeader">
       <template v-slot:formBaseTable>
         <newEmployee />
       </template>
@@ -23,6 +25,7 @@ export default {
   components: { newEmployee, editEmployee },
   mixins: [commonMixins],
   data: () => ({
+    apiBase:'/em/ei/employee/',
     tableHeader: [
       {
         text: "Employee Id",
