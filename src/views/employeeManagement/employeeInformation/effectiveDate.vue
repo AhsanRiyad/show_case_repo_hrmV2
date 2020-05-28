@@ -5,7 +5,7 @@
       <v-divider inset></v-divider>
     </v-subheader>
     <v-card class="ml-2 mr-2">
-      <allFormInputs :formArray.sync="effectiveDate"></allFormInputs>
+      <allFormInputs :formArray.sync="formArray"></allFormInputs>
     </v-card>
   </span>
 </template>
@@ -19,7 +19,7 @@ export default {
   props: ["age"],
   mixins: [commonMixins],
   data: () => ({
-    effectiveDate: [
+    formArray: [
       {
         type: "cDatePicker",
         value: "",

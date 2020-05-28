@@ -5,6 +5,7 @@
       v-model="intDialogVisible"
       persistent
       max-width="800px"
+      :fullscreen="fullscreen"
     >
       <v-card>
         <v-app-bar class="white--text" dark color="red darken-1">
@@ -77,6 +78,10 @@ export default {
     addChild: {
       type: [Function],
       default: undefined
+    },
+    fullscreen: {
+      type: [Boolean],
+      default: false
     }
   },
   mixins: [commonMixins],

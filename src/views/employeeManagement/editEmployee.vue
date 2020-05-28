@@ -32,7 +32,7 @@
       </v-tab-item>
     </v-tabs-items>
 
-    <v-bottom-navigation dark v-model="activeTab" :value="true" color="primary" horizontal>
+    <v-bottom-navigation dark background-color="red darken-1" v-model="activeTab" :value="true" color="primary" horizontal>
       <v-btn
         v-for="(n, i) in bottomTabs"
         :key="i"

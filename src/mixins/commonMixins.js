@@ -104,8 +104,8 @@ export default {
                 this.removeTimeStamp(infoOfaId);
                 this.fillItemsIntheForm(infoOfaId);
                 //make readonly
-                this.formArray.forEach((n, i, k) => {
-                    k[i].readonly = false;
+                this.formArray.forEach((n, i, a) => {
+                    a[i].readonly = false;
                 });
 
             }
@@ -151,8 +151,15 @@ export default {
                 !this.R.has('infoOfaId', this.$props) ? this.infoOfaId = { ...response } :
                     this.infoOfaIdFromProps = { ...response };
 
+                console.log('firing the event bus');
+                setTimeout(() => {
+                    eventBus.$emit('updateForm', response);
+                }, 1000);
+
                 //saves the items from the database in the table
                 if (action == 'view') {
+                    //decision making point
+                    if (this.$route.name == 'employee' && action == 'view') return;
                     this.actionIsView(response);
                 }
                 else if (action == 'edit') {
@@ -163,7 +170,8 @@ export default {
                 }
             });
             //this will make the dialog visible
-            if (this.$route.name == 'employee' && action == 'view' ) {
+            if (this.$route.name == 'employee' && action == 'view') {
+                //this event bus will be received by employeeBasic.vue
                 this.complexView = true;
             } else {
                 this.myDialogVisible = true;
@@ -192,6 +200,9 @@ export default {
                 : "";
         },
         fillItemsIntheForm(infoOfaId) {
+
+            console.log('i am called from the employeeBasic');
+
             //formArray.name == key of infoOfaId matches
             //this is used for view an item's details
             this.formArray.forEach((n, i) => {

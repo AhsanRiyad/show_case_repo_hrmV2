@@ -84,6 +84,7 @@
       :dialogVisible="myDialogVisible"
       :infoOfaId="infoOfaId"
       @close="myDialogClose"
+      :fullscreen="fullscreen"
       ref="commonDialog">
       <template v-slot:formDialog >
         <slot age2="22" ref="slotForm" :name="nameOfSlot"></slot>
@@ -132,6 +133,7 @@ export default {
   data: () => ({
     // applied for complex dialog like editEmployee.vue
     complexView: false,
+    fullscreen: false,
     infoOfaId: {}
   }),
   created() {

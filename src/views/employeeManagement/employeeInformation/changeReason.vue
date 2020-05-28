@@ -5,7 +5,7 @@
       <v-divider inset></v-divider>
     </v-subheader>
     <v-card class="ml-2 mr-2">
-      <allFormInputs :formArray.sync="changeReason"></allFormInputs>
+      <allFormInputs :formArray.sync="formArray"></allFormInputs>
     </v-card>
   </span>
 </template>
@@ -18,7 +18,7 @@ export default {
   props: ["age"],
   mixins: [commonMixins],
   data: () => ({
-    changeReason: [
+    formArray: [
       {
         type: "cAutoComplete",
         label: "Change Reason*",

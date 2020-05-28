@@ -5,18 +5,16 @@
       <v-divider inset></v-divider>
     </v-subheader>
 
-
     <!-- complexView for editEmployee, connected with baseTable, editEmployee.vue -->
     <v-card class="ml-2 mr-2" v-if="complexView !== undefined">
-      <v-form ref="form" > 
-        <allFormInputs :formArray.sync="personalInfo"></allFormInputs>
+      <v-form ref="form">
+        <allFormInputs :formArray.sync="formArray"></allFormInputs>
         <slot name="buttons" v-bind:reset="reset"></slot>
       </v-form>
     </v-card>
 
-
     <v-card class="ml-2 mr-2" v-else>
-      <allFormInputs :formArray.sync="personalInfo"></allFormInputs>
+      <allFormInputs :formArray.sync="formArray"></allFormInputs>
     </v-card>
   </span>
 </template>
@@ -24,13 +22,14 @@
 
 <script>
 import commonMixins from "@/mixins/commonMixins";
+import { eventBus } from "@/main";
 export default {
   name: "personalInfo",
   components: {},
   props: ["age", "complexView"],
   mixins: [commonMixins],
   data: () => ({
-    personalInfo: [
+    formArray: [
       {
         type: "cTextField",
         label: "First Name*",
@@ -211,7 +210,13 @@ export default {
     }
   },
   watch: {},
-  created() {}
+  created() {
+    eventBus.$on("updateForm", infoOfaId => {
+      console.log("receiving the bus");
+      console.log(infoOfaId);
+      this.fillItemsIntheForm(infoOfaId);
+    });
+  }
 };
 </script>
 <style scoped></style>

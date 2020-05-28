@@ -52,24 +52,24 @@ export default {
     fillItemsIntheForm(infoOfaId) {
       this.infoOfaId = infoOfaId;
       try {
-        this.$refs.officeInfo.officeInfo.forEach((n, i) => {
+        this.$refs.officeInfo.formArray.forEach((n, i) => {
           if (this.R.has(n.name, infoOfaId)) {
-            this.$refs.officeInfo.officeInfo[i].value = infoOfaId[n.name];
+            this.$refs.officeInfo.formArray[i].value = infoOfaId[n.name];
           }
         });
-        this.$refs.personalInfo.personalInfo.forEach((n, i) => {
+        this.$refs.personalInfo.formArray.forEach((n, i) => {
           if (this.R.has(n.name, infoOfaId)) {
-            this.$refs.personalInfo.personalInfo[i].value = infoOfaId[n.name];
+            this.$refs.personalInfo.formArray[i].value = infoOfaId[n.name];
           }
         });
-        this.$refs.effectiveDate.effectiveDate.forEach((n, i) => {
+        this.$refs.effectiveDate.formArray.forEach((n, i) => {
           if (this.R.has(n.name, infoOfaId)) {
-            this.$refs.effectiveDate.effectiveDate[i].value = infoOfaId[n.name];
+            this.$refs.effectiveDate.formArray[i].value = infoOfaId[n.name];
           }
         });
-        this.$refs.changeReason.changeReason.forEach((n, i) => {
+        this.$refs.changeReason.formArray.forEach((n, i) => {
           if (this.R.has(n.name, infoOfaId)) {
-            this.$refs.changeReason.changeReason[i].value = infoOfaId[n.name];
+            this.$refs.changeReason.formArray[i].value = infoOfaId[n.name];
           }
         });
       } catch (err) {
@@ -115,12 +115,12 @@ export default {
       if (!this.$refs.form.validate()) return;
       let employeeInfo = this.R.pipe(
         this.R.concat,
-        this.R.concat(this.$refs.effectiveDate.effectiveDate),
-        this.R.concat(this.$refs.changeReason.changeReason),
+        this.R.concat(this.$refs.effectiveDate.formArray),
+        this.R.concat(this.$refs.changeReason.formArray),
         this.R.map(n => ({ [n.name]: n.value })),
         this.R.mergeAll,
         this.R.omit(["searchSupervisor"])
-      )(this.$refs.officeInfo.officeInfo, this.$refs.personalInfo.personalInfo);
+      )(this.$refs.officeInfo.formArray, this.$refs.personalInfo.formArray);
 
       employeeInfo = this.R.mergeRight(this.infoOfaId, employeeInfo);
       /* eslint-disable  */
