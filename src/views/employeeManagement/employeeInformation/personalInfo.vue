@@ -211,10 +211,8 @@ export default {
   },
   watch: {},
   created() {
-    eventBus.$on("updateForm", infoOfaId => {
-      console.log("receiving the bus");
-      console.log(infoOfaId);
-      this.fillItemsIntheForm(infoOfaId);
+    eventBus.$on("updateThisForm", infoOfaId => {
+      this.getAndFillDataByApi("/em/ei/employee/getActive/" + infoOfaId.id);
     });
   }
 };

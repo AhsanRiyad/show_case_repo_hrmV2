@@ -96,19 +96,13 @@ export default {
             this.$store.commit("setRequestMethod", "put");
             this.newOrviewOrEditOrCorrection = 'edit';
             //this is applicable only for organization tree as there is not table. that why no props
-            if (this.$route.name == 'employee') {
-                //this event bus is fired here and will be received in employee.vue component to update the form
-                eventBus.$emit('updateForm', infoOfaId);
-            } else {
-                //add timestamp if in the view mode
-                this.removeTimeStamp(infoOfaId);
-                this.fillItemsIntheForm(infoOfaId);
-                //make readonly
-                this.formArray.forEach((n, i, a) => {
-                    a[i].readonly = false;
-                });
-
-            }
+            //add timestamp if in the view mode
+            this.removeTimeStamp(infoOfaId);
+            this.fillItemsIntheForm(infoOfaId);
+            //make readonly
+            this.formArray.forEach((n, i, a) => {
+                a[i].readonly = false;
+            });
         },
         actionIsNew(item) {
             this.newOrviewOrEditOrCorrection = 'new';
@@ -151,6 +145,8 @@ export default {
                 !this.R.has('infoOfaId', this.$props) ? this.infoOfaId = { ...response } :
                     this.infoOfaIdFromProps = { ...response };
 
+
+                //this event bus is fired here and will be received in employee.vue, editEmployee, employeeBasic, personalInfo component to update the form
                 console.log('firing the event bus');
                 setTimeout(() => {
                     eventBus.$emit('updateForm', response);
@@ -181,7 +177,6 @@ export default {
         myDialogClose() {
             this.myDialogVisible = false;
             //here is a decision point for organization tree
-
             this.$store.getters.getActiveRouteName !== 'organization' ? this.getData("/getAll/active?page=0&pageSize=50") : '';
         },
         clearInput(items) {
@@ -200,9 +195,7 @@ export default {
                 : "";
         },
         fillItemsIntheForm(infoOfaId) {
-
             console.log('i am called from the employeeBasic');
-
             //formArray.name == key of infoOfaId matches
             //this is used for view an item's details
             this.formArray.forEach((n, i) => {
@@ -336,9 +329,19 @@ export default {
                 this.tableLoading = false;
             });
         },
+        getAndFillDataByApi(extention) {
+            //a very common getData function for baseTable, will be call at the created lifeCycle hook
+            this.$store.commit('setRequestMethod', 'get');
+            this.apiRequestData.api = extention;
+            this.apiRequestData.item = {};
+            //axios calling, actions will be dispatched asynchronously
+            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+                //saves the items from the database in the table
+                this.items = response;
+                this.fillItemsIntheForm(this.items);
+            }).catch(() => { });
+        },
         //base table funcitons ends
-
-
     },
     watch: {},
     mounted() { }

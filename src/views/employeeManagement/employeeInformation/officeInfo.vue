@@ -11,7 +11,7 @@
 </template>
 <script>
 import commonMixins from "@/mixins/commonMixins";
-
+import { eventBus } from "@/main";
 export default {
   name: "officeInfo",
   mixins: [commonMixins],
@@ -227,7 +227,12 @@ export default {
     }
   },
   watch: {},
-  created() {}
+  created() {
+    eventBus.$on("updateThisForm", infoOfaId => {
+      console.log('i am office info');
+      this.getAndFillDataByApi("/em/ei/employee/getActive/" + infoOfaId.id);
+    });
+  }
 };
 </script>
 <style scoped></style>

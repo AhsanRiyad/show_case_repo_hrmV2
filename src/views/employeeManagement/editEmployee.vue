@@ -4,35 +4,40 @@
 
     <v-tabs v-model="tab" background-color="red darken-1" centered dark>
       <v-tabs-slider></v-tabs-slider>
-      <v-tab @click="tabClick" v-for="n in tabItems" :href="'#'+n.href" :key="n.href">{{ n.title }}</v-tab>
+      <v-tab @click="changeTab" v-for="n in tabItems" :href="'#'+n.href" :key="n.href">{{ n.title }}</v-tab>
     </v-tabs>
 
     <v-tabs-items v-model="tab">
       <v-tab-item v-for="n in tabItems" :value="n.href" :key="n.href">
         <v-card flat>
           <v-card-text>
-            <keep-alive>
-                <component ref="componentR" v-bind="{ complexView: true}" v-bind:is="n.component">
-                  <template v-slot:buttons="reset">
-                    <v-container>
-                      <v-row>
-                        <v-col>
-                          <v-btn color="red darken-1" class="white--text" @click="reset.reset">Reset</v-btn>
-                        </v-col>
-                        <v-col align="right">
-                          <v-btn color="red darken-1" class="white--text">Submit</v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </template>
-                </component>
-            </keep-alive>
+            <component ref="componentR" v-bind="{ complexView: true}" v-bind:is="n.component">
+              <template v-slot:buttons="reset">
+                <v-container>
+                  <v-row>
+                    <v-col>
+                      <v-btn color="red darken-1" class="white--text" @click="reset.reset">Reset</v-btn>
+                    </v-col>
+                    <v-col align="right">
+                      <v-btn color="red darken-1" class="white--text">Submit</v-btn>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </template>
+            </component>
           </v-card-text>
         </v-card>
       </v-tab-item>
     </v-tabs-items>
 
-    <v-bottom-navigation dark background-color="red darken-1" v-model="activeTab" :value="true" color="primary" horizontal>
+    <v-bottom-navigation
+      dark
+      background-color="red darken-1"
+      v-model="activeTab"
+      :value="true"
+      color="primary"
+      horizontal
+    >
       <v-btn
         v-for="(n, i) in bottomTabs"
         :key="i"
@@ -52,6 +57,7 @@
 
 <script>
 import commonMixins from "@/mixins/commonMixins";
+import { eventBus } from "@/main";
 export default {
   name: "editEmployee",
   mixins: [commonMixins],
@@ -59,19 +65,18 @@ export default {
     /*eslint-disable */
     /*eslint-enable */
     businessGroup: () => import("../workStructure/businessGroup"),
-
-    employeeBasic: () =>
-      import("./employeeInformation/employeeBasic"),
-    personalInfo: () =>
-      import("./employeeInformation/personalInfo"),
-    officeInfo: () =>
-      import("./employeeInformation/officeInfo")
+    employeeBasic: () => import("./employeeInformation/employeeBasic"),
+    personalInfo: () => import("./employeeInformation/personalInfo"),
+    officeInfo: () => import("./employeeInformation/officeInfo"),
+    others: () => import("./employeeInformation/others"),
+    bankAccount: () => import("./employeeInformation/bankAccount"),
   },
   data() {
     return {
       activeBtn: 1,
       activeTab: "",
       tab: null,
+      infoOfaId: {},
 
       tabItems: [
         {
@@ -83,7 +88,17 @@ export default {
           href: "office",
           title: "Office",
           component: "officeInfo"
-        }
+        },
+        {
+          href: "others",
+          title: "Others",
+          component: "others"
+        },
+        {
+          href: "bankAccount",
+          title: "Bank Account",
+          component: "bankAccount"
+        },
       ],
 
       text:
@@ -121,20 +136,30 @@ export default {
     };
   },
   methods: {
-    reset(){
-      alert('in my reset function');
+    reset() {
+      alert("in my reset function");
       console.log(this.$refs);
     },
-    tabClick() {
-      console.log(this);
+    changeTab() {
+      console.log("change tab clicked");
+      setTimeout(() => {
+        eventBus.$emit("updateThisForm", this.infoOfaId);
+      }, 1000);
     },
     openDialog(name) {
       console.log(this);
-
       console.log(name);
       console.log(this.activeTab);
       this.myDialogVisible = true;
     }
+  },
+  created() {
+    eventBus.$on("updateForm", infoOfaId => {
+      console.log("receiving the bus");
+      console.log(infoOfaId);
+      this.infoOfaId = infoOfaId;
+      eventBus.$emit("updateThisForm", infoOfaId);
+    });
   }
 };
 </script>
