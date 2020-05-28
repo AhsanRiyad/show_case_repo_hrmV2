@@ -26,7 +26,7 @@ export default {
         name: "firstName",
         value: "",
         readonly: true,
-        required: true
+        required: false
       },
       {
         type: "cTextField",
@@ -34,7 +34,7 @@ export default {
         name: "firstName",
         value: "",
         readonly: true,
-        required: true
+        required: false
       },
       {
         type: "cTextField",

@@ -5,12 +5,15 @@
       <v-divider inset></v-divider>
     </v-subheader>
 
+
+    <!-- complexView for editEmployee, connected with baseTable, editEmployee.vue -->
     <v-card class="ml-2 mr-2" v-if="complexView !== undefined">
       <v-form ref="form" > 
         <allFormInputs :formArray.sync="personalInfo"></allFormInputs>
         <slot name="buttons" v-bind:reset="reset"></slot>
       </v-form>
     </v-card>
+
 
     <v-card class="ml-2 mr-2" v-else>
       <allFormInputs :formArray.sync="personalInfo"></allFormInputs>

@@ -4,16 +4,23 @@
       <template v-slot:formBaseTable>
         <newEmployee />
       </template>
+
+      <!-- complexView for editEmployee -->
+      <template v-slot:otherDialog>
+        <editEmployee />
+      </template>
+
     </baseTable>
   </span>
 </template>
 <script>
 import commonMixins from "@/mixins/commonMixins";
 import newEmployee from "./newEmployee";
+import editEmployee from "../editEmployee";
 
 export default {
   name: "employee",
-  components: { newEmployee },
+  components: { newEmployee, editEmployee },
   mixins: [commonMixins],
   data: () => ({
     tableHeader: [

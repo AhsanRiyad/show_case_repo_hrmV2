@@ -83,6 +83,7 @@ export default {
         //end getDateFormatted
         actionIsView(infoOfaId) {
             this.newOrviewOrEditOrCorrection = 'view';
+
             //add timestamp if in the view mode
             this.addTimeStamp(infoOfaId);
             //make readonly
@@ -113,7 +114,7 @@ export default {
             this.newOrviewOrEditOrCorrection = 'new';
             //add timestamp if in the view mode
             !this.R.isNil(item) ? this.removeTimeStamp(item) : '';
-            
+
             this.myDialogVisible = true;
             this.$store.commit("setRequestMethod", "post");
 
@@ -162,7 +163,11 @@ export default {
                 }
             });
             //this will make the dialog visible
-            this.myDialogVisible = true;
+            if (this.$route.name == 'employee' && action == 'view' ) {
+                this.complexView = true;
+            } else {
+                this.myDialogVisible = true;
+            }
         },
         //closes the commonDialog
         myDialogClose() {
@@ -240,9 +245,9 @@ export default {
         },
         //base table functions starts
         submit(newOrviewOrEditOrCorrection) {
-            
+
             console.log('in the submit method');
-            console.log( this.$store.getters.getRequestMethod );
+            console.log(this.$store.getters.getRequestMethod);
 
 
             //this is for input form validation

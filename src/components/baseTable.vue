@@ -7,8 +7,7 @@
           color="red darken-1"
           dark
           @click.stop="()=>{ actionIsNew(formArray) }"
-        >{{ getFrontButtonName }}
-        </v-btn>
+        >{{ getFrontButtonName }}</v-btn>
         <v-spacer></v-spacer>
         <v-text-field
           v-model="search"
@@ -85,17 +84,25 @@
       :dialogVisible="myDialogVisible"
       :infoOfaId="infoOfaId"
       @close="myDialogClose"
-      ref="commonDialog"
-    >
-      <template v-slot:formDialog>
+      ref="commonDialog">
+      <template v-slot:formDialog >
         <slot age2="22" ref="slotForm" :name="nameOfSlot"></slot>
       </template>
+    </commonDialog>
 
+    <commonDialog
+      :newOrviewOrEditOrCorrectionProps="newOrviewOrEditOrCorrection"
+      :formArray.sync="formArray"
+      :dialogVisible="complexView"
+      :infoOfaId="infoOfaId"
+      @close="complexView = false"
+      ref="commonDialog">
       <template v-slot:otherDialog>
         <slot age2="22" ref="slotForm" name="otherDialog"></slot>
       </template>
-    
     </commonDialog>
+
+
   </span>
 </template>
 
@@ -123,6 +130,8 @@ export default {
   },
 
   data: () => ({
+    // applied for complex dialog like editEmployee.vue
+    complexView: false,
     infoOfaId: {}
   }),
   created() {
