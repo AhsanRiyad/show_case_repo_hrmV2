@@ -1,7 +1,7 @@
 <template>
   <span>
     <baseTable
-      apiBase="/ws/businessGroup/"
+      :apiBase="apiBase"
       v-bind="$attrs"
       :tableHeader="tableHeader"
       :formArray="formArray"
@@ -20,6 +20,7 @@ export default {
   props: ["age"],
   mixins: [commonMixins],
   data: () => ({
+    apiBase: "/ws/officeType/",
     tableHeader: [
       {
         text: "Office Type Name",

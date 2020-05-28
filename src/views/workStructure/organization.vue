@@ -41,6 +41,7 @@ export default {
   mixins: [commonMixins],
   data: () => {
     return {
+      apiBase: "/ws/organization/",
       infoOfaId: {},
 
       nameOfSlot: "",

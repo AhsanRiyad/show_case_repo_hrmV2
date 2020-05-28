@@ -2,7 +2,7 @@
   <span>
 
     <baseTable
-      apiBase="/ws/businessGroup/"
+      :apiBase="apiBase"
       v-bind="$attrs"
       :tableHeader="tableHeader"
       :formArray="formArray"
@@ -23,6 +23,7 @@ export default {
   props: ["age"],
   mixins: [commonMixins],
   data: vm => ({
+    apiBase: "/ws/businessGroup/",
     tableHeader: [
       {
         text: "Business Group Name",

@@ -4,7 +4,7 @@
       v-bind="$attrs"
       :tableHeader="tableHeader"
       :formArray="formArray"
-      apiBase="ws/companyClassType/"
+      :apiBase="apiBase"
     >
       <template v-slot:formBaseTable=" age2 ">
         <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
@@ -21,7 +21,7 @@ export default {
   props: ["age"],
   mixins: [commonMixins],
   data: vm => ({
-    name: "riyad",
+    apiBase: "/ws/companyClassType/",
     tableHeader: [
       {
         text: "Name",

@@ -70,6 +70,10 @@ export default {
     officeInfo: () => import("./employeeInformation/officeInfo"),
     others: () => import("./employeeInformation/others"),
     bankAccount: () => import("./employeeInformation/bankAccount"),
+    employeeAddress: () => import("./employeeInformation/employeeAddress"),
+    employeeEmail: () => import("./employeeInformation/employeeEmail"),
+    employeePicture: () => import("./employeeInformation/employeePicture"),
+    employeeSignature: () => import("./employeeInformation/employeeSignature"),
   },
   data() {
     return {
@@ -98,6 +102,26 @@ export default {
           href: "bankAccount",
           title: "Bank Account",
           component: "bankAccount"
+        },
+        {
+          href: "address",
+          title: "Address",
+          component: "employeeAddress"
+        },
+        {
+          href: "email",
+          title: "Email",
+          component: "employeeEmail"
+        },
+        {
+          href: "employeePicture",
+          title: "Picture",
+          component: "employeePicture"
+        },
+        {
+          href: "employeeSignature",
+          title: "Signature",
+          component: "employeeSignature"
         },
       ],
 

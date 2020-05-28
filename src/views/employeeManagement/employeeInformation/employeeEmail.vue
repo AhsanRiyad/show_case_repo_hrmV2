@@ -1,7 +1,7 @@
 <template>
   <span>
     <v-subheader>
-      Bank Account
+      Email
       <v-divider inset></v-divider>
     </v-subheader>
     <v-card class="ml-2 mr-2">
@@ -15,7 +15,7 @@
 import commonMixins from "@/mixins/commonMixins";
 import { eventBus } from "@/main";
 export default {
-  name: "bankAccount",
+  name: "employeeEmail",
   components: {},
   props: ["age"],
   mixins: [commonMixins],
@@ -23,28 +23,12 @@ export default {
     formArray: [
       {
         type: "cTextField",
-        label: "Account Number*",
+        label: "Email*",
         name: "startDate",
         value: "",
         readonly: false,
         required: true
       },
-      {
-        type: "cTextField",
-        label: "Account Type*",
-        name: "endDate",
-        value: "Savings",
-        readonly: false,
-        required: true
-      },
-      {
-        type: "cAutoComplete",
-        label: "Branch Name*",
-        name: "branchName",
-        api: "/ws/office/getAll/activeBranch/dropdown",
-        required: true,
-        value: ""
-      }
     ]
   }),
   computed: {},

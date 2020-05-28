@@ -1,11 +1,6 @@
 <template>
   <span>
-    <baseTable
-      apiBase="/ws/businessGroup/"
-      v-bind="$attrs"
-      :tableHeader="tableHeader"
-      :formArray="formArray"
-    >
+    <baseTable :apiBase="apiBase" v-bind="$attrs" :tableHeader="tableHeader" :formArray="formArray">
       <template v-slot:formBaseTable=" age2 ">
         <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
       </template>
@@ -20,13 +15,14 @@ export default {
   props: ["age"],
   mixins: [commonMixins],
   data: () => ({
+    apiBase: "/ws/office/",
     tableHeader: [
       {
         text: "Office Name",
         align: "start",
         sortable: false,
         value: "name"
-      }, 
+      },
       { text: "Office Type", value: "officeTypeName" },
       { text: "Location ", value: "locationName" },
       { text: "Branch/SOLcode ", value: "solCode" },
