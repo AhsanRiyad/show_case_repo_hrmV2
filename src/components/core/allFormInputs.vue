@@ -37,7 +37,7 @@
           :prepend-icon="!R.isNil(n.prependIcon) ? n.prependIcon : null"
           :filled="!R.isNil(n.filled) ? n.filled : false"
           autocomplete="off"
-          @keyup.stop="!R.isNil(n.keyUpEvent) ? n.keyUpEvent(n) : ()=>{}"
+          @keyup.stop="!R.isNil(n.keyUpEvent) ? n.keyUpEvent(n.value, n.dependentFieldName, n.dependentApi) : ()=>{}"
         ></v-text-field>
 
         <v-checkbox v-if="n.type == 'cCheckBox' " :label="n.label" v-model="n.value"></v-checkbox>
@@ -63,6 +63,7 @@
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
           :disabled="!R.isNil(n.disabled) ? n.disabled : false"
           :changeEvent="!R.isNil(n.changeEvent) ? n.changeEvent : ()=>{}"
+          :allData="n"
         ></cAutoComplete>
 
         <cDatePicker
@@ -86,7 +87,6 @@
           :label="n.label"
           v-model="n.value"
         ></v-file-input>
-        
       </v-col>
     </v-row>
   </v-container>

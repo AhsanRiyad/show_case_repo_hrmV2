@@ -62,8 +62,10 @@ export default {
         filled: true,
         appendIcon: "search",
         required: false,
-        keyUpEvent: vm.updateEmployeeList,
-        shouldInclude: false,
+        keyUpEvent: vm.updateDependentField,
+        dependentFieldName: "employeeId",
+        dependentApi: "/em/ei/employee/getAll/active/dropdown/",
+        shouldInclude: false
       },
       {
         type: "cDatePicker",
@@ -83,22 +85,7 @@ export default {
       }
     ]
   }),
-  methods:{
-    updateEmployeeList(n) {
-      let index = this.R.findIndex(this.R.propEq("name", "employeeId"))(
-        this.formArray
-      );
-      //a very common getData function for baseTable, will be call at the created lifeCycle hook
-      this.$store.commit('setRequestMethod', 'get');
-      this.apiRequestData.api = "/em/ei/employee/getAll/active/dropdown/" + n.value;
-      this.apiRequestData.item = {};
-      //axios calling, actions will be dispatched asynchronously
-      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-        console.log(response);
-        this.formArray[index].items = response;
-      });
-    },
-  },
+  methods:{},
   computed: {},
   watch: {},
   created() {}

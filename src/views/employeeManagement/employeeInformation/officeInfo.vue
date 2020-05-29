@@ -4,7 +4,16 @@
       Office Information
       <v-divider inset></v-divider>
     </v-subheader>
-    <v-card class="ml-2 mr-2">
+
+    <!-- complexView for editEmployee, connected with baseTable, editEmployee.vue -->
+    <v-card class="ml-2 mr-2" v-if="complexView !== undefined">
+      <v-form ref="form">
+        <allFormInputs :formArray.sync="formArray"></allFormInputs>
+        <slot name="buttons" v-bind:funAction="{ reset: reset, submit: nativeSubmit }"></slot>
+      </v-form>
+    </v-card>
+
+    <v-card class="ml-2 mr-2" v-else>
       <allFormInputs :formArray.sync="formArray"></allFormInputs>
     </v-card>
   </span>
@@ -15,7 +24,9 @@ import { eventBus } from "@/main";
 export default {
   name: "officeInfo",
   mixins: [commonMixins],
+  props: ["age", "complexView"],
   data: vm => ({
+    apiBase: "/em/ei/employee/officeInfo/",
     formArray: [
       {
         type: "cAutoComplete",
@@ -24,7 +35,9 @@ export default {
         api: "/em/employeeType/getAll/active?page=0&pageSize=50",
         required: true,
         value: "",
-        changeEvent: vm.updateEmployeeSubType
+        changeEvent: vm.updateDependentField,
+        dependentFieldName: "employeeSubtypeId",
+        dependentApi: "/em/employeeSubtype/getActive/"
       },
       {
         type: "cAutoComplete",
@@ -50,7 +63,8 @@ export default {
         items: [],
         required: true,
         api: "/em/ei/employee/getAll/active/dropdown/",
-        value: ""
+        value: "",
+        
       },
       {
         type: "cTextField",
@@ -60,7 +74,10 @@ export default {
         filled: true,
         appendIcon: "search",
         required: false,
-        keyUpEvent: vm.updateSuperVisorList
+        keyUpEvent: vm.updateDependentField,
+        dependentFieldName: "supervisorId",
+        dependentApi: "/em/ei/employee/getAll/active/dropdown/",
+        shouldInclude: false
       },
       {
         type: "cTextField",
@@ -188,28 +205,7 @@ export default {
   }),
   computed: {},
   methods: {
-    updateEmployeeSubType(id) {
-      console.log("in the update subtype");
-      console.log(id);
-      let index = this.R.findIndex(this.R.propEq("name", "employeeSubtypeId"))(
-        this.formArray
-      );
-      console.log(index);
-
-      //a very common getData function for baseTable, will be call at the created lifeCycle hook
-      this.$store.commit("setRequestMethod", "get");
-      this.apiRequestData.api = "/em/employeeSubtype/getActive/" + id;
-      this.apiRequestData.item = {};
-
-      //axios calling, actions will be dispatched asynchronously
-      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-        console.log(response);
-        this.formArray[index].items = response;
-      });
-
-      // this.formArray[index].items = [{ name: "cc", id: "cc" }];
-      // this.formArray[index].type ='cTextField';
-    },
+    
     updateSuperVisorList(n) {
       let index = this.R.findIndex(this.R.propEq("name", "supervisorId"))(
         this.formArray
@@ -228,8 +224,9 @@ export default {
   },
   watch: {},
   created() {
+    //this event is firing from editEmployee.vue for filling data in the form
     eventBus.$on("updateThisForm", infoOfaId => {
-      console.log('i am office info');
+      console.log("i am office info");
       this.getAndFillDataByApi("/em/ei/employee/getActive/" + infoOfaId.id);
     });
   }

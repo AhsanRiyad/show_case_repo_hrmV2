@@ -30,7 +30,8 @@ export default {
     disabled: [Boolean],
     itemsFromProps: [String, Number, Array, Object],
     changeEvent: [Function],
-    id: [String, Number]
+    id: [String, Number],
+    allData:[Array,Object,String],
   },
   mixins: [commonMixins],
   data() {
@@ -45,8 +46,8 @@ export default {
         return this.value;
       },
       set(val) {
-        this.changeEvent(val);
         this.$emit("input", val);
+        this.changeEvent(val , this.allData.dependentFieldName, this.allData.dependentApi);
       }
     }
   },

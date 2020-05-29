@@ -30,7 +30,6 @@ export default {
   mixins: [commonMixins],
   data: () => ({
     apiBase: "/em/ei/employee/personalInfo/",
-
     formArray: [
       {
         type: "cTextField",
@@ -206,17 +205,10 @@ export default {
   }),
   computed: {},
   methods: {
-    reset() {
-      console.log(this.$refs.form.reset());
-      alert("clicked");
-    },
-    nativeSubmit() {
-      this.$store.commit("setRequestMethod", "put");
-      this.submit("edit");
-    }
   },
   watch: {},
   created() {
+    //this event is firing from editEmployee.vue for filling data in the form
     eventBus.$on("updateThisForm", infoOfaId => {
       this.getAndFillDataByApi("/em/ei/employee/getActive/" + infoOfaId.id);
     });

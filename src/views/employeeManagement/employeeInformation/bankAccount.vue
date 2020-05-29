@@ -4,7 +4,15 @@
       Bank Account
       <v-divider inset></v-divider>
     </v-subheader>
-    <v-card class="ml-2 mr-2">
+    <!-- complexView for editEmployee, connected with baseTable, editEmployee.vue -->
+    <v-card class="ml-2 mr-2" v-if="complexView !== undefined">
+      <v-form ref="form">
+        <allFormInputs :formArray.sync="formArray"></allFormInputs>
+        <slot name="buttons" v-bind:funAction="{ reset: reset, submit: nativeSubmit }"></slot>
+      </v-form>
+    </v-card>
+
+    <v-card class="ml-2 mr-2" v-else>
       <allFormInputs :formArray.sync="formArray"></allFormInputs>
     </v-card>
   </span>
@@ -17,9 +25,10 @@ import { eventBus } from "@/main";
 export default {
   name: "bankAccount",
   components: {},
-  props: ["age"],
+  props: ["age", "complexView"],
   mixins: [commonMixins],
   data: () => ({
+    apiBase: "/em/ei/bankAccount/",
     formArray: [
       {
         type: "cTextField",
@@ -51,9 +60,10 @@ export default {
   methods: {},
   watch: {},
   created() {
+    //this event is firing from editEmployee.vue for filling data in the form
     eventBus.$on("updateThisForm", infoOfaId => {
       console.log("i am office info");
-      this.getAndFillDataByApi("/em/ei/employee/getActive/" + infoOfaId.id);
+      this.getAndFillDataByApi("/em/ei/bankAccount/getActive/" + infoOfaId.id);
     });
   }
 };

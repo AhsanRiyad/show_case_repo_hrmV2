@@ -5,11 +5,13 @@
       <v-divider inset></v-divider>
     </v-subheader>
     <v-card class="ml-2 mr-2">
-      <allFormInputs :formArray.sync="formArray"></allFormInputs>
+      <v-form ref="form">
+        <allFormInputs :formArray.sync="formArray"></allFormInputs>
+        <slot name="buttons" v-bind:funAction="{ reset: reset, submit: nativeSubmit }"></slot>
+      </v-form>
     </v-card>
   </span>
 </template>
-
 
 <script>
 import commonMixins from "@/mixins/commonMixins";
@@ -17,7 +19,7 @@ import { eventBus } from "@/main";
 export default {
   name: "employeeEmail",
   components: {},
-  props: ["age"],
+  props: ["complexView"],
   mixins: [commonMixins],
   data: () => ({
     formArray: [
@@ -28,7 +30,7 @@ export default {
         value: "",
         readonly: false,
         required: true
-      },
+      }
     ]
   }),
   computed: {},
