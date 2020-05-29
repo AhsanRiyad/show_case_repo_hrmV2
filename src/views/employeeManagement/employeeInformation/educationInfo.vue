@@ -1,6 +1,12 @@
 <template>
   <span>
-    <baseTable :componentName="componentName" :apiBase="apiBase" v-bind="$attrs" :tableHeader="tableHeader" :formArray="formArray">
+    <baseTable
+      :componentName="componentName"
+      :apiBase="apiBase"
+      v-bind="$attrs"
+      :tableHeader="tableHeader"
+      :formArray="formArray"
+    >
       <template v-slot:formBaseTable=" age2 ">
         <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
       </template>
@@ -16,7 +22,7 @@ export default {
   mixins: [commonMixins],
   data: () => ({
     apiBase: "/em/eduQualification/",
-    componentName: 'Education Info',
+    componentName: "Education Info",
     tableHeader: [
       {
         text: "Qualification Title",
@@ -119,6 +125,19 @@ export default {
         name: "endDate",
         required: false
       },
+      {
+        type: "cFileInput",
+        value: null,
+        label: "SELECT SCAN COPY OF CIRTIFICATE",
+        name: "certificate",
+        rules: [
+          value =>
+            !value || true
+        ],
+        multiple: true,
+        accept: 'image/*',
+        required: false
+      }
     ]
   }),
   computed: {},

@@ -70,7 +70,7 @@ actions: {
 			console.log(url);
 			let headers = {
 				'Authorization': 'Bearer ' + VueCookies.get('accessToken') ,
-				'Content-Type': 'application/json;charset=UTF-8',
+				'Content-Type': R.type(data.item) == "FormData" ? "multipart/form-data" : "application/json;charset=UTF-8",
 				[!R.isNil(data.newOrviewOrEditOrCorrection) && data.newOrviewOrEditOrCorrection == 'edit' ? 
 					'updatedBy' : 'createdBy']: !R.isNil(data.newOrviewOrEditOrCorrection) && data.newOrviewOrEditOrCorrection == 'correction' ? data.item.updatedBy : VueCookies.get('userId')
 			}

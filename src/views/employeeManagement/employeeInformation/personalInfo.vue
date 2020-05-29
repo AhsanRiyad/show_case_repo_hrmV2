@@ -9,7 +9,7 @@
     <v-card class="ml-2 mr-2" v-if="complexView !== undefined">
       <v-form ref="form">
         <allFormInputs :formArray.sync="formArray"></allFormInputs>
-        <slot name="buttons" v-bind:reset="reset"></slot>
+        <slot name="buttons" v-bind:funAction="{ reset: reset, submit: nativeSubmit }"></slot>
       </v-form>
     </v-card>
 
@@ -29,6 +29,8 @@ export default {
   props: ["age", "complexView"],
   mixins: [commonMixins],
   data: () => ({
+    apiBase: "/em/ei/employee/personalInfo/",
+
     formArray: [
       {
         type: "cTextField",
@@ -207,6 +209,10 @@ export default {
     reset() {
       console.log(this.$refs.form.reset());
       alert("clicked");
+    },
+    nativeSubmit() {
+      this.$store.commit("setRequestMethod", "put");
+      this.submit("edit");
     }
   },
   watch: {},

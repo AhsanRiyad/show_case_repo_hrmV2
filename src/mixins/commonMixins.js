@@ -337,7 +337,7 @@ export default {
             //axios calling, actions will be dispatched asynchronously
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
                 //saves the items from the database in the table
-                this.items = response;
+                this.infoOfaIdFromProps = this.items = response;
                 this.fillItemsIntheForm(this.items);
             }).catch(() => { });
         },

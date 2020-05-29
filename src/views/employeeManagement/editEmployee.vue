@@ -12,14 +12,14 @@
         <v-card flat>
           <v-card-text>
             <component ref="componentR" v-bind="{ complexView: true}" v-bind:is="n.component">
-              <template v-slot:buttons="reset">
+              <template v-slot:buttons="{ funAction  }">
                 <v-container>
                   <v-row>
                     <v-col>
-                      <v-btn color="red darken-1" class="white--text" @click="reset.reset">Reset</v-btn>
+                      <v-btn color="red darken-1" class="white--text" @click="funAction.reset">Reset</v-btn>
                     </v-col>
                     <v-col align="right">
-                      <v-btn color="red darken-1" class="white--text">Submit</v-btn>
+                      <v-btn color="red darken-1" class="white--text" @click="funAction.submit">Submit</v-btn>
                     </v-col>
                   </v-row>
                 </v-container>

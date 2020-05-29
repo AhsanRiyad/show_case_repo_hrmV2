@@ -75,6 +75,18 @@
           :rules="{ required: !R.isNil(n.required) ? n.required : true , name: n.Name }"
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
         ></cDatePicker>
+
+        <v-file-input
+          v-if="n.type=='cFileInput'"
+          show-size
+          chips
+          :rules="n.rules"
+          :multiple="n.multiple"
+          :accept="n.accept"
+          :label="n.label"
+          v-model="n.value"
+        ></v-file-input>
+        
       </v-col>
     </v-row>
   </v-container>
@@ -90,9 +102,7 @@ export default {
   data() {
     return {};
   },
-  computed: {
-    
-  },
+  computed: {},
   methods: {
     changeEvent($event) {
       console.log($event);
