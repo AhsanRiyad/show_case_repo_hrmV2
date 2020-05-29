@@ -5,6 +5,7 @@
       :tableHeader="tableHeader"
       :formArray="formArray"
       :apiBase="apiBase"
+      :componentName="componentName"
     >
       <template v-slot:formBaseTable=" age2 ">
         <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
@@ -22,6 +23,7 @@ export default {
   mixins: [commonMixins],
   data: vm => ({
     apiBase: "/ws/companyClassType/",
+    componentName: "Company Classification Type" ,
     tableHeader: [
       {
         text: "Name",

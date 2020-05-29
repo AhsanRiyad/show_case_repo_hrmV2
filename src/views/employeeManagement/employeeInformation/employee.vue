@@ -1,8 +1,6 @@
 <template>
   <span>
-    <baseTable
-      :apiBase="apiBase"
-     :tableHeader="tableHeader">
+    <baseTable :componentName="componentName" :apiBase="apiBase" :tableHeader="tableHeader">
       <template v-slot:formBaseTable>
         <newEmployee />
       </template>
@@ -11,7 +9,6 @@
       <template v-slot:otherDialog>
         <editEmployee />
       </template>
-
     </baseTable>
   </span>
 </template>
@@ -25,7 +22,8 @@ export default {
   components: { newEmployee, editEmployee },
   mixins: [commonMixins],
   data: () => ({
-    apiBase:'/em/ei/employee/',
+    apiBase: "/em/ei/employee/",
+    componentName: "Employee",
     tableHeader: [
       {
         text: "Employee Id",

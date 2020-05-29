@@ -43,6 +43,7 @@ export default {
   data: () => {
     return {
       apiBase: "/ws/organization/",
+      componentName: "Organization",
       infoOfaId: {},
 
       nameOfSlot: "",

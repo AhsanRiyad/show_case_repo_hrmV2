@@ -71,7 +71,7 @@ export default {
         //get the button name that shows in the baseTable
         getFrontButtonName() {
             //get it from router
-            return this.R.toUpper('new ' + this.$route.meta.title);
+            return this.R.toUpper('new ' + this.componentName);
         }
     },
     methods: {

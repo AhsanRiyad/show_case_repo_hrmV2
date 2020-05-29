@@ -76,6 +76,10 @@ export default {
     employeeSignature: () => import("./employeeInformation/employeeSignature"),
     employeeFamilyMember: () => import("./employeeInformation/employeeFamilyMember"),
     nomineeInfo: () => import("./employeeInformation/nomineeInfo"),
+    educationInfo: () => import("./employeeInformation/educationInfo"),
+    careerDetails: () => import("./employeeInformation/careerDetails"),
+    probation: () => import("./employeeInformation/probation"),
+    professionalInfo: () => import("./employeeInformation/professionalInfo")
   },
   data() {
     return {
@@ -140,11 +144,11 @@ export default {
         },
         {
           name: "Education Info",
-          cName: "educationalQualification"
+          cName: "educationInfo"
         },
         {
           name: "Career Detail",
-          cName: "career"
+          cName: "careerDetails"
         },
         {
           name: "Probation",
@@ -152,8 +156,10 @@ export default {
         },
         {
           name: "Professional Info",
-          cName: "professionalQualification"
-        } /*,
+          cName: "professionalInfo"
+        },
+        
+         /*,
             {
                 name: 'Working Condition',
                 cName: 'workingCondition'

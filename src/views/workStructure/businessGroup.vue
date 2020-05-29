@@ -3,6 +3,7 @@
 
     <baseTable
       :apiBase="apiBase"
+      :componentName="componentName"
       v-bind="$attrs"
       :tableHeader="tableHeader"
       :formArray="formArray"
@@ -24,6 +25,7 @@ export default {
   mixins: [commonMixins],
   data: vm => ({
     apiBase: "/ws/businessGroup/",
+    componentName: 'Business Group',
     tableHeader: [
       {
         text: "Business Group Name",

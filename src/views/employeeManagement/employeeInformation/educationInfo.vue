@@ -10,42 +10,75 @@
 <script>
 import commonMixins from "@/mixins/commonMixins";
 export default {
-  name: "nomineeInfo",
+  name: "educationInfo",
   components: {},
   props: ["age"],
   mixins: [commonMixins],
   data: () => ({
-    apiBase: "/em/nominee/",
-    componentName: 'Nominee',
+    apiBase: "/em/eduQualification/",
+    componentName: 'Education Info',
     tableHeader: [
       {
-        text: "Nominee Name",
+        text: "Qualification Title",
         align: "start",
         sortable: false,
-        value: "name"
+        value: "qualificationTitle"
       },
-      { text: "Nominee Type", value: "nomineeType" },
+      { text: "Major", value: "major" },
       {
         text: "Relationship",
         value: "relationship"
       },
-      { text: "Percentage", value: "nomineePercentage" },
-      { text: "Date Of Birth", value: "dateOfBirth" },
+      { text: "Passing Year", value: "passingYear" },
+      { text: "CGPA/Percentage", value: "cgpaPercentage" },
+      { text: "Institution Name", value: "eduInstitutionId" },
+      { text: "Status", value: "status" },
+      { text: "Start Date", value: "startDate" },
+      { text: "End Date", value: "endDate" },
       { text: "Actions", value: "actions" }
     ],
     formArray: [
       {
         type: "cAutoComplete",
-        label: "Family Member*",
-        name: "nomineeType",
+        label: "Qualification Type*",
+        name: "qualificationId",
         api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
       {
+        type: "cTextField",
+        label: "Qualification Title*",
+        name: "qualificationTitle",
+        value: "",
+        required: true
+      },
+      {
         type: "cAutoComplete",
-        label: "Nominee Type*",
-        name: "nomineeType",
+        label: "Educational Institutions*",
+        name: "eduInstitutionId",
+        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        required: true,
+        value: ""
+      },
+      {
+        type: "cTextField",
+        label: "Major*",
+        name: "major",
+        value: "",
+        required: true
+      },
+      {
+        type: "cTextField",
+        label: "Passing Year*",
+        name: "passingYear",
+        value: "",
+        required: true
+      },
+      {
+        type: "cAutoComplete",
+        label: "Educational Result Type*",
+        name: "eduResultTypeId",
         api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
@@ -59,30 +92,30 @@ export default {
         value: ""
       },
       {
-        type: "cDatePicker",
+        type: "cTextField",
+        label: "CGPA Percentage*",
+        name: "cgpaPercentage",
         value: "",
-        label: "Date Of Birth",
-        name: "dateOfBirth",
-        required: false
+        required: true
       },
       {
         type: "cTextField",
-        label: "Nominee Percentage*",
-        name: "nomineePercentage",
+        label: "CGPA Out Of*",
+        name: "cgpaOutOf",
         value: "",
         required: true
       },
       {
         type: "cDatePicker",
         value: "",
-        label: "Effective From",
+        label: "Education Start Date",
         name: "startDate",
-        required: false
+        required: true
       },
       {
         type: "cDatePicker",
         value: "",
-        label: "Effective To",
+        label: "Education End Date",
         name: "endDate",
         required: false
       },

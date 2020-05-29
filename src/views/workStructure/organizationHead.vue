@@ -5,6 +5,7 @@
       :formArray="formArray"
       booleanValueInTheTable="costCenter"
       :apiBase="apiBase"
+      :componentName="componentName"
     >
       <template v-slot:formBaseTable=" age2 ">
         <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
@@ -21,6 +22,7 @@ export default {
   mixins: [commonMixins],
   data: (vm) => ({
     apiBase: "/ws/organizationHead/",
+    componentName: "Organization Head" ,
     tableHeader: [
       {
         text: "Organization Name",

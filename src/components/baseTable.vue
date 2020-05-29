@@ -129,6 +129,10 @@ export default {
     apiBase: {
       type: [String],
       default: undefined
+    },
+    componentName: {
+      type: [String],
+      default: undefined
     }
   },
 

@@ -5,6 +5,7 @@
       v-bind="$attrs"
       :tableHeader="tableHeader"
       :formArray="formArray"
+      :componentName="componentName"
     >
       <template v-slot:formBaseTable=" age2 ">
         <allFormInputs  :age2="age2" :formArray.sync="formArray"></allFormInputs>
@@ -21,6 +22,7 @@ export default {
   mixins: [commonMixins],
   data: () => ({
     apiBase: "/ws/officeType/",
+    componentName: "Office Type",
     tableHeader: [
       {
         text: "Office Type Name",
