@@ -164,7 +164,7 @@ export default {
       console.log(this);
 
       //decision point
-      this.$route.name == 'employee' ? this.$refs.form.$children[0].reset() : 
+      this.apiBase == '/em/ei/employee/' ? this.$refs.form.$children[0].reset() : 
       this.$refs.form.reset();
 
       //make readonly

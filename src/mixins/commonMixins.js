@@ -177,7 +177,7 @@ export default {
         myDialogClose() {
             this.myDialogVisible = false;
             //here is a decision point for organization tree
-            this.$store.getters.getActiveRouteName !== 'organization' ? this.getData("/getAll/active?page=0&pageSize=50") : '';
+            this.$store.getters.getActiveRouteName !== 'organization' ? this.getData("getAll/active?page=0&pageSize=50") : '';
         },
         clearInput(items) {
             items.forEach((n, i, a) => {

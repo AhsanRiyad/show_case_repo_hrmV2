@@ -1,14 +1,8 @@
 <template>
   <span>
-
-    <baseTable
-      :apiBase="apiBase"
-      v-bind="$attrs"
-      :tableHeader="tableHeader"
-      :formArray="formArray"
-    >
+    <baseTable :apiBase="apiBase" v-bind="$attrs" :tableHeader="tableHeader" :formArray="formArray">
       <template v-slot:formBaseTable=" age2 ">
-        <allFormInputs  :age2="age2" :formArray.sync="formArray"></allFormInputs>
+        <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
       </template>
     </baseTable>
   </span>
@@ -16,58 +10,84 @@
 <script>
 import commonMixins from "@/mixins/commonMixins";
 
-
 export default {
-  name: "businessGroup",
+  name: "familyMemberInfo",
   components: {},
   props: ["age"],
   mixins: [commonMixins],
-  data: vm => ({
-    apiBase: "/ws/businessGroup/",
+  data: () => ({
+    apiBase: "/em/familyMember/",
     tableHeader: [
       {
-        text: "Business Group Name",
+        text: "Family Member Name",
         align: "start",
         sortable: false,
         value: "name"
       },
-      { text: "Company Classification Type Name", value: "companyClassTypeName" },
-      { text: "Start Date", value: "startDate" },
-      { text: "End Date", value: "endDate" },
+      { text: "Relationship Type", value: "familyRelationTypeId" },
+      {
+        text: "Company Classification Type Name",
+        value: "companyClassTypeName"
+      },
+      { text: "Contact No", value: "contactPhoneNo" },
       { text: "Actions", value: "actions" }
     ],
     formArray: [
       {
         type: "cTextField",
-        label: "Business Group Name*",
+        label: "Family Member Name*",
         name: "name",
         value: "",
-        required: true,
-        fun: vm.ch
+        required: true
       },
       {
         type: "cAutoComplete",
-        label: "Company Classification Type*",
+        label: "Relationship Type*",
         name: "companyClassTypeId",
         api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
       {
-        type: "cDatePicker",
+        type: "cTextField",
+        label: "Email*",
+        name: "emial",
         value: "",
-        label: "Start Date*",
-        name: "startDate",
-        required: true,
-        max: "endDate"
+        required: true
+      },
+      {
+        type: "cTextField",
+        label: "Contact Number*",
+        name: "contactPhoneNo",
+        value: "",
+        required: true
+      },
+      {
+        type: "cCheckBox",
+        label: "Is CBL Employees",
+        name: "cblEmployee",
+        value: false
+      },
+      {
+        type: "cCheckBox",
+        label: "Eligible for Health Insurance",
+        name: "isEligible",
+        value: false
+      },
+
+      {
+        type: "cTextField",
+        label: "Profession*",
+        name: "profession",
+        value: "",
+        required: true
       },
       {
         type: "cDatePicker",
         value: "",
-        label: "End Date",
-        name: "endDate",
-        required: false,
-        min: "startDate"
+        label: "Date Of Birth",
+        name: "dateOfBirth",
+        required: false
       }
     ]
   }),
