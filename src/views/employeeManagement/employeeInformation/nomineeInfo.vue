@@ -9,41 +9,41 @@
 </template>
 <script>
 import commonMixins from "@/mixins/commonMixins";
-
 export default {
-  name: "familyMemberInfo",
+  name: "nomineeInfo",
   components: {},
   props: ["age"],
   mixins: [commonMixins],
   data: () => ({
-    apiBase: "/em/familyMember/",
+    apiBase: "/em/nominee/",
     tableHeader: [
       {
-        text: "Family Member Name",
+        text: "Nominee Name",
         align: "start",
         sortable: false,
         value: "name"
       },
-      { text: "Relationship Type", value: "familyRelationTypeId" },
+      { text: "Nominee Type", value: "nomineeType" },
       {
-        text: "Company Classification Type Name",
-        value: "companyClassTypeName"
+        text: "Relationship",
+        value: "relationship"
       },
-      { text: "Contact No", value: "contactPhoneNo" },
+      { text: "Percentage", value: "nomineePercentage" },
+      { text: "Date Of Birth", value: "dateOfBirth" },
       { text: "Actions", value: "actions" }
     ],
     formArray: [
       {
         type: "cTextField",
-        label: "Family Member Name*",
+        label: "Nominee Name*",
         name: "name",
         value: "",
         required: true
       },
       {
         type: "cAutoComplete",
-        label: "Relationship Type*",
-        name: "companyClassTypeId",
+        label: "Nominee Type*",
+        name: "nomineeType",
         api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
@@ -74,7 +74,6 @@ export default {
         name: "isEligible",
         value: false
       },
-
       {
         type: "cTextField",
         label: "Profession*",

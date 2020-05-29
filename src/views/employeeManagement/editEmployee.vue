@@ -75,6 +75,7 @@ export default {
     employeePicture: () => import("./employeeInformation/employeePicture"),
     employeeSignature: () => import("./employeeInformation/employeeSignature"),
     employeeFamilyMember: () => import("./employeeInformation/employeeFamilyMember"),
+    nomineeInfo: () => import("./employeeInformation/nomineeInfo"),
   },
   data() {
     return {
