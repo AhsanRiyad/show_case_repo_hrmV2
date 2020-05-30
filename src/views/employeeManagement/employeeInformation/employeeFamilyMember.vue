@@ -1,6 +1,12 @@
 <template>
   <span>
-    <baseTable :componentName="componentName" :apiBase="apiBase" v-bind="$attrs" :tableHeader="tableHeader" :formArray="formArray">
+    <baseTable
+      :componentName="componentName"
+      :apiBase="apiBase"
+      v-bind="$attrs"
+      :tableHeader="tableHeader"
+      :formArray="formArray"
+    >
       <template v-slot:formBaseTable=" age2 ">
         <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
       </template>
@@ -17,7 +23,7 @@ export default {
   mixins: [commonMixins],
   data: () => ({
     apiBase: "/em/familyMember/",
-    componentName: 'Family Member',
+    componentName: "Family Member",
     tableHeader: [
       {
         text: "Family Member Name",

@@ -108,10 +108,8 @@ export default {
             this.newOrviewOrEditOrCorrection = 'new';
             //add timestamp if in the view mode
             !this.R.isNil(item) ? this.removeTimeStamp(item) : '';
-
             this.myDialogVisible = true;
             this.$store.commit("setRequestMethod", "post");
-
         },
         //view item
         doActionOnItem(action, { item }) {

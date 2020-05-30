@@ -85,7 +85,7 @@ export default {
     apiBase: {
       type: [String],
       default: undefined
-    },
+    }
   },
   mixins: [commonMixins],
   data() {
@@ -166,10 +166,29 @@ export default {
       console.log("in the updated");
       console.log(this);
 
-      //decision point
-      this.apiBase == "/em/ei/employee/"
+      //decision point, calling the reset method of newEmployee.vue
+      /* this.apiBase == "/em/ei/employee/"
         ? this.$refs.form.$children[0].reset()
         : this.$refs.form.reset();
+
+ */
+
+      if (this.apiBase == "/em/ei/employee/") {
+        console.log("in the dialog");
+        console.log(this);
+        this.$refs.form.$children[0].reset();
+      } else {
+        console.log("aleterante ref");
+        try {
+          console.log(this);
+          // this is behaving quite exceptional for employeeManagement->family member info, that it said refs.form is undefined,
+          //maybe this is being called multiple time that's why in the first time it showed undefined,
+          //otherwise everything is working fine
+          this.$refs.form.reset();
+        } catch (error) {
+          console.log(error);
+        }
+      }
 
       //make readonly
       !this.R.isNil(this.formArray)
