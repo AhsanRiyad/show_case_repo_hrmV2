@@ -1,6 +1,12 @@
 <template>
   <span>
-    <baseTable :componentName="componentName" :apiBase="apiBase" v-bind="$attrs" :tableHeader="tableHeader" :formArray="formArray">
+    <baseTable
+      :componentName="componentName"
+      :apiBase="apiBase"
+      v-bind="$attrs"
+      :tableHeader="tableHeader"
+      :formArray="formArray"
+    >
       <template v-slot:formBaseTable=" age2 ">
         <allFormInputs :age2="age2" :formArray.sync="formArray"></allFormInputs>
       </template>
@@ -14,9 +20,9 @@ export default {
   components: {},
   props: ["age"],
   mixins: [commonMixins],
-  data: () => ({
+  data: (vm) => ({
     apiBase: "/em/nominee/",
-    componentName: 'Nominee',
+    componentName: "Nominee",
     tableHeader: [
       {
         text: "Nominee Name",
@@ -37,24 +43,39 @@ export default {
       {
         type: "cAutoComplete",
         label: "Family Member*",
-        name: "nomineeType",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        name: "familyMemberId",
+        api: "/em/familyMember/getAll/active/dropdown",
         required: true,
-        value: ""
+        value: "",
+        changeEvent: vm.updateDependentFieldForNominee,
+        dependentFieldName: "familyRelationTypeId",
+        dependentApi: "/em/familyMember/getActive/"
       },
       {
         type: "cAutoComplete",
         label: "Nominee Type*",
         name: "nomineeType",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        items: [
+          { id: "PF", name: "PF" },
+          { id: "GF", name: "GF" },
+          { id: "Insurance", name: "Insurance" },
+          { id: "Final Settlement", name: "Final Settlement" }
+        ],
         required: true,
         value: ""
       },
       {
         type: "cAutoComplete",
         label: "Relationship*",
-        name: "nomineeType",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        name: "familyRelationTypeName",
+        items: [
+          { id: "Father", name: "Father" },
+          { id: "Mother", name: "Mother" },
+          { id: "Sister", name: "Sister" },
+          { id: "Brother", name: "Brother" },
+          { id: "Child", name: "Child" },
+          { id: "Relatives", name: "Relatives" }
+        ],
         required: true,
         value: ""
       },
@@ -85,10 +106,11 @@ export default {
         label: "Effective To",
         name: "endDate",
         required: false
-      },
+      }
     ]
   }),
   computed: {},
+  methods: {},
   watch: {},
   created() {}
 };

@@ -49,7 +49,7 @@
 
     <commonDialog @close="myDialogClose" :dialogVisible="myDialogVisible" ref="commonDialog">
       <template v-slot:otherDialog>
-        <component v-bind:is="activeTab"></component>
+        <component v-bind:is="activeTab" ></component>
       </template>
     </commonDialog>
   </v-card>

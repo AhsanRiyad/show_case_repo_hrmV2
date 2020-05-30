@@ -13,6 +13,7 @@
     :clearable=" !readonly "
     :readonly=" !R.isNil(readonly) ? readonly : true "
     :disabled="!R.isNil(disabled) ? disabled : false"
+    :height="!R.isNil(height) ? height : undefined"
     :id="id"
   ></v-autocomplete>
 </template>
@@ -32,6 +33,7 @@ export default {
     changeEvent: [Function],
     id: [String, Number],
     allData:[Array,Object,String],
+    height:[String,Number],
   },
   mixins: [commonMixins],
   data() {

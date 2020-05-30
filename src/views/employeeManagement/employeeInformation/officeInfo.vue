@@ -45,7 +45,7 @@ export default {
         name: "employeeSubtypeId",
         required: true,
         value: "",
-        items: [{ id: "ff", name: "dd" }]
+        items: [],
       },
       {
         type: "cTreeSelect",

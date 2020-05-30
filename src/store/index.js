@@ -31,7 +31,10 @@ export default new Vuex.Store({
 		//tree saver
 		// treeInfo: [],
 		//this is api request method
-		requestMethod: 'get',
+		requestMethod: 'get',	
+
+		//employeeId for employeeManagement->familyMember,
+		employeeId: undefined,
 
 	},
 	getters: {
@@ -41,6 +44,7 @@ export default new Vuex.Store({
 		getActiveRouteName: state => state.activeRouteName,
 		getActivePathName: state => state.activePathName,
 		getRequestMethod: state => state.requestMethod,
+		getEmployeeId: state => state.employeeId,
 		// getTreeInfo: state => state.treeInfo,
 	},
 	mutations: {
@@ -52,6 +56,9 @@ export default new Vuex.Store({
 		},
 		setRequestMethod(state , name){
 			state.requestMethod = name;
+		},
+		setEmployeeId(state , name){
+			state.employeeId = name;
 		},
 		/* setTreeInfo(state , name){
 			state.treeInfo = name;

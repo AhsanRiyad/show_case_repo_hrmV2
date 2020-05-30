@@ -149,6 +149,8 @@ export default {
                 //this event bus is fired here and will be received in employee.vue, editEmployee, employeeBasic, personalInfo component to update the form
                 console.log('firing the event bus');
                 setTimeout(() => {
+                    //this is for holding the employee id, this is required for employeeManagement , creating familyMemberInfo, nomineeInfo and others.
+                    this.apiBase == '/em/ei/employee/' ? this.$store.commit('setEmployeeId', response.id) : '';
                     eventBus.$emit('updateForm', response);
                 }, 1000);
 
@@ -177,7 +179,7 @@ export default {
         myDialogClose() {
             this.myDialogVisible = false;
             //here is a decision point for organization tree
-            this.$store.getters.getActiveRouteName !== 'organization' ? this.getData("getAll/active?page=0&pageSize=50") : '';
+            this.$store.getters.getActiveRouteName !== 'organization' ? this.getDataByDecisionMaking() : '';
         },
         clearInput(items) {
             items.forEach((n, i, a) => {
@@ -263,7 +265,6 @@ export default {
             }).then(() => {
                 console.log(this.formArray);
 
-
                 //validate the form
                 if (!this.$refs.form.validate()) return;
 
@@ -283,7 +284,6 @@ export default {
                 //for preventing the props from mutation
                 let mergedVal = this.R.has('infoOfaId', this.$props) && this.R.isNil(this.infoOfaIdFromProps) ? this.infoOfaId : this.infoOfaIdFromProps;
 
-
                 console.log('in the submit function');
                 console.log(mergedVal);
 
@@ -291,6 +291,10 @@ export default {
                 newOrviewOrEditOrCorrection == 'edit' || newOrviewOrEditOrCorrection == 'correction' ? formInputValues = { ...mergedVal, ...formInputValues } : '';
                 console.log('after merging');
                 console.log(formInputValues);
+
+                //this is for employeeManagement -> family member , where employeeId is required for posting data
+                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
+
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
                 // this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
                 this.apiRequestData.api = this.apiBase;
@@ -341,7 +345,7 @@ export default {
                 this.fillItemsIntheForm(this.items);
             }).catch(() => { });
         },
-        //base table funcitons ends
+        //base table funcitons ends, this function is not required
         reset() {
             console.log(this.$refs.form.reset());
             alert("clicked");
@@ -372,6 +376,32 @@ export default {
             // this.formArray[index].items = [{ name: "cc", id: "cc" }];
             // this.formArray[index].type ='cTextField';
         },
+        //an exceptional dependent field for adding nominee information for employee, here is two fields for update that's why it is different
+        updateDependentFieldForNominee(idOrValue, dependentFieldName, dependentApi) {
+            //a very common getData function for baseTable, will be call at the created lifeCycle hook
+            this.$store.commit("setRequestMethod", "get");
+            this.apiRequestData.api = dependentApi + idOrValue;
+            this.apiRequestData.item = {};
+            //axios calling, actions will be dispatched asynchronously
+            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+                console.log('in the nominee dependent');
+                console.log(response);
+                let index = this.R.findIndex(this.R.propEq("name", 'familyRelationTypeName'))(
+                    this.formArray
+                );
+                this.formArray[index].value = response.familyRelationTypeName;
+                index = this.R.findIndex(this.R.propEq("name", 'dateOfBirth'))(
+                    this.formArray
+                );
+                this.formArray[index].value = response.dateOfBirth;
+            });
+            // this.formArray[index].items = [{ name: "cc", id: "cc" }];
+            // this.formArray[index].type ='cTextField';
+        },
+        getDataByDecisionMaking() {
+            //this is for employeeManagement -> family member , where employeeId is required for posting data
+            this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" ? this.getData("getAll/active?empId=" + this.$store.getters.getEmployeeId + "&page=0&pageSize=50") : this.getData("getAll/active?page=0&pageSize=50");
+        }
     },
     watch: {},
     mounted() { }

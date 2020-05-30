@@ -44,7 +44,6 @@
             text
             @click.stop="nativeSubmit"
           >Save</v-btn>
-
         </v-card-actions>
       </v-card>
     </v-dialog>
@@ -86,7 +85,7 @@ export default {
     apiBase: {
       type: [String],
       default: undefined
-    }
+    },
   },
   mixins: [commonMixins],
   data() {
@@ -119,11 +118,15 @@ export default {
   methods: {
     //this function will decide which function to call
     nativeSubmit() {
-      this.newOrviewOrEditOrCorrectionProps == 'new' ?  this.$store.commit("setRequestMethod", "post"):  this.$store.commit("setRequestMethod", "put");
+      this.newOrviewOrEditOrCorrectionProps == "new"
+        ? this.$store.commit("setRequestMethod", "post")
+        : this.$store.commit("setRequestMethod", "put");
 
-      if (this.apiBase == '/em/ei/employee/') {
+      if (this.apiBase == "/em/ei/employee/") {
         //form slot->children named newEmployee.vue ->submit function
-        this.$refs.form.$children[0].submit(this.newOrviewOrEditOrCorrectionProps);
+        this.$refs.form.$children[0].submit(
+          this.newOrviewOrEditOrCorrectionProps
+        );
       } else {
         this.submit(this.newOrviewOrEditOrCorrectionProps);
       }
@@ -164,8 +167,9 @@ export default {
       console.log(this);
 
       //decision point
-      this.apiBase == '/em/ei/employee/' ? this.$refs.form.$children[0].reset() : 
-      this.$refs.form.reset();
+      this.apiBase == "/em/ei/employee/"
+        ? this.$refs.form.$children[0].reset()
+        : this.$refs.form.reset();
 
       //make readonly
       !this.R.isNil(this.formArray)

@@ -19,6 +19,7 @@
           :readonly="!R.isNil(n.readonly) ? n.readonly : false"
           :clearable="!R.isNil(n.readonly) ? !n.readonly : true"
           :disabled="!R.isNil(n.disabled) ? !n.disabled : false"
+          :height="!R.isNil(n.height) ? n.height : undefined"
           autocomplete="off"
         ></v-textarea>
 
@@ -37,6 +38,7 @@
           :prepend-icon="!R.isNil(n.prependIcon) ? n.prependIcon : null"
           :filled="!R.isNil(n.filled) ? n.filled : false"
           autocomplete="off"
+          :height="!R.isNil(n.height) ? n.height : undefined"
           @keyup.stop="!R.isNil(n.keyUpEvent) ? n.keyUpEvent(n.value, n.dependentFieldName, n.dependentApi) : ()=>{}"
         ></v-text-field>
 
@@ -64,6 +66,7 @@
           :disabled="!R.isNil(n.disabled) ? n.disabled : false"
           :changeEvent="!R.isNil(n.changeEvent) ? n.changeEvent : ()=>{}"
           :allData="n"
+          :height="!R.isNil(n.height) ? n.height : undefined"
         ></cAutoComplete>
 
         <cDatePicker

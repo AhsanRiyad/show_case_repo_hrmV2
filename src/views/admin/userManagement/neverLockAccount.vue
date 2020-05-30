@@ -1,6 +1,5 @@
 <template>
   <span>
-
     <baseTable
       :apiBase="apiBase"
       :componentName="componentName"
@@ -8,7 +7,7 @@
       :tableHeader="tableHeader"
       :formArray="formArray"
     >
-      <template v-slot:formBaseTable=" age2 ">
+      <template v-slot:formBaseTable>
         <allFormInputs  :age2="age2" :formArray.sync="formArray"></allFormInputs>
       </template>
     </baseTable>
@@ -17,11 +16,9 @@
 <script>
 import commonMixins from "@/mixins/commonMixins";
 
-
 export default {
-  name: "businessGroup",
+  name: "neverLockAccount",
   components: {},
-  props: ["age"],
   mixins: [commonMixins],
   data: vm => ({
     apiBase: "/ws/businessGroup/",

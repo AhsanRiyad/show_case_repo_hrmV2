@@ -81,13 +81,14 @@
 
 <script>
 import commonMixins from "@/mixins/commonMixins";
-// import { eventBus } from "@/main";
+import { eventBus } from "@/main";
 export default {
   name: "employeeAddress",
   components: {},
   props: ["age", "complexView"],
   mixins: [commonMixins],
   data: () => ({
+    apiBase: "/em/ei/employee/addressInfo/",
     formArray: [
       {
         type: "cTextField",
@@ -135,7 +136,11 @@ export default {
   },
   watch: {},
   created() {
-    console.log("i am addresss");
+    //this event is firing from editEmployee.vue for filling data in the form
+    eventBus.$on("updateThisForm", infoOfaId => {
+      console.log("i am office info");
+      this.getAndFillDataByApi("/em/ei/employee/addressInfo/getActive/" + infoOfaId.id);
+    });
   }
 };
 </script>

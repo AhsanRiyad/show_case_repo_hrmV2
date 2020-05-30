@@ -3,16 +3,17 @@ export default {
         subModules: [
             {
                 title: 'User Management',
+                name: 'userManagement',
                 icon: 'mdi-folder-open',
                 children: [
                     {
                         title: 'Unlock Account',
-                        name: 'unlock',
+                        name: 'unlockAccount',
                         icon: 'mdi-file-document-outline'
                     },
                     {
                         title: 'Never Lock Accounts',
-                        name: 'neverlock',
+                        name: 'neverLockAccount',
                         icon: 'mdi-file-document-outline'
                     },
                     {

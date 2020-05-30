@@ -133,7 +133,8 @@ export default {
     componentName: {
       type: [String],
       default: undefined
-    }
+    },
+    
   },
 
   data: () => ({
@@ -143,7 +144,9 @@ export default {
     infoOfaId: {}
   }),
   created() {
-    this.getData("getAll/active?page=0&pageSize=50");
+    //  this.getData("getAll/active?page=0&pageSize=50");
+
+     this.getDataByDecisionMaking();
   }
 };
 </script>

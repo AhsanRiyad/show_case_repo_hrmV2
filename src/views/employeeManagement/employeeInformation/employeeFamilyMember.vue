@@ -43,9 +43,16 @@ export default {
       },
       {
         type: "cAutoComplete",
-        label: "Relationship Type*",
-        name: "companyClassTypeId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        label: "Relationship*",
+        name: "familyRelationTypeName",
+        items: [
+          { id: "Father", name: "Father" },
+          { id: "Mother", name: "Mother" },
+          { id: "Sister", name: "Sister" },
+          { id: "Brother", name: "Brother" },
+          { id: "Child", name: "Child" },
+          { id: "Relatives", name: "Relatives" }
+        ],
         required: true,
         value: ""
       },

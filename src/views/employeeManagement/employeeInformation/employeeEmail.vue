@@ -22,11 +22,12 @@ export default {
   props: ["complexView"],
   mixins: [commonMixins],
   data: () => ({
+    apiBase: "/em/ei/emailAddress/",
     formArray: [
       {
         type: "cTextField",
         label: "Email*",
-        name: "startDate",
+        name: "email",
         value: "",
         readonly: false,
         required: true
@@ -39,7 +40,7 @@ export default {
   created() {
     eventBus.$on("updateThisForm", infoOfaId => {
       console.log("i am office info");
-      this.getAndFillDataByApi("/em/ei/employee/getActive/" + infoOfaId.id);
+      this.getAndFillDataByApi("/em/ei/emailAddress/getActive/" + infoOfaId.id);
     });
   }
 };

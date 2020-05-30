@@ -5,6 +5,7 @@ import store from '../store/index'
 
 import workStructure from './modules/workStructure';
 import employeeManagement from './modules/employeeManagement';
+import admin from './modules/admin';
 
 import * as R from 'ramda'
 import VueCookies from 'vue-cookies'
@@ -26,7 +27,8 @@ const routes = new Router({
                 import(/* webpackChunkName: "auth" */ '../views/test')
         },
         workStructure,
-        employeeManagement
+        employeeManagement,
+        admin,
     ]
 });
 

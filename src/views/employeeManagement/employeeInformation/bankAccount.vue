@@ -33,7 +33,7 @@ export default {
       {
         type: "cTextField",
         label: "Account Number*",
-        name: "startDate",
+        name: "accountNumber",
         value: "",
         readonly: false,
         required: true
@@ -41,7 +41,7 @@ export default {
       {
         type: "cTextField",
         label: "Account Type*",
-        name: "endDate",
+        name: "accountType",
         value: "Savings",
         readonly: false,
         required: true
@@ -49,7 +49,7 @@ export default {
       {
         type: "cAutoComplete",
         label: "Branch Name*",
-        name: "branchName",
+        name: "branchId",
         api: "/ws/office/getAll/activeBranch/dropdown",
         required: true,
         value: ""
@@ -62,7 +62,8 @@ export default {
   created() {
     //this event is firing from editEmployee.vue for filling data in the form
     eventBus.$on("updateThisForm", infoOfaId => {
-      console.log("i am office info");
+      console.log("i am bank account info");
+      console.log(infoOfaId);
       this.getAndFillDataByApi("/em/ei/bankAccount/getActive/" + infoOfaId.id);
     });
   }

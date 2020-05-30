@@ -24,7 +24,7 @@ export default {
                     {
                         title: 'Bank Account Assignment',
                         icon: 'mdi-file-document-outline',
-                        name: 'per_emp_bank_account'
+                        name: 'bankAccountAssignment'
                     }
                 ]
             },
