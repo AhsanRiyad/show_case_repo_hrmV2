@@ -39,7 +39,7 @@ export default {
   watch: {},
   created() {
     eventBus.$on("updateThisForm", infoOfaId => {
-      console.log("i am office info");
+      console.log("i am email info");
       this.getAndFillDataByApi("/em/ei/emailAddress/getActive/" + infoOfaId.id);
     });
   }

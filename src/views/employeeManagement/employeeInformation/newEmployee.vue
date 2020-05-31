@@ -46,10 +46,39 @@ export default {
   }),
   computed: {},
   methods: {
+    //update subfield for form field
+    updateDependentFieldForEmployeeSubType(
+      idOrValue,
+      dependentFieldName,
+      dependentApi,
+      arrayTobeSearched
+    ) {
+      console.log("in the update subtype");
+      console.log(idOrValue);
+      let index = this.R.findIndex(this.R.propEq("name", dependentFieldName))(
+        arrayTobeSearched
+      );
+      console.log(index);
+      //a very common getData function for baseTable, will be call at the created lifeCycle hook
+      this.$store.commit("setRequestMethod", "get");
+      this.apiRequestData.api = dependentApi + idOrValue;
+      this.apiRequestData.item = {};
+
+      //axios calling, actions will be dispatched asynchronously
+      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+        console.log(response);
+        arrayTobeSearched[index].items = response;
+      });
+      // this.formArray[index].items = [{ name: "cc", id: "cc" }];
+      // this.formArray[index].type ='cTextField';
+    },
+
     //this function will be fired to fill in the form when clicked on the view/edit/correction
     //it would be fired from baseTable, under action button menu
     //this is only applicable for employee route name
     fillItemsIntheForm(infoOfaId) {
+      console.log("two or two");
+
       this.infoOfaId = infoOfaId;
       try {
         this.$refs.officeInfo.formArray.forEach((n, i) => {
@@ -75,6 +104,32 @@ export default {
       } catch (err) {
         console.log(err);
       }
+    },
+    //update subfield for form field
+    updateDependentFieldByArray(
+      idOrValue,
+      dependentFieldName,
+      dependentApi,
+      arrayTobeSearched
+    ) {
+      console.log("in the update subtype");
+      console.log(idOrValue);
+      let index = this.R.findIndex(this.R.propEq("name", dependentFieldName))(
+        arrayTobeSearched
+      );
+      console.log(index);
+      //a very common getData function for baseTable, will be call at the created lifeCycle hook
+      this.$store.commit("setRequestMethod", "get");
+      this.apiRequestData.api = dependentApi + idOrValue;
+      this.apiRequestData.item = {};
+
+      //axios calling, actions will be dispatched asynchronously
+      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+        console.log(response);
+        arrayTobeSearched[index].items = response;
+      });
+      // this.formArray[index].items = [{ name: "cc", id: "cc" }];
+      // this.formArray[index].type ='cTextField';
     },
     closeDialog() {
       console.log(this.$parent.$children);

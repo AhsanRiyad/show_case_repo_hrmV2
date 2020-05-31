@@ -101,13 +101,16 @@ export default {
       this.apiRequestData.api = dependentApi + idOrValue;
       this.apiRequestData.item = {};
       //axios calling, actions will be dispatched asynchronously
-      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-        this.items = response;
-        console.log(response);
-      }).catch((err)=>{
-        console.log('error in the reset');
-        console.log(err);
-      });
+      this.$store
+        .dispatch("callApi", this.apiRequestData)
+        .then(response => {
+          this.items = response;
+          console.log(response);
+        })
+        .catch(err => {
+          console.log("error in the reset");
+          console.log(err);
+        });
       // this.formArray[index].items = [{ name: "cc", id: "cc" }];
       // this.formArray[index].type ='cTextField';
     },
@@ -116,10 +119,10 @@ export default {
 
       this.$store.commit("setRequestMethod", "put");
       this.apiRequestData.api = this.apiBase + this.items.empId;
+      this.apiRequestData.newOrviewOrEditOrCorrection = "edit";
       this.apiRequestData.item = {};
       //axios calling, actions will be dispatched asynchronously
       this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-        
         //recall the method for getting updated data
         this.updateDependentFieldForAdminResetPass(
           response.empId,

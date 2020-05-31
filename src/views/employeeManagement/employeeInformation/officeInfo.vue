@@ -40,7 +40,7 @@ export default {
         dependentApi: "/em/employeeSubtype/getActive/"
       },
       {
-        type: "cAutoComplete",
+        type: "cTextField",
         label: "Employee Sub Type*",
         name: "employeeSubtypeId",
         required: true,

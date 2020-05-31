@@ -11,7 +11,7 @@
       <v-tab-item v-for="n in tabItems" :value="n.href" :key="n.href">
         <v-card flat>
           <v-card-text>
-            <component ref="componentR" v-bind="{ complexView: true}" v-bind:is="n.component">
+            <component ref="componentR" v-bind="{ complexView: true }" v-bind:is="n.component">
               <template v-slot:buttons="{ funAction  }">
                 <v-container>
                   <v-row>
@@ -19,7 +19,12 @@
                       <v-btn color="red darken-1" class="white--text" @click="funAction.reset">Reset</v-btn>
                     </v-col>
                     <v-col align="right">
-                      <v-btn color="red darken-1" class="white--text" @click="funAction.submit">Submit</v-btn>
+                      <!-- here is a decision making for bankAccount as there is a dependency on update or post -->
+                      <v-btn
+                        color="red darken-1"
+                        class="white--text"
+                        @click="funAction.submit"
+                      >{{ !R.isNil(funAction.isBankAccountExists) && !funAction.isBankAccountExists ? 'ADD' : 'UPDATE' }}</v-btn>
                     </v-col>
                   </v-row>
                 </v-container>
@@ -49,7 +54,7 @@
 
     <commonDialog @close="myDialogClose" :dialogVisible="myDialogVisible" ref="commonDialog">
       <template v-slot:otherDialog>
-        <component v-bind:is="activeTab" ></component>
+        <component v-bind:is="activeTab"></component>
       </template>
     </commonDialog>
   </v-card>
@@ -74,7 +79,8 @@ export default {
     employeeEmail: () => import("./employeeInformation/employeeEmail"),
     employeePicture: () => import("./employeeInformation/employeePicture"),
     employeeSignature: () => import("./employeeInformation/employeeSignature"),
-    employeeFamilyMember: () => import("./employeeInformation/employeeFamilyMember"),
+    employeeFamilyMember: () =>
+      import("./employeeInformation/employeeFamilyMember"),
     nomineeInfo: () => import("./employeeInformation/nomineeInfo"),
     educationInfo: () => import("./employeeInformation/educationInfo"),
     careerDetails: () => import("./employeeInformation/careerDetails"),
@@ -128,7 +134,7 @@ export default {
           href: "employeeSignature",
           title: "Signature",
           component: "employeeSignature"
-        },
+        }
       ],
 
       text:
@@ -157,9 +163,9 @@ export default {
         {
           name: "Professional Info",
           cName: "professionalInfo"
-        },
-        
-         /*,
+        }
+
+        /*,
             {
                 name: 'Working Condition',
                 cName: 'workingCondition'

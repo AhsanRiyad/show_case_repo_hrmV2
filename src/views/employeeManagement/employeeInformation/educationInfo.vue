@@ -48,7 +48,7 @@ export default {
         type: "cAutoComplete",
         label: "Qualification Type*",
         name: "qualificationId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        api: "/em/qualificationType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
@@ -63,7 +63,7 @@ export default {
         type: "cAutoComplete",
         label: "Educational Institutions*",
         name: "eduInstitutionId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        api: "/em/eduInstitution/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
@@ -85,15 +85,7 @@ export default {
         type: "cAutoComplete",
         label: "Educational Result Type*",
         name: "eduResultTypeId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
-        required: true,
-        value: ""
-      },
-      {
-        type: "cAutoComplete",
-        label: "Relationship*",
-        name: "nomineeType",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        api: "/em/eduResultType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
@@ -129,18 +121,16 @@ export default {
         type: "cFileInput",
         value: null,
         label: "SELECT SCAN COPY OF CIRTIFICATE",
-        name: "certificate",
-        rules: [
-          value =>
-            !value || true
-        ],
-        multiple: true,
-        accept: 'image/*',
+        name: "file",
+        rules: [value => !value || true],
+        multiple: false,
+        accept: "image/*",
         required: false
       }
     ]
   }),
   computed: {},
+  methods: {},
   watch: {},
   created() {}
 };

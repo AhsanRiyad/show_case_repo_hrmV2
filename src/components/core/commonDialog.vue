@@ -102,7 +102,7 @@ export default {
       else return true;
     },
     showOrHideCloseButton() {
-      return true; 
+      return true;
     },
     intDialogVisible: {
       get: function() {
@@ -127,6 +127,10 @@ export default {
         this.$refs.form.$children[0].submit(
           this.newOrviewOrEditOrCorrectionProps
         );
+      }
+      //this includes a form
+      else if (this.apiBase == "/em/eduQualification/") {
+        this.submitForFormData(this.newOrviewOrEditOrCorrectionProps);
       } else {
         this.submit(this.newOrviewOrEditOrCorrectionProps);
       }
