@@ -33,7 +33,7 @@ export default {
       { text: "Nominee Type", value: "nomineeType" },
       {
         text: "Relationship",
-        value: "relationship"
+        value: "familyRelationTypeName"
       },
       { text: "Percentage", value: "nomineePercentage" },
       { text: "Date Of Birth", value: "dateOfBirth" },

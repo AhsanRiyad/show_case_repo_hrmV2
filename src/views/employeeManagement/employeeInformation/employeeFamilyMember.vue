@@ -31,10 +31,8 @@ export default {
         sortable: false,
         value: "name"
       },
-      { text: "Relationship Type", value: "familyRelationTypeId" },
       {
-        text: "Company Classification Type Name",
-        value: "companyClassTypeName"
+        text: "Relationship Type", value: "familyRelationTypeName"
       },
       { text: "Contact No", value: "contactPhoneNo" },
       { text: "Actions", value: "actions" }
@@ -49,7 +47,7 @@ export default {
       },
       {
         type: "cAutoComplete",
-        label: "Relationship*",
+        label: "Relationship Type*",
         name: "familyRelationTypeName",
         items: [
           { id: "Father", name: "Father" },

@@ -102,7 +102,7 @@ export default {
       else return true;
     },
     showOrHideCloseButton() {
-      return true;
+      return true; 
     },
     intDialogVisible: {
       get: function() {

@@ -18,7 +18,6 @@
   </span>
 </template>
 
-
 <script>
 import commonMixins from "@/mixins/commonMixins";
 import { eventBus } from "@/main";
