@@ -124,7 +124,7 @@ export default {
         name: "file",
         rules: [value => !value || true],
         multiple: false,
-        accept: "image/*",
+        accept: "image/*, .pdf",
         required: false
       }
     ]

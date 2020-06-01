@@ -1,53 +1,10 @@
 <template>
-  <v-card>
-    <employeeBasic />
-
-    <v-tabs v-model="tab" background-color="red darken-1" centered dark>
-      <v-tabs-slider></v-tabs-slider>
-      <v-tab @click="tabClick" v-for="n in tabItems" :href="'#'+n.href" :key="n.href">{{ n.title }}</v-tab>
-    </v-tabs>
-
-    <v-tabs-items v-model="tab">
-      <v-tab-item v-for="n in tabItems" :value="n.href" :key="n.href">
-        <v-card flat>
-          <v-card-text>
-            <keep-alive>
-                <component ref="componentR" v-bind="{ complexView: true}" v-bind:is="n.component">
-                  <template v-slot:buttons="reset">
-                    <v-container>
-                      <v-row>
-                        <v-col>
-                          <v-btn color="red darken-1" class="white--text" @click="reset.reset">Reset</v-btn>
-                        </v-col>
-                        <v-col align="right">
-                          <v-btn color="red darken-1" class="white--text">Submit</v-btn>
-                        </v-col>
-                      </v-row>
-                    </v-container>
-                  </template>
-                </component>
-            </keep-alive>
-          </v-card-text>
-        </v-card>
-      </v-tab-item>
-    </v-tabs-items>
-
-    <v-bottom-navigation dark v-model="activeTab" :value="true" color="primary" horizontal>
-      <v-btn
-        v-for="(n, i) in bottomTabs"
-        :key="i"
-        :value="n.cName"
-        @click="()=>openDialog(n.cName)"
-        class="red darken-1 white--text"
-      >{{ n.name }}</v-btn>
-    </v-bottom-navigation>
-
-    <commonDialog @close="myDialogClose" :dialogVisible="myDialogVisible" ref="commonDialog">
-      <template v-slot:otherDialog>
-        <component v-bind:is="activeTab"></component>
-      </template>
-    </commonDialog>
-  </v-card>
+  <div>
+    <v-file-input v-model="file"  label="File input"></v-file-input>
+    <v-btn color="error" @click.stop="submit">
+      Submit
+    </v-btn>
+  </div>
 </template>
 
 <script>
@@ -55,20 +12,11 @@ import commonMixins from "../mixins/commonMixins";
 export default {
   name: "test",
   mixins: [commonMixins],
-  components: {
-    /*eslint-disable */
-    /*eslint-enable */
-    businessGroup: () => import("./workStructure/businessGroup"),
-
-    employeeBasic: () =>
-      import("./employeeManagement/employeeInformation/employeeBasic"),
-    personalInfo: () =>
-      import("./employeeManagement/employeeInformation/personalInfo"),
-    officeInfo: () =>
-      import("./employeeManagement/employeeInformation/officeInfo")
-  },
+  components: {},
   data() {
     return {
+      file: '',
+
       activeBtn: 1,
       activeTab: "",
       tab: null,
@@ -121,8 +69,36 @@ export default {
     };
   },
   methods: {
-    reset(){
-      alert('in my reset function');
+
+    submit(){
+
+      console.log(this.file);
+
+      let formData = new FormData();
+        formData.append('file', this.file);
+
+      this.$axios.post( "http://hrm.babl.xyz/hrm-server-v2/api/em/professionalInfo/sig" ,
+          formData,
+          { 
+            headers: {
+              'Authorization': 'Bearer ' + this.$cookies.get("accessToken") ,
+              'Content-Type': 'multipart/form-data'
+            }
+          }
+          ).then(function(response){
+
+            console.log(response);
+
+          }.bind(this))
+          .catch(function(err){
+          console.log(err)
+          }.bind(this));
+
+
+    },
+
+    reset() {
+      alert("in my reset function");
       console.log(this.$refs);
     },
     tabClick() {

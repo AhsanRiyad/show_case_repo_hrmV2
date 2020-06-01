@@ -293,7 +293,7 @@ export default {
                 console.log(formInputValues);
 
                 //this is for employeeManagement -> family member , where employeeId is required for posting data
-                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/"  ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
+                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
 
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
                 // this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
@@ -373,7 +373,7 @@ export default {
             //axios calling, actions will be dispatched asynchronously
             this.$store.dispatch("callApi", this.apiRequestData).then(response => {
                 console.log(response);
-                this.formArray[index].type = 'cAutoComplete' ;
+                this.formArray[index].type = 'cAutoComplete';
                 this.formArray[index].items = response;
             });
             // this.formArray[index].items = [{ name: "cc", id: "cc" }];
@@ -401,76 +401,48 @@ export default {
             // this.formArray[index].items = [{ name: "cc", id: "cc" }];
             // this.formArray[index].type ='cTextField';
         },
-        submitForFormData(newOrviewOrEditOrCorrection) {
+        submitForFormData() {
 
-            console.log('in the submit method');
-            console.log(this.$store.getters.getRequestMethod);
+            console.log(this.formArray[10].value[0]);
 
-            //this is for input form validation
-            new Promise((resolve) => {
-                //remove timestamp if there is any
-                this.removeTimeStamp();
-                //this is only for form validation issues, connected with allFormInputs components
-                resolve();
-            }).then(() => {
-                console.log(this.formArray);
+            let formData = new FormData();
+            /* formData.append('file', this.formArray[10].value[0]);
+            formData.append('name', 'rashed'); */
 
-                //validate the form
-                if (!this.$refs.form.validate()) return;
+            let abc =
+                this.R.map((n) => { return { [n.name]: n.value } }, this.formArray)
+            console.log(abc);
 
-                //remove the search or non-takenable fields
-                let formArray = [...this.R.reject(n => n.shouldInclude == false)(this.formArray)];
-                console.log('should include')
-                console.log(formArray);
+            let bca = this.R.mergeAll(abc);
+            console.log(bca);
 
-                //organize the input form, first formate the array using map, then make the a an object using mergeAll
-                let formInputValues =
-                    this.R.pipe(
-                        this.R.map((n) => { return { [n.name]: n.value } }),
-                        this.R.mergeAll()
-                    )(formArray)
-                console.log(formInputValues);
-                console.log(this.apiBase);
-                //for preventing the props from mutation
-                let mergedVal = this.R.has('infoOfaId', this.$props) && this.R.isNil(this.infoOfaIdFromProps) ? this.infoOfaId : this.infoOfaIdFromProps;
+            let a = { ...bca, file: this.formArray[10].value[0], employeeId: this.$store.getters.getEmployeeId };
+            console.log(a);
 
-                console.log('in the submit function');
-                console.log(mergedVal);
+            this.R.forEachObjIndexed((v, k) => { formData.append(k, v) }, a)
 
-                // merge the value that is required for updating a entity
-                newOrviewOrEditOrCorrection == 'edit' || newOrviewOrEditOrCorrection == 'correction' ? formInputValues = { ...mergedVal, ...formInputValues } : '';
-                console.log('after merging');
-                console.log(formInputValues);
-
-                //this is for employeeManagement -> family member , where employeeId is required for posting data
-                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/probation/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
-
-                let formData = new FormData();
-                this.R.forEachObjIndexed((v, k) => { formData.append(k, v) }, formInputValues);
-                console.log(formData);
-
-                //a very common getData function for baseTable, will be call at the created lifeCycle hook
-                // this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
-                this.apiRequestData.api = this.apiBase;
-                this.apiRequestData.item = formData;
+            console.log(formData);
 
 
 
+            this.$axios.post("http://hrm.babl.xyz/hrm-server-v2/api/em/eduQualification",
+                formData,
+                {
+                    headers: {
+                        'Authorization': 'Bearer ' + this.$cookies.get("accessToken"),
+                        'Content-Type': 'multipart/form-data'
+                    }
+                }
+            ).then(function (response) {
+
+                console.log(response);
+
+            }.bind(this))
+                .catch(function (err) {
+                    console.log(err)
+                }.bind(this));
 
 
-                //this will help decide the header if it will be createdBy or updatedBy
-                this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
-                //axios calling, actions will be dispatched asynchronously
-                this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-                    //reload the form
-                    console.log(response);
-                    //success dialog                
-                    this.$awn.success(`Successfully`);
-                }).catch(() => {
-                    this.$awn.alert(`Connection Error`);
-                    this.tableLoading = false;
-                });
-            })
         },
         getDataByDecisionMaking() {
             //this is for employeeManagement -> family member , where employeeId is required for posting data
