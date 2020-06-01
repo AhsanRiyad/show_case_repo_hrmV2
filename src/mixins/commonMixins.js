@@ -4,6 +4,10 @@ export default {
         //table items, autcomplete items
         items: [],
 
+        //
+        profilePic: require("@/assets/noImage.jpg"),
+        signature: require("@/assets/noImage.jpg"),
+
         //baseTable dialog
         myDialogVisible: false,
 
@@ -129,9 +133,16 @@ export default {
             console.log('checking the items');
             console.log(item);
 
+            //for photo upload
+            let apiBase = this.apiBase;
+            if (this.apiBase == '/em/ei/employee/profilePic/'){
+                apiBase = '/em/ei/employee/getActive/';
+            }
+
+
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.$store.commit('setRequestMethod', 'get');
-            this.apiRequestData.api = this.apiBase + 'getActive/' + item.id;
+            this.apiRequestData.api = apiBase + 'getActive/' + item.id;
             this.apiRequestData.item = {};
 
             //table loader
@@ -143,7 +154,6 @@ export default {
 
                 //this variable will send the value to the commonDialog forms so that it can have the data
                 //when it needs to submit
-
                 console.log('getting the response');
                 console.log(response);
 
@@ -267,7 +277,6 @@ export default {
             console.log('in the submit method');
             console.log(this.$store.getters.getRequestMethod);
 
-
             //this is for input form validation
             new Promise((resolve) => {
                 //remove timestamp if there is any
@@ -308,12 +317,11 @@ export default {
                 this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" || this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/professionalQua/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
 
                 //this is for  file upload problem
-                if (this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/professionalQua/") {
+                if (this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/professionalQua/" || this.apiBase == "/em/ei/employee/profilePic/") {
                     let formData = new FormData();
                     let file = '';
                     try {
                         file = this.R.find(n => n.name == 'file')(this.formArray).value[0];
-
                     } catch (error) {
                         console.log(error)
                     }
@@ -345,7 +353,6 @@ export default {
                     } else {
                         this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
                     }
-
                     console.log(this.infoTree);
                     console.log(response);
                     //success dialog                
