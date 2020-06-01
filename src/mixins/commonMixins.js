@@ -88,18 +88,18 @@ export default {
                 a[i].readonly = true;
 
                 //this is for file uploading purpose, for employeeManagement->educationInfo
-                n.name == 'file' ? (a[i].haveBtn = true) : '';
+                if (n.name == 'file') {
+                    a[i].haveBtn = true;
+                    a[i].href = n.href + infoOfaId.fileName;
+                }
             })
             // this.fillItemsIntheForm method will be called at add timestamp method
         },
         actionIsEdit(infoOfaId) {
             this.$store.commit("setRequestMethod", "put");
             this.newOrviewOrEditOrCorrection = 'edit';
-
-
             //decision making point for file upload option
             //for employee->educationInfo
-
 
             //this is applicable only for organization tree as there is not table. that why no props
             //add timestamp if in the view mode
@@ -109,8 +109,11 @@ export default {
             this.formArray.forEach((n, i, a) => {
                 a[i].readonly = false;
                 //this is for file uploading purpose, for employeeManagement->education info 
-                n.name == 'file' ? (a[i].haveBtn = true, a[i].rules = [() => true]) : '';
-
+                if (n.name == 'file') {
+                    a[i].haveBtn = true;
+                    a[i].rules = [() => true];
+                    a[i].href = n.href + infoOfaId.fileName;
+                }
             });
         },
         actionIsNew(item) {
@@ -151,7 +154,6 @@ export default {
                 !this.R.has('infoOfaId', this.$props) ? this.infoOfaId = { ...response } :
                     this.infoOfaIdFromProps = { ...response };
 
-
                 //this event bus is fired here and will be received in employee.vue, editEmployee, employeeBasic, personalInfo component to update the form
                 console.log('firing the event bus');
                 setTimeout(() => {
@@ -175,6 +177,7 @@ export default {
             });
             //this will make the dialog visible
             if (this.apiBase == '/em/ei/employee/' && action == 'view') {
+                this.newOrviewOrEditOrCorrection = 'view';
                 //this event bus will be received by employeeBasic.vue
                 this.complexView = true;
             } else {
@@ -436,49 +439,6 @@ export default {
             });
             // this.formArray[index].items = [{ name: "cc", id: "cc" }];
             // this.formArray[index].type ='cTextField';
-        },
-        submitForFormData() {
-
-            console.log(this.formArray[10].value[0]);
-
-            let formData = new FormData();
-            /* formData.append('file', this.formArray[10].value[0]);
-            formData.append('name', 'rashed'); */
-
-            let abc =
-                this.R.map((n) => { return { [n.name]: n.value } }, this.formArray)
-            console.log(abc);
-
-            let bca = this.R.mergeAll(abc);
-            console.log(bca);
-
-            let a = { ...bca, file: this.formArray[10].value[0], employeeId: this.$store.getters.getEmployeeId };
-            console.log(a);
-
-            this.R.forEachObjIndexed((v, k) => { formData.append(k, v) }, a)
-
-            console.log(formData);
-
-
-
-            this.$axios.post("http://hrm.babl.xyz/hrm-server-v2/api/em/eduQualification",
-                formData,
-                {
-                    headers: {
-                        'Authorization': 'Bearer ' + this.$cookies.get("accessToken"),
-                        'Content-Type': 'multipart/form-data'
-                    }
-                }
-            ).then(function (response) {
-
-                console.log(response);
-
-            }.bind(this))
-                .catch(function (err) {
-                    console.log(err)
-                }.bind(this));
-
-
         },
         getDataByDecisionMaking() {
             //this is for employeeManagement -> family member , where employeeId is required for posting data

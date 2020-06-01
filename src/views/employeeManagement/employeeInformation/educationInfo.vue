@@ -20,7 +20,7 @@ export default {
   components: {},
   props: ["age"],
   mixins: [commonMixins],
-  data: () => ({
+  data: (vm) => ({
     apiBase: "/em/eduQualification/",
     componentName: "Education Info",
     tableHeader: [
@@ -129,7 +129,7 @@ export default {
         required: false,
         haveBtn: false,
         readonly: false,
-        href: 'google.com',
+        href:  vm.$store.state.apiBase +"/em/eduQualification/file/",
         btnLabel: 'Download Certificate',
       },
       

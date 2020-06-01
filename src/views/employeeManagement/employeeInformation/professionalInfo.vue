@@ -20,7 +20,7 @@ export default {
   components: {},
   props: ["age"],
   mixins: [commonMixins],
-  data: () => ({
+  data: (vm) => ({
     apiBase: "/em/professionalQua/",
     componentName: "Professional Qualification",
     tableHeader: [
@@ -96,7 +96,7 @@ export default {
         required: false,
         haveBtn: false,
         readonly: false,
-        href: "google.com",
+        href: vm.$store.state.apiBase +"/em/professionalQua/file/", 
         btnLabel: "Download Certificate"
       }
     ]
