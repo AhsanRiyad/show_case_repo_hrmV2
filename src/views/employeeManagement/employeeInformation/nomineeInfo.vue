@@ -44,7 +44,7 @@ export default {
         type: "cAutoComplete",
         label: "Family Member*",
         name: "familyMemberId",
-        api: "/em/familyMember/getAll/active/dropdown",
+        api: "/em/familyMember/getAll/active?empId="+vm.$store.getters.getEmployeeId+"&page=0&pageSize=50",
         required: true,
         value: "",
         changeEvent: vm.updateDependentFieldForNominee,

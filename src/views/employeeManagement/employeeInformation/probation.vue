@@ -21,20 +21,16 @@ export default {
   props: ["age"],
   mixins: [commonMixins],
   data: () => ({
-    apiBase: "/em/careerDetail/",
-    componentName: "Career Detail",
+    apiBase: "/em/probation/",
+    componentName: "Probation",
     tableHeader: [
       {
         text: "Employee Id",
         align: "start",
         sortable: false,
-        value: "empId"
+        value: "employeeId"
       },
       { text: "Employee Name", value: "employeeName" },
-      {
-        text: "Designation",
-        value: "designation"
-      },
       { text: "Duration", value: "duration" },
       { text: "Effective Start Date", value: "startDate" },
       { text: "Effective End Date", value: "endDate" },
@@ -44,7 +40,7 @@ export default {
       {
         type: "cTextField",
         label: "Duration (Months)*",
-        name: "organizationName",
+        name: "duration",
         value: "",
         required: true
       },

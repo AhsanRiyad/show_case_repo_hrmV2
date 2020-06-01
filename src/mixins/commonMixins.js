@@ -293,7 +293,7 @@ export default {
                 console.log(formInputValues);
 
                 //this is for employeeManagement -> family member , where employeeId is required for posting data
-                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
+                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/"  ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
 
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
                 // this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
@@ -443,7 +443,7 @@ export default {
                 console.log(formInputValues);
 
                 //this is for employeeManagement -> family member , where employeeId is required for posting data
-                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/eduQualification/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
+                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/probation/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
 
                 let formData = new FormData();
                 this.R.forEachObjIndexed((v, k) => { formData.append(k, v) }, formInputValues);
@@ -474,7 +474,7 @@ export default {
         },
         getDataByDecisionMaking() {
             //this is for employeeManagement -> family member , where employeeId is required for posting data
-            this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" ? this.getData("getAll/active?empId=" + this.$store.getters.getEmployeeId + "&page=0&pageSize=50") : this.getData("getAll/active?page=0&pageSize=50");
+            this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" ? this.getData("getAll/active?empId=" + this.$store.getters.getEmployeeId + "&page=0&pageSize=50") : this.getData("getAll/active?page=0&pageSize=50");
         }
     },
     watch: {},

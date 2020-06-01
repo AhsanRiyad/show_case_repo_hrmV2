@@ -30,7 +30,7 @@ export default {
         sortable: false,
         value: "departmentName"
       },
-      { text: "Emloyement Type", value: "employeeTypeId" },
+      { text: "Emloyement Type", value: "employmentTypeName" },
       {
         text: "Designation",
         value: "designation"
@@ -49,7 +49,7 @@ export default {
         type: "cAutoComplete",
         label: "Work Area*",
         name: "careerDetailWorkAreaId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        api: "/em/careerWorkArea/getAll/active/dropdown/",
         required: true,
         value: ""
       },
@@ -71,7 +71,7 @@ export default {
         type: "cAutoComplete",
         label: "Organization Type*",
         name: "organizationTypeId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        api: "/ws/organizationType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
@@ -83,14 +83,6 @@ export default {
         required: true
       },
       {
-        type: "cAutoComplete",
-        label: "Organization Type*",
-        name: "eduInstitutionId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
-        required: true,
-        value: ""
-      },
-      {
         type: "cTextField",
         label: "Department Name*",
         name: "departmentName",
@@ -100,8 +92,8 @@ export default {
       {
         type: "cAutoComplete",
         label: "Employement Type*",
-        name: "employeeTypeId",
-        api: "/ws/companyClassType/getAll/active?page=0&pageSize=50",
+        name: "employmentTypeId",
+        api: "/em/employmentType/getAll/active?page=0&pageSize=50",
         required: true,
         value: ""
       },
@@ -176,8 +168,8 @@ export default {
       },
       {
         type: "cTextField",
-        label: "Supervisor Email*",
-        name: "supervisorEmail",
+        label: "Total Experience",
+        name: "totalExperience",
         value: "",
         required: true
       }
