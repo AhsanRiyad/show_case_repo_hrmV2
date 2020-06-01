@@ -89,14 +89,23 @@ export default {
             //add timestamp if in the view mode
             this.addTimeStamp(infoOfaId);
             //make readonly
-            this.formArray.forEach((n, i, k) => {
-                k[i].readonly = true;
+            this.formArray.forEach((n, i, a) => {
+                a[i].readonly = true;
+
+                //this is for file uploading purpose, for employeeManagement->educationInfo
+                n.name == 'file' ? (a[i].haveBtn = true) : '';
             })
             // this.fillItemsIntheForm method will be called at add timestamp method
         },
         actionIsEdit(infoOfaId) {
             this.$store.commit("setRequestMethod", "put");
             this.newOrviewOrEditOrCorrection = 'edit';
+
+
+            //decision making point for file upload option
+            //for employee->educationInfo
+
+
             //this is applicable only for organization tree as there is not table. that why no props
             //add timestamp if in the view mode
             this.removeTimeStamp(infoOfaId);
@@ -104,10 +113,14 @@ export default {
             //make readonly
             this.formArray.forEach((n, i, a) => {
                 a[i].readonly = false;
+                //this is for file uploading purpose, for employeeManagement->education info 
+                n.name == 'file' ? (a[i].haveBtn = true, a[i].rules = [ () => true ]) : '';
+
             });
         },
         actionIsNew(item) {
             this.newOrviewOrEditOrCorrection = 'new';
+
             //add timestamp if in the view mode
             !this.R.isNil(item) ? this.removeTimeStamp(item) : '';
             this.myDialogVisible = true;
@@ -117,8 +130,6 @@ export default {
         doActionOnItem(action, { item }) {
             console.log('checking the items');
             console.log(item);
-
-            //get Data from server
 
             //a very common getData function for baseTable, will be call at the created lifeCycle hook
             this.$store.commit('setRequestMethod', 'get');
@@ -195,9 +206,12 @@ export default {
             this.formArray.some(n => n.name == "createdBy")
                 ? this._.times(4, () => { this.formArray.pop() })
                 : "";
+
+
+
         },
         fillItemsIntheForm(infoOfaId) {
-            console.log('i am called from the employeeBasic');
+            console.log('i am called from the employeeBasic from updated');
             //formArray.name == key of infoOfaId matches
             //this is used for view an item's details
             this.formArray.forEach((n, i) => {
@@ -293,7 +307,28 @@ export default {
                 console.log(formInputValues);
 
                 //this is for employeeManagement -> family member , where employeeId is required for posting data
-                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
+                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" || this.apiBase == "/em/eduQualification/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
+
+                //this is for  file upload problem
+                if (this.apiBase == "/em/eduQualification/" && newOrviewOrEditOrCorrection == 'new') {
+                    let formData = new FormData();
+                    let file = '';
+                    try {
+                        file = this.R.find(n => n.name == 'file')(this.formArray).value[0];
+
+                    } catch (error) {
+                        console.log(error)
+                    }
+
+
+
+                    formInputValues = { ...formInputValues, file: file };
+                    this.R.forEachObjIndexed((v, k) => { formData.append(k, v) }, formInputValues);
+                    formInputValues = formData;
+                    console.log(formInputValues);
+                    // return;
+                }
+
 
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
                 // this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
@@ -303,10 +338,21 @@ export default {
                 this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
                 //axios calling, actions will be dispatched asynchronously
                 this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+
                     //reload the form
                     //exception for organization tree , when there is a child node successfully inserted this, should
                     this.$store.getters.getActiveRouteName == 'organization' ? this.addChild(response) :
                         this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
+
+                    if (this.$store.getters.getActiveRouteName == 'organization') {
+                        this.addChild(response);
+                    } else if (this.apiBase == "/em/eduQualification/") {
+                        this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
+                    } else {
+                        this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
+                    }
+
+
                     console.log(this.infoTree);
                     console.log(response);
                     //success dialog                
@@ -446,7 +492,7 @@ export default {
         },
         getDataByDecisionMaking() {
             //this is for employeeManagement -> family member , where employeeId is required for posting data
-            this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" ? this.getData("getAll/active?empId=" + this.$store.getters.getEmployeeId + "&page=0&pageSize=50") : this.getData("getAll/active?page=0&pageSize=50");
+            this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" || this.apiBase == "/em/eduQualification/" ? this.getData("getAll/active?empId=" + this.$store.getters.getEmployeeId + "&page=0&pageSize=50") : this.getData("getAll/active?page=0&pageSize=50");
         }
     },
     watch: {},

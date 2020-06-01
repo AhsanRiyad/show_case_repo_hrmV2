@@ -129,9 +129,10 @@ export default {
         );
       }
       //this includes a form
-      else if (this.apiBase == "/em/eduQualification/") {
+      /* else if (this.apiBase == "/em/eduQualification/") {
         this.submitForFormData(this.newOrviewOrEditOrCorrectionProps);
-      } else {
+      } */
+      else {
         this.submit(this.newOrviewOrEditOrCorrectionProps);
       }
     },
@@ -166,6 +167,13 @@ export default {
     console.log("this is common dialog");
   },
   updated() {
+    try {
+      //reset validation for new->edit or edit->new
+      this.$refs.form.resetValidation();
+    } catch (error) {
+      console.log(error);
+    }
+
     if (this.$store.getters.getRequestMethod == "post") {
       console.log("in the updated");
       console.log(this);
@@ -176,6 +184,20 @@ export default {
         : this.$refs.form.reset();
 
  */
+
+      try {
+        //this is for file handling purpose, employeeManagement->education info
+        this.formArray.forEach((n, i, a) => {
+          console.log(a);
+          if (n.name == "file") {
+            a[i].haveBtn = false;
+            a[i].readonly = false;
+            a[i].rules = [ v => !!v || false ];
+          }
+        });
+      } catch (error) {
+        console.log(error);
+      }
 
       if (this.apiBase == "/em/ei/employee/") {
         console.log("in the dialog");

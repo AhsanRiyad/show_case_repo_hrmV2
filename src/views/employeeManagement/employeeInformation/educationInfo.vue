@@ -122,11 +122,17 @@ export default {
         value: null,
         label: "SELECT SCAN COPY OF CIRTIFICATE",
         name: "file",
-        rules: [value => !value || true],
+        showInput: true,
+        rules: [v => !!v || false],
         multiple: false,
         accept: "image/*, .pdf",
-        required: false
-      }
+        required: false,
+        haveBtn: false,
+        readonly: false,
+        href: 'google.com',
+        btnLabel: 'Download Certificate',
+      },
+      
     ]
   }),
   computed: {},

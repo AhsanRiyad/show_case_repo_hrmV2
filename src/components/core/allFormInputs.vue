@@ -81,7 +81,8 @@
         ></cDatePicker>
 
         <v-file-input
-          v-if="n.type=='cFileInput'"
+          v-if=" n.type=='cFileInput' && n.readonly == false "
+          :disabled="n.readonly"
           show-size
           chips
           :rules="n.rules"
@@ -89,7 +90,16 @@
           :accept="n.accept"
           :label="n.label"
           v-model="n.value"
+          color="red darken-1"
         ></v-file-input>
+        <span>
+          <v-btn
+            v-if="n.haveBtn == true"
+            :href="n.href"
+            color="error"
+            target="_blank"
+          >{{ n.btnLabel }}</v-btn>
+        </span>
       </v-col>
     </v-row>
   </v-container>
