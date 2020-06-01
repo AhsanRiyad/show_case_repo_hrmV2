@@ -310,7 +310,7 @@ export default {
                 this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" || this.apiBase == "/em/eduQualification/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
 
                 //this is for  file upload problem
-                if (this.apiBase == "/em/eduQualification/" && newOrviewOrEditOrCorrection == 'new') {
+                if (this.apiBase == "/em/eduQualification/") {
                     let formData = new FormData();
                     let file = '';
                     try {
@@ -319,9 +319,6 @@ export default {
                     } catch (error) {
                         console.log(error)
                     }
-
-
-
                     formInputValues = { ...formInputValues, file: file };
                     this.R.forEachObjIndexed((v, k) => { formData.append(k, v) }, formInputValues);
                     formInputValues = formData;
@@ -347,6 +344,7 @@ export default {
                     if (this.$store.getters.getActiveRouteName == 'organization') {
                         this.addChild(response);
                     } else if (this.apiBase == "/em/eduQualification/") {
+                        this.apiRequestData.item = { ...response };
                         this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
                     } else {
                         this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
