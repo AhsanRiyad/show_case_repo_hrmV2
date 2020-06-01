@@ -1,9 +1,6 @@
 import { eventBus } from '@/main';
 export default {
     data: () => ({
-
-
-
         //table items, autcomplete items
         items: [],
 
@@ -28,10 +25,8 @@ export default {
             api: '',
             item: {},
         },
-
         //for common dialog props
         newOrviewOrEditOrCorrection: '',
-
 
         //for all form input
         timestamp: [
@@ -114,7 +109,7 @@ export default {
             this.formArray.forEach((n, i, a) => {
                 a[i].readonly = false;
                 //this is for file uploading purpose, for employeeManagement->education info 
-                n.name == 'file' ? (a[i].haveBtn = true, a[i].rules = [ () => true ]) : '';
+                n.name == 'file' ? (a[i].haveBtn = true, a[i].rules = [() => true]) : '';
 
             });
         },
@@ -307,10 +302,10 @@ export default {
                 console.log(formInputValues);
 
                 //this is for employeeManagement -> family member , where employeeId is required for posting data
-                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" || this.apiBase == "/em/eduQualification/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
+                this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/ei/bankAccount/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" || this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/professionalQua/" ? formInputValues = { ...formInputValues, employeeId: this.$store.getters.getEmployeeId } : '';
 
                 //this is for  file upload problem
-                if (this.apiBase == "/em/eduQualification/") {
+                if (this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/professionalQua/") {
                     let formData = new FormData();
                     let file = '';
                     try {
@@ -326,7 +321,6 @@ export default {
                     // return;
                 }
 
-
                 //a very common getData function for baseTable, will be call at the created lifeCycle hook
                 // this.apiRequestData.method = newOrviewOrEditOrCorrection == 'new' ? 'post' : 'put';
                 this.apiRequestData.api = this.apiBase;
@@ -335,7 +329,6 @@ export default {
                 this.apiRequestData.newOrviewOrEditOrCorrection = newOrviewOrEditOrCorrection;
                 //axios calling, actions will be dispatched asynchronously
                 this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-
                     //reload the form
                     //exception for organization tree , when there is a child node successfully inserted this, should
                     this.$store.getters.getActiveRouteName == 'organization' ? this.addChild(response) :
@@ -343,13 +336,12 @@ export default {
 
                     if (this.$store.getters.getActiveRouteName == 'organization') {
                         this.addChild(response);
-                    } else if (this.apiBase == "/em/eduQualification/") {
+                    } else if (this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/professionalQua/") {
                         this.apiRequestData.item = { ...response };
                         this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
                     } else {
                         this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
                     }
-
 
                     console.log(this.infoTree);
                     console.log(response);
@@ -490,7 +482,7 @@ export default {
         },
         getDataByDecisionMaking() {
             //this is for employeeManagement -> family member , where employeeId is required for posting data
-            this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" || this.apiBase == "/em/eduQualification/" ? this.getData("getAll/active?empId=" + this.$store.getters.getEmployeeId + "&page=0&pageSize=50") : this.getData("getAll/active?page=0&pageSize=50");
+            this.apiBase == "/em/familyMember/" || this.apiBase == "/em/nominee/" || this.apiBase == "/em/careerDetail/" || this.apiBase == "/em/probation/" || this.apiBase == "/em/eduQualification/" || this.apiBase == "/em/professionalQua/" ? this.getData("getAll/active?empId=" + this.$store.getters.getEmployeeId + "&page=0&pageSize=50") : this.getData("getAll/active?page=0&pageSize=50");
         }
     },
     watch: {},

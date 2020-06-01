@@ -30,7 +30,7 @@ export default {
         sortable: false,
         value: "qualTitle"
       },
-      { text: "Qualification Area", value: "qualArea" },
+      { text: "Qualification Area", value: "professionalQuaAreaName" },
       {
         text: "Institution",
         value: "institute"
@@ -52,7 +52,7 @@ export default {
         type: "cAutoComplete",
         label: "Area*",
         name: "professionalQuaAreaId",
-        api: "/ws/office/getAll/activeBranch/dropdown",
+        api: "/em/professionalQuaArea/getAll/active/dropdown",
         required: true,
         value: ""
       },
@@ -84,6 +84,21 @@ export default {
         name: "endDate",
         required: false
       },
+      {
+        type: "cFileInput",
+        value: null,
+        label: "SELECT SCAN COPY OF CIRTIFICATE",
+        name: "file",
+        showInput: true,
+        rules: [v => !!v || false],
+        multiple: false,
+        accept: "image/*, .pdf",
+        required: false,
+        haveBtn: false,
+        readonly: false,
+        href: "google.com",
+        btnLabel: "Download Certificate"
+      }
     ]
   }),
   computed: {},
