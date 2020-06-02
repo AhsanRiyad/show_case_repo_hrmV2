@@ -34,5 +34,69 @@ export default [
                 { title: 'Never Lock Account', name: '' }
             ],
         }
+    },
+    {
+        path: 'user',
+        name: 'adminUser',
+        component: () =>
+            import(
+                /* webpackChunkName: "employee_management" */ '../../../views/admin/userManagement/adminUser'
+            ),
+        meta: {
+            title: "User",
+            breadcrumb: [
+                { title: 'Admin', name: 'admin' },
+                { title: 'User Management', name: 'userManagement' },
+                { title: 'User', name: '' }
+            ],
+        }
+    },
+    {
+        path: 'role',
+        name: 'adminRole',
+        component: () =>
+            import(
+                /* webpackChunkName: "employee_management" */ '../../../views/admin/userManagement/adminRole'
+            ),
+        meta: {
+            title: "Role",
+            breadcrumb: [
+                { title: 'Admin', name: 'admin' },
+                { title: 'User Management', name: 'userManagement' },
+                { title: 'Role', name: '' }
+            ],
+        }
+    },
+    {
+        path: 'menu',
+        name: 'adminMenu',
+        component: () =>
+            import(
+                /* webpackChunkName: "employee_management" */ '../../../views/admin/userManagement/adminMenu'
+            ),
+        meta: {
+            title: "Menu",
+            breadcrumb: [
+                { title: 'Admin', name: 'admin' },
+                { title: 'User Management', name: 'userManagement' },
+                { title: 'Menu', name: '' }
+            ],
+        }
+    },
+    {
+        path: 'submenu',
+        name: 'adminSubMenu',
+        component: () =>
+            import(
+                /* webpackChunkName: "employee_management" */ '../../../views/admin/userManagement/adminSubMenu'
+            ),
+        meta: {
+            title: "Menu",
+            breadcrumb: [
+                { title: 'Admin', name: 'admin' },
+                { title: 'User Management', name: 'userManagement' },
+                { title: 'Sub Menu', name: '' }
+            ],
+        }
     }
 ];

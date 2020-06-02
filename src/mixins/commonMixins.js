@@ -94,12 +94,21 @@ export default {
                 //this is for file uploading purpose, for employeeManagement->educationInfo
                 if (n.name == 'file') {
                     a[i].haveBtn = true;
-                    a[i].href = n.href + infoOfaId.fileName;
+                    console.log('in the test file ');
+                    let result = /(\S(wuomulghutlafhug12ga)\S)/.test(a[i].href);
+                    console.log(result);
+                    console.log(a[i].href);
+                    // /(\S(wuomulghutlafhug12ga)\S)/.test(a[i].href) ? '' :
+                    if (/(\S(wuomulghutlafhug12ga)\S)/.test(a[i].href) == false) {
+                        console.log(' in the false ');
+                        a[i].href = n.href + infoOfaId.fileName;
+                    }
                 }
             })
             // this.fillItemsIntheForm method will be called at add timestamp method
         },
         actionIsEdit(infoOfaId) {
+            this.$store.state.showChangeReason = true;
             this.$store.commit("setRequestMethod", "put");
             this.newOrviewOrEditOrCorrection = 'edit';
             //decision making point for file upload option
@@ -116,12 +125,15 @@ export default {
                 if (n.name == 'file') {
                     a[i].haveBtn = true;
                     a[i].rules = [() => true];
-                    a[i].href = n.href + infoOfaId.fileName;
+                    if (/(\S(wuomulghutlafhug12ga)\S)/.test(a[i].href) == false) {
+                        a[i].href = n.href + infoOfaId.fileName;
+                    }
                 }
             });
         },
         actionIsNew(item) {
             this.newOrviewOrEditOrCorrection = 'new';
+            this.$store.state.showChangeReason = false;
 
             //add timestamp if in the view mode
             !this.R.isNil(item) ? this.removeTimeStamp(item) : '';
@@ -135,7 +147,7 @@ export default {
 
             //for photo upload
             let apiBase = this.apiBase;
-            if (this.apiBase == '/em/ei/employee/profilePic/'){
+            if (this.apiBase == '/em/ei/employee/profilePic/') {
                 apiBase = '/em/ei/employee/getActive/';
             }
 
@@ -214,9 +226,6 @@ export default {
             this.formArray.some(n => n.name == "createdBy")
                 ? this._.times(4, () => { this.formArray.pop() })
                 : "";
-
-
-
         },
         fillItemsIntheForm(infoOfaId) {
             console.log('i am called from the employeeBasic from updated');
@@ -271,6 +280,25 @@ export default {
                 ]);
             }
         },
+        //this is for neverLock
+        submitNeverLockAccount(id) {
+
+            // if (!this.$refs.form.validate()) return;
+
+            // this.$store.commit("setRequestMethod", "put");
+            this.apiRequestData.api = this.apiBase + id;
+            this.apiRequestData.newOrviewOrEditOrCorrection = "edit";
+            this.apiRequestData.item = {};
+            //axios calling, actions will be dispatched asynchronously
+            this.$store.dispatch("callApi", this.apiRequestData).then(response => {
+                //recall the method for getting updated data
+                console.log(response);
+                this.$awn.success(`Successfully`);
+            }).catch(() => {
+                this.$awn.alert(`Failed`);
+            });
+
+        },
         //base table functions starts
         submit(newOrviewOrEditOrCorrection) {
 
@@ -288,6 +316,17 @@ export default {
 
                 //validate the form
                 if (!this.$refs.form.validate()) return;
+
+                console.log(this.$route);
+                if (this.$route.name == "neverLockAccount") {
+                    console.log('in the neverlock');
+                    //this holds the id, in the first index
+                    this.submitNeverLockAccount(this.formArray[0].value);
+                    return;
+                }
+
+
+
 
                 //remove the search or non-takenable fields
                 let formArray = [...this.R.reject(n => n.shouldInclude == false)(this.formArray)];

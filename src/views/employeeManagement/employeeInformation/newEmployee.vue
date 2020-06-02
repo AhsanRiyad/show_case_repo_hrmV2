@@ -4,7 +4,7 @@
       <personalInfo ref="personalInfo" />
       <officeInfo ref="officeInfo" />
       <effectiveDate ref="effectiveDate" />
-      <changeReason v-show="this.$store.getters.getRequestMethod == 'put'" ref="changeReason" />
+      <changeReason v-if="this.$store.state.showChangeReason" ref="changeReason" />
 
       <v-container>
         <v-row>
@@ -21,7 +21,7 @@
               v-if=" $route.name == 'newEmployee' "
               class="m-3 white--text"
               color="red darken-1"
-              @click.stop="submit"
+              @click.stop="()=>submit('new')"
             >Submit</v-btn>
           </v-col>
         </v-row>
@@ -138,6 +138,11 @@ export default {
       this.$refs.form.reset();
     },
     submit(newOrviewOrEditOrCorrection) {
+      if (this.$route.name == "newEmployee") {
+        this.$store.state.showChangeReason = false;
+        this.$store.commit('setRequestMethod' , 'post');
+      }
+
       /* console.log(this.$refs.form.inputs) */
       /* let abc = 
       this.$refs.form.inputs.map((n)=>{
@@ -160,22 +165,35 @@ export default {
           [n.name]: n.value
         };
       });
-
        */
       /*  console.log(
         this.R.concat(this.$refs.officeInfo.officeInfo , this.$refs.personalInfo.personalInfo, this.effectiveDate)
       ); */
-      console.log("newEmployee submit");
+      console.log("newEmployee submit in the field");
       //form data
+      console.log(this);
+      console.log(this.$refs.form.validate());
       if (!this.$refs.form.validate()) return;
-      let employeeInfo = this.R.pipe(
-        this.R.concat,
-        this.R.concat(this.$refs.effectiveDate.formArray),
-        this.R.concat(this.$refs.changeReason.formArray),
-        this.R.map(n => ({ [n.name]: n.value })),
-        this.R.mergeAll,
-        this.R.omit(["searchSupervisor"])
-      )(this.$refs.officeInfo.formArray, this.$refs.personalInfo.formArray);
+
+      let employeeInfo = "";
+      if (this.$store.getters.getRequestMethod == "post") {
+        employeeInfo = this.R.pipe(
+          this.R.concat,
+          this.R.concat(this.$refs.effectiveDate.formArray),
+          this.R.map(n => ({ [n.name]: n.value })),
+          this.R.mergeAll,
+          this.R.omit(["searchSupervisor"])
+        )(this.$refs.officeInfo.formArray, this.$refs.personalInfo.formArray);
+      } else {
+        employeeInfo = this.R.pipe(
+          this.R.concat,
+          this.R.concat(this.$refs.effectiveDate.formArray),
+          this.R.concat(this.$refs.changeReason.formArray),
+          this.R.map(n => ({ [n.name]: n.value })),
+          this.R.mergeAll,
+          this.R.omit(["searchSupervisor"])
+        )(this.$refs.officeInfo.formArray, this.$refs.personalInfo.formArray);
+      }
 
       employeeInfo = this.R.mergeRight(this.infoOfaId, employeeInfo);
       /* eslint-disable  */
@@ -194,7 +212,8 @@ export default {
         .dispatch("callApi", this.apiRequestData)
         .then(response => {
           console.log(response);
-          this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
+          // this.doActionOnItem(newOrviewOrEditOrCorrection, this.apiRequestData);
+          this.fillItemsIntheForm(response);
           //success dialog
           this.$awn.success(`Successfully`);
         })
@@ -205,12 +224,17 @@ export default {
   },
   watch: {},
   created() {
+    if (this.$route.name == "newEmployee") {
+      this.$store.state.showChangeReason = false;
+    }
+
     //this event is being fired from baseTable viewItem function, the the definition is in the common mixins file
     eventBus.$on("updateForm", infoOfaId => {
       setTimeout(() => {
         this.fillItemsIntheForm(infoOfaId);
       }, 100);
     });
+
   }
 };
 </script>

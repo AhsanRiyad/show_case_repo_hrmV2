@@ -26,7 +26,10 @@ export default {
             childPages: [
                 { title: 'Unlock Account', name: 'unlockAccount' },
                 { title: 'Never Lock Account', name: 'neverLockAccount' },
-                { title: 'Users', name: 'users' },
+                { title: 'Users', name: 'adminUser' },
+                { title: 'Role', name: 'adminRole' },
+                { title: 'Menu', name: 'adminMenu' },
+                { title: 'Sub Menu', name: 'adminSubMenu' },
             ]
         }
     },

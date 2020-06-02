@@ -18,24 +18,24 @@ export default {
                     },
                     {
                         title: 'Users',
-                        name: 'users',
+                        name: 'adminUser',
                         icon: 'mdi-file-document-outline'
                     },
                     {
                         title: 'Roles',
-                        name: 'role',
+                        name: 'adminRole',
                         icon: 'mdi-file-document-outline'
                     },
                     {
-                        title: 'Modules',
-                        name: 'privileges',
+                        title: 'Menu',
+                        name: 'adminMenu',
                         icon: 'mdi-file-document-outline'
                     },
                     {
-                        title: 'Assign Role & Modules',
-                        name: 'assign_roles_privileges',
+                        title: 'Sub Menu',
+                        name: 'adminSubMenu',
                         icon: 'mdi-file-document-outline'
-                    }
+                    },
                 ]
             }
         ]

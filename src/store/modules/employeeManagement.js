@@ -21,19 +21,19 @@ export default {
                         icon: 'mdi-file-document-outline',
                         name: 'per_emp_email'
                     },*/,
-                    {
+                    /* {
                         title: 'Bank Account Assignment',
                         icon: 'mdi-file-document-outline',
                         name: 'bankAccountAssignment'
-                    }
+                    } */
                 ]
             },
-            {
+            /* {
                 title: 'Business Card Requisition',
                 icon: 'mdi-file-document-outline',
                 name: 'em_business_card_requisition'
-            },
-            {
+            }, */
+            /* {
                 title: 'Joining Process',
                 icon: 'mdi-file-document-outline',
                 items: [
@@ -48,7 +48,7 @@ export default {
                         name: 'emp_list'
                     }
                 ]
-            }
+            } */
         ]
     }
 };

@@ -8,12 +8,15 @@
     autocomplete="off"
     :filter="customFilter"
     color="red darken-1"
+    item-color="red darken-1"
     @input="handleValue"
     :rules="fieldRulesProp( rules.required , rules.name )"
     :clearable=" !readonly "
     :readonly=" !R.isNil(readonly) ? readonly : true "
     :disabled="!R.isNil(disabled) ? disabled : false"
     :height="!R.isNil(height) ? height : undefined"
+    :multiple="!R.isNil(multiple) ? multiple : false"
+    :chips="!R.isNil(chips) ? chips : false"
     :id="id"
   ></v-autocomplete>
 </template>
@@ -23,7 +26,7 @@ import commonMixins from "../../mixins/commonMixins";
 export default {
   name: "cAutoComplete",
   props: {
-    value: [String, Number],
+    value: [String, Number,Array],
     label: [String, Number],
     rules: [String, Number, Array, Object],
     api: [String],
@@ -34,6 +37,8 @@ export default {
     id: [String, Number],
     allData:[Array,Object,String],
     height:[String,Number],
+    multiple:[String,Number,Boolean],
+    chips:[String,Number,Boolean],
   },
   mixins: [commonMixins],
   data() {

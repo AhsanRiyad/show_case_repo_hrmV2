@@ -8,7 +8,7 @@
       :formArray="formArray"
     >
       <template v-slot:formBaseTable>
-        <allFormInputs  :formArray.sync="formArray"></allFormInputs>
+        <allFormInputs :formArray.sync="formArray"></allFormInputs>
       </template>
     </baseTable>
   </span>
@@ -21,8 +21,8 @@ export default {
   components: {},
   mixins: [commonMixins],
   data: vm => ({
-    apiBase: "/admin/user/neverLock/",
-    componentName: 'Never Lock',
+    apiBase: "/admin/user/",
+    componentName: "User",
     tableHeader: [
       {
         text: "Employee Id",
@@ -33,7 +33,6 @@ export default {
       { text: "Employee Name", value: "empName" },
       { text: "Grade", value: "grade" },
       { text: "Contact Number", value: "phone" },
-      { text: "Organization", value: "organization" },
       { text: "Actions", value: "actions" }
     ],
     formArray: [
@@ -64,6 +63,38 @@ export default {
         shouldInclude: false,
         height: 20
       },
+      {
+        type: "cAutoComplete",
+        label: "Menu*",
+        name: "menus",
+        api: "/admin/role/getAll/active?page=0&pageSize=100",
+        required: true,
+        value: "",
+        chips: true,
+        multiple: true,
+      },
+      {
+        type: "cTextField",
+        label: "Email*",
+        name: "email",
+        value: "",
+        required: true
+      },
+      {
+        type: "cTextField",
+        label: "User Id*",
+        name: "userId",
+        value: "",
+        required: true
+      },
+      {
+        type: "cDatePicker",
+        value: "",
+        label: "Start Date",
+        name: "startDate",
+        required: true,
+        min: "startDate"
+      }
     ]
   }),
   computed: {},

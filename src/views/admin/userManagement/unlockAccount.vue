@@ -85,7 +85,7 @@ export default {
         dependentApi: "/em/ei/employee/getAll/active/dropdown/",
         shouldInclude: false,
         height: 20
-      }
+      },
     ],
     items: []
   }),
@@ -122,16 +122,22 @@ export default {
       this.apiRequestData.newOrviewOrEditOrCorrection = "edit";
       this.apiRequestData.item = {};
       //axios calling, actions will be dispatched asynchronously
-      this.$store.dispatch("callApi", this.apiRequestData).then(response => {
-        //recall the method for getting updated data
-        this.updateDependentFieldForAdminResetPass(
-          response.empId,
-          "",
-          "/em/ei/employee/getActive/"
-        );
+      this.$store
+        .dispatch("callApi", this.apiRequestData)
+        .then(response => {
+          this.$awn.success(`Successfully`);
 
-        console.log(response);
-      });
+          //recall the method for getting updated data
+          this.updateDependentFieldForAdminResetPass(
+            response.empId,
+            "",
+            "/em/ei/employee/getActive/"
+          );
+          console.log(response);
+        })
+        .catch(() => {
+          this.$awn.alert(`Failed`);
+        });
     }
   },
   watch: {},

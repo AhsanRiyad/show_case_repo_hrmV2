@@ -23,8 +23,8 @@ export default new Vuex.Store({
 		//this is the base api of the project 
 		// apiBase: "http://localhost:8090/hrm-server/api",
 		// apiBase: "http://192.168.10.220:9085/hrm-server-v2/api",
-		// apiBase: "http://hrm.babl.xyz/hrm-server-v2/api",
-		apiBase: "http://6c4ff6cffd5f.ngrok.io/hrm-server/api",
+		apiBase: "http://hrm.babl.xyz/hrm-server-v2/api",
+		// apiBase: "http://9c02d947a85b.ngrok.io/hrm-server/api",
 		//will be used in calling the url using route name, being used in index.js of router
 		activeRouteName: 'hellow',
 		//will be used in making api automatic, being used in index.js of router
@@ -36,6 +36,10 @@ export default new Vuex.Store({
 
 		//employeeId for employeeManagement->familyMember,
 		employeeId: undefined,
+
+
+		//show changeReason twiking, for changeReason.vue for employee creation
+		showChangeReason: false,
 
 	},
 	getters: {

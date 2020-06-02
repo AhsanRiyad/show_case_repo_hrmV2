@@ -49,7 +49,7 @@
           v-if=" n.type=='cTreeSelect' "
           v-model="n.value"
           :label="n.label"
-          placeholder="n.label"
+          :placeholder="n.label"
           :api=" !R.isNil(n.api) ? n.api : '' "
           :disabled="!R.isNil(n.disabled) ? n.disabled : false"
         ></cTreeSelect>
@@ -67,7 +67,23 @@
           :changeEvent="!R.isNil(n.changeEvent) ? n.changeEvent : ()=>{}"
           :allData="n"
           :height="!R.isNil(n.height) ? n.height : undefined"
+          :multiple="!R.isNil(n.multiple) ? n.multiple : false"
+          :chips="!R.isNil(n.chips) ? n.chips : false"
         ></cAutoComplete>
+
+        <v-select
+          color="red darken-1"
+          :id="n.name"
+          :label="n.label"
+          v-if="n.type == 'cSelect'"
+          v-model="n.value"
+          :items="n.items"
+          :item-value="n.itemValue"
+          :item-text="n.itemText"
+          attach
+          chips
+          multiple
+        ></v-select>
 
         <cDatePicker
           :id="n.name"
@@ -113,12 +129,30 @@ export default {
   props: ["formArray", "age2"],
   mixins: [commonMixins],
   data() {
-    return {};
+    return {
+      selectBoxItems: []
+    };
   },
   computed: {},
   methods: {
     changeEvent($event) {
       console.log($event);
+    },
+    getDataForCSelect(api, array) {
+      //a very common getData function for baseTable, will be call at the created lifeCycle hook
+      this.$store.commit("setRequestMethod", "get");
+      this.apiRequestData.api = api;
+      this.apiRequestData.data = {};
+
+      //axios calling, actions will be dispatched asynchronously
+      this.$store
+        .dispatch("callApi", this.apiRequestData)
+        .then(response => {
+          console.log(response);
+          array.items = response;
+          this.selectBoxItems = response;
+        })
+        .catch(() => {});
     }
   },
   created() {
